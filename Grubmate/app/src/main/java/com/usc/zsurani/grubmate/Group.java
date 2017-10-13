@@ -6,16 +6,19 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import java.util.List;
+import java.util.Set;
+
 public class Group {
     Integer id;
     //change to set for easier remove/add
-    List<Integer> users;
+    Set<Integer> users;
 
     /*
      * Constructor for when new group is created
      * including list of user IDs in group, and group creator’s id
      */
-    Group(List<Integer> users, Integer userId){
+    Group(Set<Integer> users, Integer userId){
         id = userId;
         this.users = users;
     }
@@ -24,18 +27,18 @@ public class Group {
      * When editing a group, if user wants to add a user to
      * group, add new user’s id to list of ids of users in group
      */
-    void addUser(Integer userId){}
+    void addUser(Integer userId){users.add(userId);}
 
     /*
      * When editing a group, if user wants to remove a user to group,
      * remove new user’s id from list of ids of users in group
      */
-    void removeUser(Integer userId){}
+    void removeUser(Integer userId){users.remove(userId);}
 
     //from db
 	/*
 	 * Returns list of the User ids that are part of this group.
 	 */
-    List<Integer> getUsers(){return users;}
+    Set<Integer> getUsers(){return users;}
 }
 

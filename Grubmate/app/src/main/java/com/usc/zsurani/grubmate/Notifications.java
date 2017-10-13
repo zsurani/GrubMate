@@ -8,31 +8,44 @@ import java.util.List;
 
 import java.util.List;
 
+import java.util.List;
+import java.util.Set;
+
 public class Notifications {
     Integer userID;
     Integer id;
     List<String> category;
-    List<String> tags;
+    Set<String> tags;
     Integer beginTime;
     Integer endTime;
     Boolean status;
     String name;
-    Integer type;
+    String type;
 
     /*
      * Constructor (Type 1) for subscription type notification in
      * which user selects when to be notified of a post matching
      * inputted criteria
      */
-    Notifications(String postName, List<String> tags,
-                  List<String> category, String time, String type){}
+    Notifications(String postName, Set<String> tags,
+                  List<String> category, String time, String type){
+        name = postName;
+        this.tags = tags;
+        this.category = category;
+        //beginTime=
+        //endTime=
+        this.type = type;
+    }
 
     /*
      * Constructor (Type 2) for notification in which provider gets
      * notification of someone sending a request to their post
      */
     Notifications(Integer postID, Integer requesterID, Integer providerID,
-                  String locationOfRequester, String type){}
+                  String locationOfRequester, String type){
+        //PostID, requesterID, providerID,locationOfRequester need to create variable?
+        this.type = type;
+    }
 
     /*
      * Constructor (Type 3) for notification in which receiver
@@ -40,7 +53,11 @@ public class Notifications {
      * their request
      */
     Notifications(Integer postID, Integer requesterID, Integer providerID,
-                  Boolean accepted, String type){}
+                  Boolean accepted, String type){
+        //PostID, requesterID, providerID,locationOfRequester need to create variable?
+        status = accepted;
+        this.type = type;
+    }
 
     /*
      * Constructor (Type 4) for notification sent after transaction
@@ -48,7 +65,10 @@ public class Notifications {
      * provider/receiver based on experience
      */
     Notifications(Integer postID, List<Integer> receiversID,
-                  Integer providerID, String type){}
+                  Integer providerID, String type){
+        //PostID, requesterID, providerID need to create variable?
+        this.type = type;
+    }
 
     /*
      * Returns true if notification (Type 1) is still active,
@@ -71,13 +91,13 @@ public class Notifications {
      * For notification (Type 1) if updating subscription to add tag,
      * add tag to list of string tags
      */
-    void addTag(String tag){}
+    void addTag(String tag){tags.add(tag);}
 
     /*
      * For notification (Type 1) if updating subscription to remove
      * tag, remove tag from list of string tags
      */
-    void removeTag(String tag){}
+    void removeTag(String tag){tags.remove(tag);}
 
     /*
      * Returns the category that the notification was created with
@@ -88,7 +108,7 @@ public class Notifications {
      * Returns a list of tags associated with the notification
      * determined by the creator
      */
-    List<String> getTags(){return tags;}
+    Set<String> getTags(){return tags;}
 
     /*
      * Returns time set by creator of notification of beginning of
@@ -110,13 +130,11 @@ public class Notifications {
     /*
      * Sets or changes the beginning time set in the notification
      */
-    void setBeginTime(Integer time){}
+    void setBeginTime(Integer time){beginTime = time;}
 
     /*
      * Sets or changes the end time set in the notification
      */
-    void setEndTime(Integer time){}
+    void setEndTime(Integer time){endTIme = time;}
 
 }
-
-
