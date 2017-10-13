@@ -12,6 +12,16 @@ import java.util.List;
 import java.util.Set;
 
 public class Notifications {
+    public static final String TABLE = "Notifications";
+    public static final String KEY_id = "id";
+    public static final String KEY_userID = "userID";
+    public static final String KEY_category = "category";
+    public static final String KEY_tags = "tags";
+    public static final String KEY_beginTime = "beginTime";
+    public static final String KEY_endTime = "endTime";
+    public static final String KEY_status = "status";
+    public static final String KEY_name = "name";
+
     Integer userID;
     Integer id;
     List<String> category;

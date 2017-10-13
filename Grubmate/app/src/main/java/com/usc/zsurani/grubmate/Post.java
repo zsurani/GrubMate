@@ -12,6 +12,27 @@ import java.util.List;
 import java.util.Set;
 
 public class Post {
+
+    public static final String TABLE = "Post";
+    public static final String KEY_id = "id";
+    public static final String KEY_description = "description";
+    public static final String KEY_owner = "owner";
+    public static final String KEY_food = "food";
+    public static final String KEY_images = "images";
+    public static final String KEY_num_requests = "num_requests";
+    public static final String KEY_categories = "categories";
+    public static final String KEY_tags = "tags";
+    public static final String KEY_beginTime = "beginTime";
+    public static final String KEY_endTime = "endTime";
+    public static final String KEY_location = "location";
+    public static final String KEY_active = "active";
+    public static final String KEY_groups = "groups";
+    public static final String KEY_usersRequested = "usersRequested";
+    public static final String KEY_usersAccepted = "usersAccepted";
+    public static final String KEY_homemadeNotRestaurant = "homemadeNotRestaurant";
+    public static final String KEY_allFriendsCanView = "allFriendsCanView";
+    public static final String KEY_maxRequesters = "maxRequesters";
+
     Integer id;
     String description;
     User owner;
