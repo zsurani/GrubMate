@@ -5,14 +5,13 @@ import android.os.Bundle;
 
 
 public class Transaction {
-    public static final String TABLE = "Transaction";
+    public static final String TABLE = "Transactions";
     public static final String KEY_id = "id";
     public static final String KEY_status = "status";
     public static final String KEY_idProvider = "idProvider";
     public static final String KEY_idRequester = "idRequester";
     public static final String KEY_locRequester = "locRequester";
     public static final String KEY_originalPostID = "originalPostID";
-    public static String KEY_type;
 
     Integer id;
     String status;
