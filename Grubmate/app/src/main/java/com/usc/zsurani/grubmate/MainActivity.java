@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
+        Intent i = new Intent(getApplicationContext(), CreateNotificationActivity.class);
+        startActivity(i);
+
         Button tv =(Button)findViewById(R.id.button2);
 
         tv.setOnClickListener(new View.OnClickListener() {
@@ -67,15 +70,18 @@ public class MainActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+
+                //Intent i = new Intent(MainActivity.this, ProfileActivity.class);
+                //startActivity(i);
+
                 String id = Profile.getCurrentProfile().getId();
-//                UserRepo userRepo = new UserRepo(getApplicationContext());
-//                boolean status = userRepo.newUser(id);
-//                if (status) {
-//                    Log.d("DEBUG", "new");
-//                }
-//                else {
-//                    Log.d("DEBUG", "nah");
-//                }
+                UserRepo userRepo = new UserRepo(getApplicationContext());
+                boolean status = userRepo.newUser(id);
+                if (status) {
+                    String name = Profile.getCurrentProfile().getFirstName() + " " + Profile.getCurrentProfile().getLastName();
+                    User user = new User(name, id);
+                    userRepo.insert(user);
+                }
             }
 
             @Override
@@ -89,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     @Override
@@ -96,36 +103,5 @@ public class MainActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void getUserDetailsFromFB() {
-
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "email,name,picture");
-
-        new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/me",
-                parameters,
-                HttpMethod.GET,
-                new GraphRequest.Callback() {
-                    public void onCompleted(GraphResponse response) {
-            /* handle the result */
-                        try {
-                            String email = response.getJSONObject().getString("email");
-//                            mEmailID.setText(email);
-                            Log.d("DEBUG", "hola");
-                            String name = response.getJSONObject().getString("name");
-//                            mUsername.setText(name);
-
-                            JSONObject picture = response.getJSONObject().getJSONObject("picture");
-                            JSONObject data = picture.getJSONObject("data");
-                            String pictureUrl = data.getString("url");
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-        ).executeAsync();
-
-    }
 }
+

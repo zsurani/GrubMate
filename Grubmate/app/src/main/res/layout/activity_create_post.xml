@@ -102,150 +102,134 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioButton"
-                    android:layout_width="176dp"
-                    android:layout_height="wrap_content"
-                    android:text="Homemade" />
-
-                <RadioButton
-                    android:id="@+id/radioButton2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Restaurant" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
                 <CheckBox
-                    android:id="@+id/checkBox"
+                    android:id="@+id/american"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="American" />
 
                 <CheckBox
-                    android:id="@+id/checkBox2"
+                    android:id="@+id/mexican"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Mexican" />
 
                 <CheckBox
-                    android:id="@+id/checkBox3"
+                    android:id="@+id/fastFood"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Fast Food" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-
                 <CheckBox
-                    android:id="@+id/checkBox4"
+                    android:id="@+id/burger"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Burger" />
 
                 <CheckBox
-                    android:id="@+id/checkBox5"
+                    android:id="@+id/pizza"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Pizza" />
 
                 <CheckBox
-                    android:id="@+id/checkBox6"
+                    android:id="@+id/asian"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Asian" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-
                 <CheckBox
-                    android:id="@+id/checkBox7"
+                    android:id="@+id/coffee"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Coffee" />
 
                 <CheckBox
-                    android:id="@+id/checkBox8"
+                    android:id="@+id/italian"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Italian" />
 
                 <CheckBox
-                    android:id="@+id/checkBox9"
+                    android:id="@+id/sandwich"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Sandwich" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-
                 <CheckBox
-                    android:id="@+id/checkBox10"
+                    android:id="@+id/sushi"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Sushi" />
 
                 <CheckBox
-                    android:id="@+id/checkBox11"
+                    android:id="@+id/breakfast"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:text="Breakfast Food" />
+                    android:text="Breakfast" />
 
                 <CheckBox
-                    android:id="@+id/checkBox12"
+                    android:id="@+id/dessert"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Dessert" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-
                 <CheckBox
-                    android:id="@+id/checkBox13"
+                    android:id="@+id/bakery"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Bakery" />
 
                 <CheckBox
-                    android:id="@+id/checkBox14"
+                    android:id="@+id/boba"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Boba" />
 
                 <CheckBox
-                    android:id="@+id/checkBox15"
+                    android:id="@+id/thai"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Thai" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-
                 <CheckBox
-                    android:id="@+id/checkBox16"
+                    android:id="@+id/indian"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Indian" />
+
+                <CheckBox
+                    android:id="@+id/homemade"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Homemade" />
+
+                <CheckBox
+                    android:id="@+id/restaurant"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Restaurant" />
+
             </LinearLayout>
 
             <TextView

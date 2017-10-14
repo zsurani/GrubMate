@@ -21,18 +21,21 @@ public class UserRepo {
         dbHelper = new DatabaseHandler(context);
     }
 
-//    public int insert(User user) {
-//
-//        //Open connection to write data
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(Student.KEY_age, student.age);
-//
-//        // Inserting Row
-//        long student_Id = db.insert(Student.TABLE, null, values);
-//        db.close(); // Closing database connection
-//        return (int) student_Id;
-//    }
+    public int insert(User user) {
+
+        //Open connection to write data
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(User.KEY_name, user.getName());
+        values.put(User.KEY_fbUniqueIdentifier, user.getFBid());
+        values.put(User.KEY_rating, 0);
+        values.put(User.KEY_numRatings, 0);
+
+        // Inserting Row
+        long user_id = db.insert(User.TABLE, null, values);
+        db.close(); // Closing database connection
+        return (int) user_id;
+    }
 
 //    public void delete(int student_Id) {
 //
@@ -59,30 +62,28 @@ public class UserRepo {
     public Boolean newUser(String Id) {
         //Open connection to read only
         Log.d("DEBUG", "here");
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String selectQuery =  "SELECT  " +
-                User.KEY_ID + "," +
-                " FROM " + User.TABLE
-                + " WHERE " +
-                User.KEY_fbUniqueIdentifier + "=?";
-
-        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(Id) } );
         int count = 0;
 
-        if (cursor.moveToFirst()) {
-            do {
-                User.id =cursor.getInt(cursor.getColumnIndex(User.KEY_ID));
-                count++;
-            } while (cursor.moveToNext());
-        }
+        Log.d("SQL", "SELECT " + User.KEY_ID + " FROM " + User.TABLE
+                + " WHERE " + User.KEY_fbUniqueIdentifier + " = " + Id);
 
-        cursor.close();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT " + User.KEY_ID + " FROM " + User.TABLE
+                + " WHERE " + User.KEY_fbUniqueIdentifier + " = " + Id, null);
+        if(c.moveToFirst()){
+            do{
+                count++;
+
+            }while(c.moveToNext());
+        }
+        c.close();
         db.close();
+
         if (count > 0) {
             return false;
         }
         return true;
-
     }
+
 }

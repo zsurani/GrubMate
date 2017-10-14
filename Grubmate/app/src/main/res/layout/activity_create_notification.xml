@@ -215,7 +215,6 @@
                 android:textSize="18sp"
                 android:id="@+id/button_save_new_notification"/>
 
-
         </LinearLayout>
     </ScrollView>
 

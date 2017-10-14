@@ -31,6 +31,7 @@ public class CreatePostActivity extends AppCompatActivity {
         editTags = (EditText) findViewById(R.id.edit_post_tags);
         buttonSave = (Button) findViewById(R.id.button_save_new_post);
 
+/*
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +56,7 @@ public class CreatePostActivity extends AppCompatActivity {
         //db.close(); // Closing database connection
         //return (int) student_Id;
         });
+*/
 
     }
 }
