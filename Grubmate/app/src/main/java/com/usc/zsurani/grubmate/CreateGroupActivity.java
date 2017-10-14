@@ -2,6 +2,7 @@ package com.usc.zsurani.grubmate;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -20,6 +21,12 @@ public class CreateGroupActivity extends AppCompatActivity {
         addGroupMembers = (Button) findViewById(R.id.button_add_members);
         saveChanges = (Button) findViewById(R.id.button_save_group_changes);
 
-        // TODO all the listeners 
+        // TODO all the listeners
+        addGroupMembers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }
