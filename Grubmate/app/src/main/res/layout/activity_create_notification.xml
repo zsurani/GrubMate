@@ -69,6 +69,145 @@
                 android:hint="Separate by commas"
                 android:id="@+id/edit_notification_tags"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Categories: "
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="American" />
+
+                <CheckBox
+                    android:id="@+id/checkBox2"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Mexican" />
+
+                <CheckBox
+                    android:id="@+id/checkBox3"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Fast Food" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/checkBox4"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Burger" />
+
+                <CheckBox
+                    android:id="@+id/checkBox5"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Pizza" />
+
+                <CheckBox
+                    android:id="@+id/checkBox6"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Asian" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/checkBox7"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Coffee" />
+
+                <CheckBox
+                    android:id="@+id/checkBox8"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Italian" />
+
+                <CheckBox
+                    android:id="@+id/checkBox9"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Sandwich" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/checkBox10"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Sushi" />
+
+                <CheckBox
+                    android:id="@+id/checkBox11"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Breakfast Food" />
+
+                <CheckBox
+                    android:id="@+id/checkBox12"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Dessert" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/checkBox13"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Bakery" />
+
+                <CheckBox
+                    android:id="@+id/checkBox14"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Boba" />
+
+                <CheckBox
+                    android:id="@+id/checkBox15"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Thai" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/checkBox16"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Indian" />
+
+                <CheckBox
+                    android:id="@+id/checkBox17"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Homemade" />
+
+                <CheckBox
+                    android:id="@+id/checkBox18"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Restaurant" />
+            </LinearLayout>
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,8 +215,6 @@
                 android:textSize="18sp"
                 android:id="@+id/button_save_new_notification"/>
 
-
-            <!-- TODO add categories -->
 
         </LinearLayout>
     </ScrollView>
