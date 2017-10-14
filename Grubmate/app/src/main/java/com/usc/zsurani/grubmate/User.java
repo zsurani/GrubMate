@@ -1,9 +1,11 @@
 package com.usc.zsurani.grubmate;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import java.util.List;
+import com.facebook.Profile;
 
 import java.util.List;
 import java.util.Set;
@@ -17,6 +19,7 @@ public class User {
     public static final String KEY_numRatings = "numRatings";
 
     public static int id;
+    private Context context;
 
 
     String name;
@@ -30,12 +33,27 @@ public class User {
     List<String> reviews;
     String image;
 
-    //use fb api
 	/*
 	 * Constructor which takes in user’s unique Facebook
-	 * identifier and gets user information from Facebook Profile
+	 * identifier, gets user information from Facebook Profile,
+	 * and inserts the user into the database
 	 */
-    User (String fbLink){}
+    User (String name, String fbID){
+        this.name = name;
+        this.facebookUniqueIdentifier = fbID;
+    }
+
+    User() {} // for when methods just need to be used
+
+    public String getName() {
+        return name;
+    }
+
+    public String getFBid() {
+        return facebookUniqueIdentifier;
+    }
+
+
 
     /*
      * Add a post to the list storing ids of posts visible to the user
