@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">Grubmate</string>
-    <string name="facebook_app_id">2056580697903980</string>
+
+    <string name="facebook_app_id">126633521374877</string>
+
+    <!-- String Resources for Transactions -->
+    <string name="text_transaction_history_label">Transaction History</string>
+    <string name="text_transaction_name">%1$s requested %2$s from %3$s</string>
+    <string name="text_transaction_status">Status: %1$s</string>
+    <string name="text_accepted">Accepted</string>
+    <string name="text_denied">Denied</string>
+    <string name="text_pending">Pending</string>
+    <string name="text_button_accept">Accept</string>
+    <string name="text_button_deny">Deny</string>
+    <string name="text_button_cancel">Cancel</string>
+
+    <!-- String Resources for Posts -->
+    <string name="text_button_request">Request</string>
 </resources>

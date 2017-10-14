@@ -122,7 +122,6 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Group.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Transaction.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Notifications.TABLE);
-
         onCreate(db);
     }
 

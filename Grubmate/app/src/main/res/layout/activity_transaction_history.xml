@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Transaction History"
+        android:text="@string/text_transaction_history_label"
         android:gravity="center"
         android:textSize="24dp"
         android:layout_margin="8dp"/>
@@ -18,7 +18,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/list_newsfeed"
+        android:id="@+id/list_transaction_hist"
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
         android:layout_margin="6dp">

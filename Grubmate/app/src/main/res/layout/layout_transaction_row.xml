@@ -7,7 +7,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="X requested Y from Z"
+        android:id="@+id/label_transaction_name"
+        android:text="@string/text_transaction_name"
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="8dp"
@@ -17,7 +18,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Status / some extra information goes here"
+        android:id="@+id/label_transaction_status"
+        android:text="@string/text_transaction_status"
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="4dp"
@@ -26,7 +28,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="cancel or accept/deny"
+        android:text="@string/text_pending"
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
         android:id="@+id/button_transaction"/>

@@ -39,19 +39,21 @@ public class Notifications {
      * inputted criteria
      */
     Notifications(String postName, Set<String> tags,
-                  List<String> category, String time, String type){
+                  List<String> category, String timeStart, String timeEnd, String type, Integer userId){
         name = postName;
         this.tags = tags;
         this.category = category;
-        //beginTime=
-        //endTime=
+        this.beginTime= Integer.parseInt(timeStart);
+        this.endTime= Integer.parseInt(timeEnd);
         this.type = type;
+        this.userID = userId;
     }
 
     /*
      * Constructor (Type 2) for notification in which provider gets
      * notification of someone sending a request to their post
      */
+
     Notifications(Integer postID, Integer requesterID, Integer providerID,
                   String locationOfRequester, String type){
         //PostID, requesterID, providerID,locationOfRequester need to create variable?
@@ -128,6 +130,16 @@ public class Notifications {
     Integer getBeginTime(){return beginTime;}
 
     /*
+    Returns the id of the notification that is being stored in database
+     */
+    Integer getId(){return id;}
+
+    /*
+    Returns the id of the user who owns the notification
+     */
+    Integer getUserId(){return userID;}
+
+    /*
      * Returns time set by creator of notification of end
      * of time period for notification
      */
@@ -147,4 +159,14 @@ public class Notifications {
      * Sets or changes the end time set in the notification
      */
     void setEndTime(Integer time){endTime = time;}
+
+    /*
+    Returns the name of the post
+     */
+    String getName(){return name;}
+
+    /*
+    Returns the type of the notification
+     */
+    String getType() {return type;}
 }

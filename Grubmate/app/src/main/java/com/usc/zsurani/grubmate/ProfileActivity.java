@@ -1,12 +1,21 @@
 package com.usc.zsurani.grubmate;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.facebook.Profile;
 
 import org.w3c.dom.Text;
+
+import java.net.URL;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -21,6 +30,9 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView textRating;
     private TextView textNumRatings;
     private TextView textName;
+    private ImageView profilePic;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +44,27 @@ public class ProfileActivity extends AppCompatActivity {
         textNumRatings = (TextView) findViewById(R.id.label_num_ratings);
         textName = (TextView) findViewById(R.id.label_name);
 
+        profilePic = (ImageView) findViewById(R.id.image_profile_pic);
+
+        //just for testing purposes
+        Profile current_user = Profile.getCurrentProfile();
+        textName.setText(current_user.getName());
+        Uri pic = current_user.getProfilePictureUri(100, 100);
+        //textRating.setText(pic.toString());
+        profilePic.setImageURI(pic);
+        //profilePic.setVisibility(View.VISIBLE);
 
         // TODO create custom adapter to put post info into rows on list view
     }
+
+    //somehow need to get something that gets what profile we are looking at
+    void Profile(User u)
+    {
+        profilePic.setImageURI(u.getImg());
+        textName.setText(u.getName());
+        textRating.setText(u.getRating());
+        //textNumRatings.setText(u.getNumRating()); //need to make the getNumRating method if we think this is needed
+
+    }
+
 }
