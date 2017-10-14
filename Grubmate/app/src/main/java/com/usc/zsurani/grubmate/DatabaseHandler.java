@@ -23,9 +23,10 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //All necessary tables
+        Log.i("got here");
 
-        String CREATE_TABLE_USER = "CREATE TABLE " + User.TABLE  + "("
+        //All necessary tablesString
+        CREATE_TABLE_USER = "CREATE TABLE " + User.TABLE  + "("
                 + User.KEY_ID  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + User.KEY_name + " TEXT, "
                 + User.KEY_fbUniqueIdentifier + " TEXT, "
@@ -98,6 +99,10 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
         // Create tables again
         onCreate(db);
+
+    }
+
+    public void addPost(SQLiteDatabase db, Post p){
 
     }
 

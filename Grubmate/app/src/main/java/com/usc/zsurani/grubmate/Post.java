@@ -62,6 +62,8 @@ public class Post {
         this.endTime = endTime;
         this.location = location;
         image = imageLink;
+
+
     }
     /*
      * If request is accepted, update list of ids of accepted users to include new id
