@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.usc.zsurani.grubmate">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,9 +28,16 @@
         <activity android:name=".TransactionHistoryActivity" />
         <activity android:name=".MyNotificationActivity" />
         <activity android:name=".CreateNotificationActivity"></activity>
+        <activity android:name="com.usc.zsurani.grubmate.AndroidDatabaseManager"
+            android:label="@string/app_name" />
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
+<<<<<<< HEAD
         <uses-permission android:name="android.permission.INTERNET"/>
+=======
+
+        <activity android:name=".AddGroupMembersActivity"></activity>
+>>>>>>> a6617cebefaae05e1c1424504aa6e5e6fb77cc83
     </application>
 
 </manifest>

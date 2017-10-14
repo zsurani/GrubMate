@@ -18,8 +18,9 @@ public class User {
     public static final String KEY_rating = "rating";
     public static final String KEY_numRatings = "numRatings";
 
+    public static int id;
 
-    Integer id;
+
     String name;
     String facebookUniqueIdentifier;
     Integer rating;
@@ -208,7 +209,6 @@ public class User {
 	 * Returns list of the ids of the groups that the user has created
 	 */
     List<Integer> getGroupList(){return groups;}
-
 
 
 }

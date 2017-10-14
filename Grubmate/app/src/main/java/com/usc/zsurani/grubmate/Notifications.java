@@ -151,6 +151,5 @@ public class Notifications {
     /*
      * Sets or changes the end time set in the notification
      */
-   // void setEndTime(Integer time){endTIme = time;}
-
+    void setEndTime(Integer time){endTime = time;}
 }
