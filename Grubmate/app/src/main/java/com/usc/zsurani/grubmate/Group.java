@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Group {
-    public static final String TABLE = "Group";
+    public static final String TABLE = "Groups";
     public static final String KEY_id = "id";
     public static final String KEY_user = "users";
 

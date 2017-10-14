@@ -30,12 +30,32 @@ public class CreatePostActivity extends AppCompatActivity {
         editLocation = (EditText) findViewById(R.id.edit_post_location);
         editTags = (EditText) findViewById(R.id.edit_post_tags);
         buttonSave = (Button) findViewById(R.id.button_save_new_post);
-
+/*
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO
+                // Have to go to select group page
+                //Add this code to select group after passing post
+                Post(List<String> tags, Set<String> category, User provider,
+
+
+                Post newPost = new Post(editTags,)
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();
+
             }
+
+        values.put(Student.KEY_age, student.age);
+        values.put(Student.KEY_email,student.email);
+        values.put(Student.KEY_name, student.name);
+
+            // Inserting Row
+            long student_Id = db.insert(Student.TABLE, null, values);
+        db.close(); // Closing database connection
+        return (int) student_Id;
         });
+*/
+
     }
 }

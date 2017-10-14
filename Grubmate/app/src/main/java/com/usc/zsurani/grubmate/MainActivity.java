@@ -1,6 +1,7 @@
 package com.usc.zsurani.grubmate;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,21 +33,23 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     CallbackManager callbackManager;
     DatabaseHandler dbHandler;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*
-
         Log.d("DEBUG", "hola");
 
-
         dbHandler = new DatabaseHandler(this);
-        dbHandler.getReadableDatabase();
+        db = dbHandler.getReadableDatabase();
+        dbHandler.delete(db);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
+
+        Intent i = new Intent(getApplicationContext(), CreateNotificationActivity.class);
+        startActivity(i);
 
         Button tv =(Button)findViewById(R.id.button2);
 
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        */
+
 
     }
 

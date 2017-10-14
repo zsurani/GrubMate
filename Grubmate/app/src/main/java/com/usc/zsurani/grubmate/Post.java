@@ -62,6 +62,8 @@ public class Post {
         this.endTime = endTime;
         this.location = location;
         image = imageLink;
+
+
     }
 }
     /*

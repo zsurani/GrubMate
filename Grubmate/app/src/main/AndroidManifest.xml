@@ -32,12 +32,7 @@
             android:label="@string/app_name" />
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
-<<<<<<< HEAD
-        <uses-permission android:name="android.permission.INTERNET"/>
-=======
-
         <activity android:name=".AddGroupMembersActivity"></activity>
->>>>>>> a6617cebefaae05e1c1424504aa6e5e6fb77cc83
     </application>
 
 </manifest>

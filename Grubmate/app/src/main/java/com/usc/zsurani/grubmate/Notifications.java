@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Notifications {
-    public static final String TABLE = "Notifications";
+    public static final String TABLE = "Notifs";
     public static final String KEY_id = "id";
     public static final String KEY_userID = "userID";
     public static final String KEY_category = "category";
@@ -21,6 +21,7 @@ public class Notifications {
     public static final String KEY_endTime = "endTime";
     public static final String KEY_status = "status";
     public static final String KEY_name = "name";
+    public static final String KEY_type = "type";
 
     Integer userID;
     Integer id;
@@ -38,13 +39,14 @@ public class Notifications {
      * inputted criteria
      */
     Notifications(String postName, Set<String> tags,
-                  List<String> category, String timeStart, String timeEnd, String type){
+                  List<String> category, String timeStart, String timeEnd, String type, Integer userId){
         name = postName;
         this.tags = tags;
         this.category = category;
         this.beginTime= Integer.parseInt(timeStart);
         this.endTime= Integer.parseInt(timeEnd);
         this.type = type;
+        this.userID = userId;
     }
 
     /*
@@ -133,6 +135,11 @@ public class Notifications {
     Integer getId(){return id;}
 
     /*
+    Returns the id of the user who owns the notification
+     */
+    Integer getUserId(){return userID;}
+
+    /*
      * Returns time set by creator of notification of end
      * of time period for notification
      */
@@ -152,4 +159,14 @@ public class Notifications {
      * Sets or changes the end time set in the notification
      */
     void setEndTime(Integer time){endTime = time;}
+
+    /*
+    Returns the name of the post
+     */
+    String getName(){return name;}
+
+    /*
+    Returns the type of the notification
+     */
+    String getType() {return type;}
 }
