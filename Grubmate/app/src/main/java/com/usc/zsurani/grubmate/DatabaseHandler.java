@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by zsurani on 10/12/17.
@@ -19,6 +20,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
     public DatabaseHandler(Context context ) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        Log.d("SQL", "In databaseHandler constructor");
     }
 
     @Override
@@ -31,6 +33,8 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
                 + User.KEY_fbUniqueIdentifier + " TEXT, "
                 + User.KEY_rating + " INTEGER, "
                 + User.KEY_numRatings + " INTEGER)";
+
+        Log.d("SQL", "based create_table_user");
 
         db.execSQL(CREATE_TABLE_USER);
 
@@ -56,6 +60,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_POST);
 
+        /*
         String CREATE_TABLE_GROUP = "CREATE TABLE " + Group.TABLE  + "("
                 + Group.KEY_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + Group.KEY_user + " TEXT)";
@@ -84,6 +89,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
                 + Transaction.KEY_type + " INTEGER)";
 
         db.execSQL(CREATE_TABLE_TRANSACTION);
+        */
 
     }
 

@@ -1,5 +1,6 @@
 package com.usc.zsurani.grubmate;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -7,6 +8,7 @@ import java.util.List;
 
 import java.util.List;
 import java.util.Set;
+import com.facebook.Profile;
 
 public class User {
     public static final String TABLE = "User";
@@ -27,14 +29,22 @@ public class User {
     List<Integer> groups;
     Set<Integer> notifications;
     List<String> reviews;
-    String image;
+    Uri image;
+    Profile current_user;
 
     //use fb api
 	/*
 	 * Constructor which takes in user’s unique Facebook
 	 * identifier and gets user information from Facebook Profile
 	 */
-    User (String fbLink){}
+    User (String fbLink){
+        current_user = Profile.getCurrentProfile();
+        name = current_user.getName();
+        facebookUniqueIdentifier = current_user.getId();
+        image = current_user.getProfilePictureUri(10, 10); //would need to add the dimensions that we want the picture
+        //get the rating from the database
+        //get the numRating from the database
+    }
 
     /*
      * Add a post to the list storing ids of posts visible to the user
@@ -84,6 +94,16 @@ public class User {
      * Updates number of ratings for user by one
      */
     void addRating(Integer rating){
+        /*
+
+            Would we need to multiple the current rating by the number of ratings,
+            add the input, and then divide by the number of ratings + 1 to get the new rating?
+
+            Integer oldRating = this.rating*numRatings;
+            numRatings++;
+            this.rating = (oldRating+rating)/numRatings;
+
+         */
         this.rating +=rating;
     }
 
@@ -160,7 +180,7 @@ public class User {
 	/*
 	 * Returns the image of the user
 	 */
-    String getImg(){return image;}
+    Uri getImg(){return image;}
 
     //from db
 	/*
@@ -174,7 +194,7 @@ public class User {
 	 * Returns list of post ids that have been posted
 	 * to a group the user is apart of
 	 */
-    List<Integer> getVisablePosts(){}
+   // List<Integer> getVisablePosts(){}
 
     //from db
 	/*

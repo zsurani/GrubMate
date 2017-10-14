@@ -28,6 +28,7 @@
         <activity android:name=".CreateNotificationActivity"></activity>
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
+        <uses-permission android:name="android.permission.INTERNET"/>
     </application>
 
 </manifest>

@@ -69,12 +69,154 @@
                 android:hint="Separate by commas"
                 android:id="@+id/edit_notification_tags"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Categories: "
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/american"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="American" />
+
+                <CheckBox
+                    android:id="@+id/mexican"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Mexican" />
+
+                <CheckBox
+                    android:id="@+id/fastFood"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Fast Food" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/burger"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Burger" />
+
+                <CheckBox
+                    android:id="@+id/pizza"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Pizza" />
+
+                <CheckBox
+                    android:id="@+id/asian"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Asian" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/coffee"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Coffee" />
+
+                <CheckBox
+                    android:id="@+id/italian"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Italian" />
+
+                <CheckBox
+                    android:id="@+id/sandwich"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Sandwich" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/sushi"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Sushi" />
+
+                <CheckBox
+                    android:id="@+id/breakfast"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Breakfast" />
+
+                <CheckBox
+                    android:id="@+id/dessert"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Dessert" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/bakery"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Bakery" />
+
+                <CheckBox
+                    android:id="@+id/boba"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Boba" />
+
+                <CheckBox
+                    android:id="@+id/thai"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Thai" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/indian"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Indian" />
+
+                <CheckBox
+                    android:id="@+id/homemade"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Homemade" />
+
+                <CheckBox
+                    android:id="@+id/restaurant"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Restaurant" />
+
+            </LinearLayout>
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SAVE"
                 android:textSize="18sp"
                 android:id="@+id/button_save_new_notification"/>
+
+
 
 
             <!-- TODO add categories -->

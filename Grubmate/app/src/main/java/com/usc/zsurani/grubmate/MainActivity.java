@@ -17,10 +17,16 @@ public class MainActivity extends AppCompatActivity {
     LoginButton loginButton;
     TextView textView;
     CallbackManager callbackManager;
+    DatabaseHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dbHandler = new DatabaseHandler(this);
+        dbHandler.getReadableDatabase();
+        /*
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
         loginButton = (LoginButton)findViewById(R.id.login_button);
@@ -29,9 +35,15 @@ public class MainActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+
+                //Intent i = new Intent(MainActivity.this, ProfileActivity.class);
+                //startActivity(i);
+
+
                 textView.setText("Login Success \n" +
                     loginResult.getAccessToken().getUserId() +
                 "\n"+loginResult.getAccessToken().getToken());
+
             }
 
             @Override
@@ -44,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        */
 
     }
 
@@ -51,4 +64,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
 }
+
