@@ -66,6 +66,7 @@ public class TransactionHistoryActivity extends AppCompatActivity {
                 LayoutInflater vi;
                 vi = LayoutInflater.from(getApplicationContext());
                 v = vi.inflate(R.layout.layout_transaction_row, null);
+                // TODO delete this log line
                 Log.d("TRANSACTION HISTORY", "inflated transaction row to view");
             }
 
