@@ -132,11 +132,11 @@ public class User {
 //
 //    }
 //
-//    /*
-//     * Returns the id of the User
-//     */
-//    Integer getID(){ return id;}
-//
+    /*
+     * Returns the id of the User
+     */
+    Integer getID(){ return id;}
+
 //    /*
 //     * Returns the calculated rating of the user
 //     */
