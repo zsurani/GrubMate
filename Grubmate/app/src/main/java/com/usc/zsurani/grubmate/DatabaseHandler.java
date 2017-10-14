@@ -25,12 +25,10 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
     public DatabaseHandler(Context context ) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        Log.d("debug", "here");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("debug", "here2");
 
         String CREATE_TABLE_USER = "CREATE TABLE " + User.TABLE  + "("
                 + User.KEY_ID  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
@@ -67,40 +65,40 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_POST);
 
-//        String CREATE_TABLE_GROUP = "CREATE TABLE " + Group.TABLE  + "("
-//                + Group.KEY_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
-//                + Group.KEY_user + " TEXT)";
-//
-//        Log.d("SQL", CREATE_TABLE_GROUP);
-//
-//        db.execSQL(CREATE_TABLE_GROUP);
-//
-//        String CREATE_TABLE_TRANSACTION = "CREATE TABLE " + Transaction.TABLE  + "("
-//                + Transaction.KEY_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
-//                + Transaction.KEY_status + " TEXT, "
-//                + Transaction.KEY_idProvider + " INTEGER, "
-//                + Transaction.KEY_idRequester + " INTEGER, "
-//                + Transaction.KEY_locRequester + " TEXT, "
-//                + Transaction.KEY_originalPostID + " INTEGER)";
-//
-//        Log.d("SQL", CREATE_TABLE_TRANSACTION);
-//
-//        db.execSQL(CREATE_TABLE_TRANSACTION);
+        String CREATE_TABLE_GROUP = "CREATE TABLE " + Group.TABLE  + "("
+                + Group.KEY_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Group.KEY_user + " TEXT)";
 
-//        String CREATE_TABLE_NOTIFICATION = "CREATE TABLE " + Notifications.TABLE  + "("
-//                + Notifications.KEY_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
-//                + Notifications.KEY_userID + " INTEGER, "
-//                + Notifications.KEY_category + " TEXT, "
-//                + Notifications.KEY_tags + " TEXT, "
-//                + Notifications.KEY_beginTime + " INTEGER, "
-//                + Notifications.KEY_endTime + " INTEGER, "
-//                + Notifications.KEY_status + " TEXT, "
-//                + Notifications.KEY_name + " TEXT, "
-//                + Transaction.KEY_type + " INTEGER)";
-//
-//        Log.d("SQL", CREATE_TABLE_NOTIFICATION);
-//
-//        db.execSQL(CREATE_TABLE_NOTIFICATION);
+        Log.d("SQL", CREATE_TABLE_GROUP);
+
+        db.execSQL(CREATE_TABLE_GROUP);
+
+        String CREATE_TABLE_TRANSACTION = "CREATE TABLE " + Transaction.TABLE  + "("
+                + Transaction.KEY_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Transaction.KEY_status + " TEXT, "
+                + Transaction.KEY_idProvider + " INTEGER, "
+                + Transaction.KEY_idRequester + " INTEGER, "
+                + Transaction.KEY_locRequester + " TEXT, "
+                + Transaction.KEY_originalPostID + " INTEGER)";
+
+        Log.d("SQL", CREATE_TABLE_TRANSACTION);
+
+        db.execSQL(CREATE_TABLE_TRANSACTION);
+
+        String CREATE_TABLE_NOTIFICATION = "CREATE TABLE " + Notifications.TABLE  + "("
+                + Notifications.KEY_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Notifications.KEY_userID + " INTEGER, "
+                + Notifications.KEY_category + " TEXT, "
+                + Notifications.KEY_tags + " TEXT, "
+                + Notifications.KEY_beginTime + " INTEGER, "
+                + Notifications.KEY_endTime + " INTEGER, "
+                + Notifications.KEY_status + " TEXT, "
+                + Notifications.KEY_name + " TEXT, "
+                + Notifications.KEY_type + " TEXT)";
+
+        Log.d("SQL", CREATE_TABLE_NOTIFICATION);
+
+        db.execSQL(CREATE_TABLE_NOTIFICATION);
 
     }
 
@@ -118,6 +116,15 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
     }
 
+    public void delete(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS " + User.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Post.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Group.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Transaction.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Notifications.TABLE);
+
+        onCreate(db);
+    }
 
     public ArrayList<Cursor> getData(String Query){
         //get writable database

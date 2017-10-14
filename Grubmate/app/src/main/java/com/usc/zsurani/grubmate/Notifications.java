@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Notifications {
-    public static final String TABLE = "Notifications";
+    public static final String TABLE = "Notifs";
     public static final String KEY_id = "id";
     public static final String KEY_userID = "userID";
     public static final String KEY_category = "category";
@@ -21,6 +21,7 @@ public class Notifications {
     public static final String KEY_endTime = "endTime";
     public static final String KEY_status = "status";
     public static final String KEY_name = "name";
+    public static final String KEY_type = "type";
 
     Integer userID;
     Integer id;
