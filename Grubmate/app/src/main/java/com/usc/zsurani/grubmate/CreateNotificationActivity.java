@@ -54,8 +54,10 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 String tags = editNotifTags.getText().toString();
                 String[] split = tags.split(", ");
                 HashSet<String> t = new HashSet<String>(Arrays.asList(split));
-
+                
                 ArrayList<String> cate = new ArrayList<String>();
+                //checks to see what checkboxs are checked and then add the
+                //name of the checkbox to an array
                 CheckBox c = (CheckBox) findViewById(R.id.checkBoxAmerican);
                 if (c.isChecked()) {
                     cate.add("American");
@@ -146,10 +148,9 @@ public class CreateNotificationActivity extends AppCompatActivity {
                     cate.add("Restaurant");
                 }
 
+                //This uses the current facebook profile to get the use ID to save in database
                 String fbId = Profile.getCurrentProfile().getId();
                 UserRepo up = new UserRepo(getApplicationContext());
-
-
                 int userId = up.getId(fbId); //need to add to use repo
                 Log.d("USERID", Integer.toString(userId));
 
