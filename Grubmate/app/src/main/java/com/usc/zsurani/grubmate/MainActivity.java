@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 for(String l : note)
                 {
                     Log.d("NOTE", l);
+                    Notifications n = nr.getNotification(Integer.parseInt(l));
+                    Log.d("NOTIFCIATION", n.getName());
                 }
             }
         });

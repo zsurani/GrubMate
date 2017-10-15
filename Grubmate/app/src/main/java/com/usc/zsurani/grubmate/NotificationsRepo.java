@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -78,4 +80,51 @@ public class NotificationsRepo {
         db.close();
         return not;
     }
+
+    //gets the notification class from a Notification ID
+    public Notifications getNotification(int id) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT "
+                + Notifications.KEY_userID + ", "
+                + Notifications.KEY_category + ", "
+                + Notifications.KEY_tags + ", "
+                + Notifications.KEY_beginTime + ", "
+                + Notifications.KEY_endTime + ", "
+                + Notifications.KEY_status + ", "
+                + Notifications.KEY_name + ", "
+                + Notifications.KEY_type +
+                " FROM " + Notifications.TABLE + " where " +
+                Notifications.KEY_id + " = " + id;
+        Cursor c = db.rawQuery(selectQuery, null);
+        Notifications n = null;
+        Log.d("DEBUG", "before the if statement");
+        if(c.moveToFirst()) {
+            do {
+                String userId = c.getString(c.getColumnIndex(Notifications.KEY_userID));
+                String start = c.getString(c.getColumnIndex(Notifications.KEY_beginTime));
+                String end = c.getString(c.getColumnIndex(Notifications.KEY_endTime));
+                String type = c.getString(c.getColumnIndex(Notifications.KEY_type));
+                String status = c.getString(c.getColumnIndex(Notifications.KEY_status));
+                String name = c.getString(c.getColumnIndex(Notifications.KEY_name));
+                Log.d("DEBUG", "after the assigning to each of the string variables");
+
+                //gets the category as a string, splits by , and then puts into a list
+                String cateString = c.getString(c.getColumnIndex(Notifications.KEY_category));
+                String[] cateArray = cateString.split(",");
+                List<String> cate = Arrays.asList(cateArray);
+
+                //get the tags as a string, splits by , and then puts into a set
+                String tagString = c.getString(c.getColumnIndex(Notifications.KEY_tags));
+                String[] tagArray = tagString.split(",");
+                Set<String> tag = new HashSet<>(Arrays.asList(tagArray));
+                n = new Notifications(name, tag, cate, start, end, type, Integer.parseInt(userId));
+                n.setActiveStatus(Boolean.parseBoolean(status));
+
+            } while (c.moveToNext());
+        }
+        return n;
+    }
+
+
+
 }
