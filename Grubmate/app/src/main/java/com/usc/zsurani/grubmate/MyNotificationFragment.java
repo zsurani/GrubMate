@@ -53,6 +53,7 @@ public class MyNotificationFragment extends Fragment {
         notificationList.setAdapter(adapter);
 
         createNotification =  v.findViewById(R.id.button_add_notification);
+
         createNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +82,7 @@ public class MyNotificationFragment extends Fragment {
 
     private List<Notifications> getNotificationList() {
         String fbId = Profile.getCurrentProfile().getId();
-        UserRepo up = new UserRepo(getActivity().getApplicationContext());
+        UserRepo up = new UserRepo(getContext());
         final int userId = up.getId(fbId);
 
         List<Notifications> notifList = new ArrayList<>();
@@ -141,7 +142,7 @@ public class MyNotificationFragment extends Fragment {
                 }
                 String categories = t.getCategory().toString();
                 if (categories.length() > 0) {
-                    categories = categories.substring(1, categories.length()-1);
+                    categories = categories.substring(1, categories.length() - 1);
                 } else {
                     categories = "none";
                 }
@@ -169,8 +170,8 @@ public class MyNotificationFragment extends Fragment {
                 buttonEnd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        NotificationsRepo repo = new NotificationsRepo(context);
-                        repo.deleteNotification(String.valueOf(t.getId()));
+//                        NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
+//                        repo.deleteNotification(String.valueOf(t.getId()));
 
                         // have to update adapter?
 
@@ -181,4 +182,5 @@ public class MyNotificationFragment extends Fragment {
             return v;
         }
     }
+
 }
