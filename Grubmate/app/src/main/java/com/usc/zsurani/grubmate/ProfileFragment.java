@@ -11,6 +11,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.Profile;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Madison on 10/15/17.
@@ -56,6 +60,26 @@ public class ProfileFragment extends Fragment {
         //profilePic.setVisibility(View.VISIBLE);
 
         // TODO create custom adapter to put post info into rows on list view
+        List<Post> posts = new ArrayList<Post>();
+        postList.setAdapter(new PostAdapter(getContext(), R.layout.layout_post_row, posts));
+
+        // getting all the info to populate the profile page TODO this assumes it's the current user
+        String fbId = Profile.getCurrentProfile().getId();
+        UserRepo up = new UserRepo(getContext());
+        final int userId = up.getId(fbId);
+
+        String stringNumRatings = up.getNumRatings(String.valueOf(userId));
+        String stringRating = up.getRating(String.valueOf(userId));
+        String stringName = Profile.getCurrentProfile().getName();
+        Uri uri = Profile.getCurrentProfile().getProfilePictureUri(profilePic.getMaxWidth(), profilePic.getMaxHeight());
+
+        if (stringNumRatings.isEmpty()) stringNumRatings = "0";
+        if (stringRating.isEmpty()) stringRating = "N/A";
+
+        textNumRatings.setText(String.format(getResources().getString(R.string.text_profile_num_ratings), stringNumRatings));
+        textRating.setText(String.format(getResources().getString(R.string.text_profile_rating),stringRating));
+        textName.setText(stringName);
+        Picasso.with(getContext()).load(uri).into(profilePic);
     }
 
     //somehow need to get something that gets what profile we are looking at
