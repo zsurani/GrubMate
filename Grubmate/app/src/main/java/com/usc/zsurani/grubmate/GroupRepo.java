@@ -24,28 +24,26 @@ public class GroupRepo {
         dbHelper = new DatabaseHandler(context);
     }
 
-    //Make return groupId
-    public String insert(String userId) {
+    public void insert(String userId, String ownerId) {
 
         //Open connection to write data
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Group.KEY_user, userId);
-
+        values.put(Group.KEY_ownerid, ownerId);
         // Inserting Row
         long group_id = db.insert(Group.TABLE, null, values);
         db.close(); // Closing database connection
-        return (String) userId;
     }
 
-    public void delete(Integer groupId) {
+    public void delete(String groupId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // It's a good practice to use parameter ?, instead of concatenate string
         db.delete("Group","id=" + groupId, null);
         db.close(); // Closing database connection
     }
 
-    public void addNewUser(Integer groupId, Integer userId){
+    public void addNewUser(String groupId, String userId){
         String oldUserList = getUsers(groupId);
         String newUserList = oldUserList + "," + userId;
 
@@ -58,7 +56,7 @@ public class GroupRepo {
         db.close(); // Closing database connection
     }
 
-    public void deleteUserFromGroup(Integer groupId, Integer userId){
+    public void deleteUserFromGroup(String groupId, String userId){
         String oldUserList = getUsers(groupId);
         List<String> usersList = Arrays.asList(oldUserList.split(","));
         Set<String> usersSet = new HashSet<String>(usersList);
@@ -75,7 +73,7 @@ public class GroupRepo {
         db.close(); // Closing database connection
     }
 
-    public String getUsers(Integer groupId){
+    public String getUsers(String groupId){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT  " +
                 Group.KEY_user +
@@ -94,6 +92,31 @@ public class GroupRepo {
         cursor.close();
         db.close();
         return toReturn;
+    }
+
+    public ArrayList<String>  getGroupsFromOwner(String ownerId) {
+        //Open connection to read only
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Group.KEY_id +
+                " FROM " + Group.TABLE + " WHERE " + Group.KEY_ownerid + " = " + ownerId;
+
+        //Student student = new Student();
+        ArrayList<String> toReturn = new ArrayList<String>();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn.add(cursor.getString(cursor.getColumnIndex(Group.KEY_id)));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return toReturn;
+
     }
 
 }

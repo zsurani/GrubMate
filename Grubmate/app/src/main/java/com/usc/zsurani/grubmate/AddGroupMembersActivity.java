@@ -19,7 +19,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
     private EditText memberName;
     private Button addingMembers;
     private Button savingChanges;
-    private HashSet<Integer> friends = new HashSet<>();
+    private HashSet<Integer> friends = new HashSet<Integer>();
 
     public static final String MEMBERS_SET = "Members.Set";
 
@@ -32,18 +32,24 @@ public class AddGroupMembersActivity extends AppCompatActivity {
 //        addingMembers = (Button) findViewById(R.id.adding_members);
 //        savingChanges = (Button) findViewById(R.id.save_members);
 //
-//        String friendname = memberName.getText().toString();
+//        final String friendname = memberName.getText().toString();
 //
+//        /*
+//            gets userID using the friend name inserted by the user
+//            add the userid to the friends set needed to create the group
+//         */
 //        addingMembers.setOnClickListener(new OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//
-//                //Get friend ID
-//                //push ID to Set
-//
+//                UserRepo ur = new UserRepo(getApplicationContext());
+//                int userID = ur.getUserId(friendname);
+//                friends.add(userID);
 //            }
 //        });
 //
+//        /*
+//            send the set of friends that will be used to create the new group
+//         */
 //        savingChanges.setOnClickListener(new OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -53,6 +59,5 @@ public class AddGroupMembersActivity extends AppCompatActivity {
 //                finish();
 //            }
 //        });
-
     }
 }

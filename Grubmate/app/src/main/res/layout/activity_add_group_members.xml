@@ -7,12 +7,14 @@
     tools:context="com.usc.zsurani.grubmate.AddGroupMembersActivity"
     android:orientation="vertical">
 
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:textSize="18dp"-->
-    <!--android:text="Enter Group Members"-->
-    <!--android:gravity="center"/>-->
+
+    <TextView
+        android:id="@+id/label_member_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:text="Enter Group Members"
+        android:gravity="center"/>
 
     <!--<EditText-->
     <!--android:id="@+id/member_name"-->

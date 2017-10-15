@@ -55,10 +55,10 @@ public class Post {
     Set<String> image;
     Set<String> category;
     Set<String> tags;
-    Set<Integer> groups;
+    Set<String> groups;
     Boolean active;
-    List<Integer> usersRequested;
-    List<Integer> usersAccepted;
+    Set<String> usersRequested;
+    Set<String> usersAccepted;
     Boolean visibleToAll;
     Integer maxAccepted;
     Boolean isHomemade;
@@ -67,7 +67,7 @@ public class Post {
      * Constructor which sets member variables of post when post is created
      */
     Post(Set<String> tags, Set<String> category, User provider,
-         Set<Integer> groupID, String title, String description,
+         Set<String> groupID, String title, String description,
          String beginTime, String endTime, String location, Set<String> imageLink,
          Boolean visibleToAllFriends, Integer maxAccepted, Boolean homemade) {
         //create variable tags? groupID add? title add? visible to all friends?
@@ -112,7 +112,7 @@ public class Post {
     /*
      * If request is accepted, update list of ids of accepted users to include new id
      */
-    void updateAcceptedRequests(Integer userId) {
+    void updateAcceptedRequests(String userId) {
         usersAccepted.add(userId);
     }
 
@@ -120,7 +120,7 @@ public class Post {
      * When request is made, update list of ids of all users who requested the food to
      * include the new id
      */
-    void updateAllRequests(Integer userId) {
+    void updateAllRequests(String userId) {
         usersRequested.add(userId);
     }
 
@@ -175,7 +175,7 @@ public class Post {
      * make the post visible to them, then add group ID to list
      * of IDs storing all groups who have access to the post
      */
-    void addGroup(Integer groupId) {
+    void addGroup(String groupId) {
         groups.add(groupId);
     }
 
@@ -269,21 +269,21 @@ public class Post {
     /*
 	 * Returns list of User ids that have been accepted as receivers
 	 */
-    List<Integer> getAcceptedRequesters() {
+    Set<String> getAcceptedRequesters() {
         return usersAccepted;
     }
 
     /*
 	 * Returns a list of User ids that have requested on the post.
 	 */
-    List<Integer> getAllRequesters() {
+    Set<String> getAllRequesters() {
         return usersRequested;
     }
 
     /*
 	 * Returns list of Group ids that this post is visible to.
 	 */
-    Set<Integer> getGroupID() {
+    Set<String> getGroupID() {
         return groups;
     }
 
@@ -365,6 +365,11 @@ public class Post {
     public String getActive_status() {
         return active_status;
     }
+
+    public Boolean getActive() {
+        return active;
+    }
+
 
     public String getUserRequested() {
         return userRequested;
