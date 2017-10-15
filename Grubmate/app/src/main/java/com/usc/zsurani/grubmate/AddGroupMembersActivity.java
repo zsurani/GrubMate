@@ -28,7 +28,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group_members);
 
-        memberName = (EditText) findViewById(R.id.member_name);
+//        memberName = (EditText) findViewById(R.id.member_name);
         addingMembers = (Button) findViewById(R.id.adding_members);
         savingChanges = (Button) findViewById(R.id.save_members);
 

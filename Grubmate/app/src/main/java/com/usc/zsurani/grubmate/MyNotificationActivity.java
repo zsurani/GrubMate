@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.facebook.Profile;
 
 import org.w3c.dom.Text;
 
@@ -38,10 +41,8 @@ public class MyNotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_notification);
 
         // TODO change this to be list of notifications from DB
-        ArrayList<Notifications> notifList = new ArrayList<>();
-
         notificationList = (ListView) findViewById(R.id.list_notifications);
-        notificationList.setAdapter(new NotificationAdapter(getApplicationContext(), R.layout.layout_notification_row, notifList));
+        notificationList.setAdapter(new NotificationAdapter(getApplicationContext(), R.layout.layout_notification_row, getNotificationList()));
 
         createNotification = (Button) findViewById(R.id.button_add_notification);
         createNotification.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +68,28 @@ public class MyNotificationActivity extends AppCompatActivity {
                 // Don't do anything
                 break;
         }
+    }
+
+    private List<Notifications> getNotificationList() {
+//        String fbId = Profile.getCurrentProfile().getId();
+//        UserRepo up = new UserRepo(getApplicationContext());
+//        final int userId = up.getId(fbId);
+        final int userId = 100;
+
+        List<Notifications> notifList = new ArrayList<>();
+        if (notifList.size() == 0) {
+            Log.d("NOTIFICATION ACTIVITY", "SIZE IS ZERO");
+        } else {
+            Log.d("NOTIFICATION ACTIVITY", "SIZE IS NOT !! ZERO");
+        }
+
+        NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
+        List<String> notifStrings = repo.getNotifications(userId);
+        for (String id : notifStrings) {
+            notifList.add(repo.getNotification(Integer.getInteger(id)));
+        }
+
+        return notifList;
     }
 
 //    private void saveNewNotification(Intent data) {

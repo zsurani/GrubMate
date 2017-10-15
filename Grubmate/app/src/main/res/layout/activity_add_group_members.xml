@@ -14,12 +14,12 @@
         android:text="Enter Group Members"
         android:gravity="center"/>
 
-    <EditText
+    <!--<EditText
         android:id="@+id/member_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/label_member_name"
-        android:layout_toEndOf="@id/label_member_name" />
+        android:layout_toEndOf="@id/label_member_name" />-->
 
     <ListView
         android:layout_width="match_parent"
