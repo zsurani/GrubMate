@@ -21,13 +21,16 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class PostAdapter extends ArrayAdapter<Post> {
 
+    private Context context;
 
-    public PostAdapter(Context context, int textViewResourceId) {
+    public PostAdapter(Context context, int textViewResourceId, Context current) {
         super(context, textViewResourceId);
+        context = current;
     }
 
-    public PostAdapter(Context context, int textViewResourceId, List<Post> items) {
+    public PostAdapter(Context context, int textViewResourceId, Context current, List<Post> items) {
         super(context, textViewResourceId, items);
+        context = current;
     }
     /*
 
@@ -38,10 +41,8 @@ public class PostAdapter extends ArrayAdapter<Post> {
 
         if (v == null) {
             LayoutInflater vi;
-            vi = LayoutInflater.from(getApplicationContext());
-            v = vi.inflate(R.layout.layout_transaction_row, null);
-            // TODO delete this log line
-            Log.d("TRANSACTION HISTORY", "inflated transaction row to view");
+            vi = LayoutInflater.from(context.getApplicationContext());
+            v = vi.inflate(R.layout.layout_post_row, null);
         }
 
         Post t = getItem(position);
@@ -55,12 +56,9 @@ public class PostAdapter extends ArrayAdapter<Post> {
             // Get data from transaction to put into row
 
                 /* TODO once repo classes are set up
-                    get UserRepo
-                    find provider name with ID
-                    find requester name with ID
-
                     get PostRepo
-                    find post info with ID
+                    find post info (name, description, times, tags, categories) with ID
+                    if (already requested) disable request button
                  */
 
             // TODO delete dummy data

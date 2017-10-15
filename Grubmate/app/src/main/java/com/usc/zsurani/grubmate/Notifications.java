@@ -27,8 +27,8 @@ public class Notifications {
     Integer id;
     List<String> category;
     Set<String> tags;
-    Integer beginTime;
-    Integer endTime;
+    String beginTime;
+    String endTime;
     Boolean status;
     String name;
     String type;
@@ -43,8 +43,8 @@ public class Notifications {
         name = postName;
         this.tags = tags;
         this.category = category;
-        this.beginTime= Integer.parseInt(timeStart);
-        this.endTime= Integer.parseInt(timeEnd);
+        this.beginTime= timeStart;
+        this.endTime= timeEnd;
         this.type = type;
         this.userID = userId;
     }
@@ -127,7 +127,7 @@ public class Notifications {
      * Returns time set by creator of notification of beginning of
      * time period for notification
      */
-    Integer getBeginTime(){return beginTime;}
+    String getBeginTime(){return beginTime;}
 
     /*
     Returns the id of the notification that is being stored in database
@@ -143,7 +143,7 @@ public class Notifications {
      * Returns time set by creator of notification of end
      * of time period for notification
      */
-    Integer getEndTime(){return endTime;}
+    String getEndTime(){return endTime;}
 
     /*
      * Changes notification (Type 1) to true if active, false if inactive
@@ -153,12 +153,12 @@ public class Notifications {
     /*
      * Sets or changes the beginning time set in the notification
      */
-    void setBeginTime(Integer time){beginTime = time;}
+    void setBeginTime(String time){beginTime = time;}
 
     /*
      * Sets or changes the end time set in the notification
      */
-    void setEndTime(Integer time){endTime = time;}
+    void setEndTime(String time){endTime = time;}
 
     /*
     Returns the name of the post
