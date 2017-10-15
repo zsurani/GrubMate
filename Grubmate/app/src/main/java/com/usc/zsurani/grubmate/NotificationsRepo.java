@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.lang.String;
 
 /**
  * Created by Madison on 10/14/17.
@@ -33,20 +35,16 @@ public class NotificationsRepo {
         values.put(n.KEY_userID, n.getUserId());
 
         //loops through the list of categories to turn into a string
-        List<String> l = n.getCategory();
-        String cate = "";
-        for(int i = 0; i < l.size(); i++)
-        {
-            cate += l.get(i) + ", ";
-        }
-        values.put(n.KEY_category, cate);
+        Set<String> l = n.getCategory();
+        List<String> list = new ArrayList<String>(l);
+        String cate = TextUtils.join(", ", list);
 
         //loops through the list of tags to turn into a string
         Set<String> li = n.getTags();
         String tag = "";
         for(String s : li)
         {
-            tag += s + ", ";
+            tag += s + ",";
         }
 
         values.put(n.KEY_tags, tag);
@@ -117,7 +115,10 @@ public class NotificationsRepo {
                 String tagString = c.getString(c.getColumnIndex(Notifications.KEY_tags));
                 String[] tagArray = tagString.split(",");
                 Set<String> tag = new HashSet<>(Arrays.asList(tagArray));
-                n = new Notifications(name, tag, cate, start, end, type, Integer.parseInt(userId));
+
+                Set<String> cateSet = new HashSet<String>(cate);
+
+                n = new Notifications(name, tag, cateSet, start, end, type, userId);
                 n.setActiveStatus(Boolean.parseBoolean(status));
 
             } while (c.moveToNext());
@@ -125,6 +126,143 @@ public class NotificationsRepo {
         return n;
     }
 
+    public void addNewCategory(String notifId, String category){
+        String oldCategoryList = getCategories(notifId);
+        String newCategoryList = oldCategoryList + "," + category;
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Notifications.KEY_category, newCategoryList);
+
+        db.update(Notifications.TABLE, values, Post.KEY_id + "= " + notifId, null);
+        db.close(); // Closing database connection
+    }
+
+    public void deleteCategory(String notifId, String category){
+        String oldCategoryList = getCategories(notifId);
+        List<String> categoryList = Arrays.asList(oldCategoryList.split(","));
+        Set<String> categorySet = new HashSet<String>(categoryList);
+        categorySet.remove(category);
+        List<String> list = new ArrayList<String>(categorySet);
+        String newCategoryList = TextUtils.join(", ", list);
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Notifications.KEY_category, newCategoryList);
+
+        db.update(Notifications.TABLE, values, Notifications.KEY_id + "= " + notifId, null);
+        db.close(); // Closing database connection
+    }
+
+    public String getCategories(String notifId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Notifications.KEY_category +
+                " FROM " + Notifications.TABLE
+                + " WHERE " +
+                Notifications.KEY_id + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(notifId) } );
+        String toReturn = "";
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(Notifications.KEY_category));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return toReturn;
+    }
+
+    public void addNewTag(String notifId, String tag){
+        String oldTagList = getTags(notifId);
+        String newTagList = oldTagList + "," + tag;
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Notifications.KEY_tags, newTagList);
+
+        db.update(Notifications.TABLE, values, Notifications.KEY_id + "= " + notifId, null);
+        db.close(); // Closing database connection
+    }
+
+    public void deleteTag(String notifId, String tag){
+        String oldTagList = getTags(notifId);
+        List<String> tagList = Arrays.asList(oldTagList.split(","));
+        Set<String> tagSet = new HashSet<String>(tagList);
+        tagSet.remove(tag);
+        List<String> list = new ArrayList<String>(tagSet);
+        String newTagList = TextUtils.join(", ", list);
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Notifications.KEY_tags, newTagList);
+
+        db.update(Notifications.TABLE, values, Notifications.KEY_id + "= " + notifId, null);
+        db.close(); // Closing database connection
+    }
+
+    public String getTags(String notifId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Notifications.KEY_tags +
+                " FROM " + Notifications.TABLE
+                + " WHERE " +
+                Notifications.KEY_id + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(notifId) } );
+        String toReturn = "";
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(Notifications.KEY_tags));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return toReturn;
+    }
+
+    public void updateBeginTime(String notifId, String newBeginTime) {
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Notifications.KEY_beginTime, newBeginTime);
+
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.update(Notifications.TABLE, values, Notifications.KEY_id + "= ?", new String[] { String.valueOf(notifId) });
+        db.close(); // Closing database connection
+    }
+
+    public void updateEndTime(String notifId, String newEndTime) {
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Notifications.KEY_endTime, newEndTime);
+
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.update(Notifications.TABLE, values, Notifications.KEY_id + "= ?", new String[] { String.valueOf(notifId) });
+        db.close(); // Closing database connection
+    }
+
+    public void updateStatus(String notifId, String status) {
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Notifications.KEY_status, status);
+
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.update(Notifications.TABLE, values, Notifications.KEY_id + "= ?", new String[] { String.valueOf(notifId) });
+        db.close(); // Closing database connection
+    }
 
 
 }
