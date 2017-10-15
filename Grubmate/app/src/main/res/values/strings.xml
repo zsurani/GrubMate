@@ -20,4 +20,8 @@
     <!-- String Resources for Notifications -->
     <string name="text_notification_description">From %1$s to %2$s.</string>
     <string name="text_end_notification">End Notification</string>
+
+    <!-- String Resources for Profile -->
+    <string name="text_profile_rating">Rating: %1$s</string>
+    <string name="text_profile_num_ratings">Num Ratings: %1$d</string>
 </resources>

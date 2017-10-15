@@ -54,7 +54,7 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 String tags = editNotifTags.getText().toString();
                 String[] split = tags.split(", ");
                 HashSet<String> t = new HashSet<String>(Arrays.asList(split));
-                
+
                 ArrayList<String> cate = new ArrayList<String>();
                 //checks to see what checkboxs are checked and then add the
                 //name of the checkbox to an array
