@@ -23,14 +23,14 @@ public class PostAdapter extends ArrayAdapter<Post> {
 
     private Context context;
 
-    public PostAdapter(Context context, int textViewResourceId, Context current) {
+    public PostAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
-        context = current;
+        this.context = context;
     }
 
-    public PostAdapter(Context context, int textViewResourceId, Context current, List<Post> items) {
+    public PostAdapter(Context context, int textViewResourceId, List<Post> items) {
         super(context, textViewResourceId, items);
-        context = current;
+        this.context = context;
     }
     /*
 
