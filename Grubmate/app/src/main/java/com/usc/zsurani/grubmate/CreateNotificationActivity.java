@@ -56,7 +56,7 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 String[] split = tags.split(", ");
                 HashSet<String> t = new HashSet<String>(Arrays.asList(split));
 
-                ArrayList<String> cate = new ArrayList<String>();
+                HashSet<String> cate = new HashSet<String>();
                 //checks to see what checkboxs are checked and then add the
                 //name of the checkbox to an array
                 CheckBox c = (CheckBox) findViewById(R.id.checkBoxAmerican);
@@ -155,7 +155,7 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 int userId = up.getId(fbId); //need to add to use repo
                 Log.d("USERID", Integer.toString(userId));
 
-                Notifications n = new Notifications(name, t, cate, start, end, "POSTING", userId); //INPUTING A TEMP USER ID
+                Notifications n = new Notifications(name, t, cate, start, end, "POSTING", String.valueOf(userId)); //INPUTING A TEMP USER ID
                 n.setActiveStatus(true);
 
                 // if any field is not filled out, the user will not be able to save it

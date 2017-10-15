@@ -42,7 +42,7 @@ public class UserRepo {
         Log.d("USEID", "in getId");
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT " + User.KEY_ID + " FROM " +
-                User.TABLE + "WHERE " + User.KEY_fbUniqueIdentifier + "=" + fbId;
+                User.TABLE + " WHERE " + User.KEY_fbUniqueIdentifier + "=" + fbId;
         Log.d("USERID", selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
