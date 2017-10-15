@@ -374,6 +374,7 @@ public class Post {
     }
 
     public byte[] getPhoto_image() {
+        Log.d("here", "getting");
         return photo_image;
     }
 

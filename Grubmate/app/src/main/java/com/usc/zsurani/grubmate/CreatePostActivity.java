@@ -194,8 +194,10 @@ public class CreatePostActivity extends AppCompatActivity {
                 final String users = "";
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                yourbitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                yourbitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
                 byte[] image = stream.toByteArray();
+
+                Log.d("debug", Integer.toString(image.length));
 
                 // images in between food and num_requests
                 // groups in between active and usersRequested

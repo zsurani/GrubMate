@@ -132,6 +132,7 @@ public class PostRepo {
                 post.setLocation(c.getString(c.getColumnIndex(Post.KEY_location)));
                 post.setCategories(c.getString(c.getColumnIndex(Post.KEY_categories)));
                 post.setTag(c.getString(c.getColumnIndex(Post.KEY_tags)));
+                post.setPhoto_image(c.getBlob(c.getColumnIndex(Post.KEY_images)));
             } while (c.moveToNext());
         }
 

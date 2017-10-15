@@ -1,11 +1,14 @@
 package com.usc.zsurani.grubmate;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ViewPostActivity extends AppCompatActivity {
@@ -22,6 +25,7 @@ public class ViewPostActivity extends AppCompatActivity {
     private TextView location;
     private TextView categories;
     private TextView tags;
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class ViewPostActivity extends AppCompatActivity {
         location = (TextView) findViewById(R.id.view_post_location);
         categories = (TextView) findViewById(R.id.view_post_categories);
         tags = (TextView) findViewById(R.id.view_post_tags);
+        image = (ImageView) findViewById(R.id.view_post_picture);
 
         PostRepo postRepo = new PostRepo(getApplicationContext());
         final Post post = postRepo.getPost(postID);
@@ -64,6 +69,9 @@ public class ViewPostActivity extends AppCompatActivity {
         location.setText(post.getLocation());
         categories.setText(post.getCategories());
         tags.setText(post.getTag());
+        byte[] images = post.getPhoto_image();
+        Bitmap images2 = BitmapFactory.decodeByteArray(images, 0, images.length);
+        image.setImageBitmap(images2);
 
         buttonRequestOnPost.setOnClickListener(new View.OnClickListener() {
             @Override
