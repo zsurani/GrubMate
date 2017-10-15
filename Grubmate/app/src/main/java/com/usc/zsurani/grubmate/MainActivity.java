@@ -67,16 +67,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button getNotificationsFromUser = (Button) findViewById(R.id.button4);
-        getNotificationsFromUser.setOnClickListener(new View.OnClickListener() {
+        Button getTransactionFromUser = (Button) findViewById(R.id.button4);
+        getTransactionFromUser.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
-                List<String> note = nr.getNotifications(1);
+                TransactionRepo nr = new TransactionRepo(getApplicationContext());
+                List<String> note = nr.getTransactionsId(1);
                 for(String l : note)
                 {
-                    Log.d("NOTE", l);
-                    Notifications n = nr.getNotification(Integer.parseInt(l));
-                    Log.d("NOTIFCIATION", n.getName());
+                    Log.d("T", l);
+                    Transaction n = nr.getTransaction(Integer.parseInt(l));
+                    Log.d("TRANSACTION", n.getStatus());
                 }
             }
         });
