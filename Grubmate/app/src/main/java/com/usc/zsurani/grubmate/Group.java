@@ -15,24 +15,28 @@ public class Group {
     public static final String KEY_ownerid = "owner";
     public static final String KEY_user = "users";
 
-    Integer id;
+    String id;
     //change to set for easier remove/add
-    Set<Integer> users;
+    Set<String> users;
+    String ownerId;
 
     /*
      * Constructor for when new group is created
      * including list of user IDs in group, and group creator’s id
      */
-    Group(Set<Integer> users, Integer userId){
+    Group(Set<String> users, String userId, String ownerId){
         id = userId;
         this.users = users;
+        this.ownerId = ownerId;
     }
+
+    Group(){}
 
     /*
      * When editing a group, if user wants to add a user to
      * group, add new user’s id to list of ids of users in group
      */
-    void addUser(Integer userId){users.add(userId);}
+    void addUser(String userId){users.add(userId);}
 
     /*
      * When editing a group, if user wants to remove a user to group,
@@ -44,6 +48,18 @@ public class Group {
 	/*
 	 * Returns list of the User ids that are part of this group.
 	 */
-    Set<Integer> getUsers(){return users;}
+    Set<String> getUsers(){return users;}
+    String getId(){
+        return id;
+    }
+
+    String getOwnerId(){return ownerId;}
+    public void setUsers(Set<String> u){users = u;}
+    public void setOwner(String o){
+        ownerId = o;
+    }
+    public void setId(String id){
+        this.id = id;
+    }
 }
 
