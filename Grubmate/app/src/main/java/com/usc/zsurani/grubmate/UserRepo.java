@@ -8,7 +8,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
 /**
  * Created by zsurani on 10/13/17.
  */
@@ -80,7 +80,110 @@ public class UserRepo {
 //        db.close(); // Closing database connection
 //    }
 
-    //public void updateReviews(String newReview, )
+    public long addReview(String userId, String newReview){
+        //Open connection to write data
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(User.KEY_userId, userId);
+        values.put(User.KEY_review, newReview);
+
+        // Inserting Row
+        long reviewID = db.insert(User.TABLE2, null, values);
+        db.close(); // Closing database connection
+        return reviewID;
+    }
+
+    public void addRating(String userId, String nRating){
+        //Open connection to write data
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        String oldRating = getRating(userId);
+        String newRating = oldRating + nRating;
+
+        ContentValues values = new ContentValues();
+
+        values.put(User.KEY_rating, newRating);
+
+        db.update(User.TABLE, values, User.KEY_ID + "=" + userId, null);
+
+        String oldNum = getNumRatings(userId);
+        String newNum = Integer.toString(Integer.parseInt(oldRating) + Integer.parseInt(nRating));
+
+        values = new ContentValues();
+
+        values.put(User.KEY_rating, newNum);
+
+        db.update(User.TABLE, values, User.KEY_ID + "=" + userId, null);
+
+        db.close();
+    }
+
+    public String getNumRatings(String userId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                User.KEY_numRatings +
+                " FROM " + User.TABLE
+                + " WHERE " +
+                User.KEY_ID + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(userId) } );
+        String toReturn = "";
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(User.KEY_numRatings));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return toReturn;
+    }
+
+    public String getRating(String userId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                User.KEY_rating +
+                " FROM " + User.TABLE
+                + " WHERE " +
+                User.KEY_ID + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(userId) } );
+        String toReturn = "";
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(User.KEY_rating));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return toReturn;
+    }
+
+    public ArrayList<String>  getReviews(String userId) {
+        //Open connection to read only
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                User.KEY_review +
+                " FROM " + User.TABLE2 + " WHERE " + User.KEY_userId + " = " + userId;
+
+        //Student student = new Student();
+        ArrayList<String> toReturn = new ArrayList<String>();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn.add(cursor.getString(cursor.getColumnIndex(User.KEY_review)));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return toReturn;
+
+    }
 
     public Boolean newUser(String Id) {
         //Open connection to read only

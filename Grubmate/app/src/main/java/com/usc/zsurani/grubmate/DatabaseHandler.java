@@ -75,6 +75,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
         String CREATE_TABLE_GROUP = "CREATE TABLE " + Group.TABLE  + "("
                 + Group.KEY_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Group.KEY_ownerid + "TEXT, "
                 + Group.KEY_user + " TEXT)";
 
         Log.d("SQL", CREATE_TABLE_GROUP);
