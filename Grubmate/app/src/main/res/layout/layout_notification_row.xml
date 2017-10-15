@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/label_notification_name"
-        android:text="Notification Name here"
+        android:text="Notification Name"
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="8dp"
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/label_notification_description"
-        android:text="Some extra information goes here"
+        android:text="@string/text_notification_description"
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="4dp"
@@ -28,7 +28,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="end notification"
+        android:text="@string/text_end_notification"
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
         android:id="@+id/button_notification"/>

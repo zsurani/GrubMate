@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
         Button tv =(Button)findViewById(R.id.button2);
 
         tv.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         loginButton = (LoginButton)findViewById(R.id.login_button);
         dbHandler = new DatabaseHandler(getApplicationContext());
 
@@ -91,9 +89,6 @@ public class MainActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
-                //Intent i = new Intent(MainActivity.this, ProfileActivity.class);
-                //startActivity(i);
 
                 String id = Profile.getCurrentProfile().getId();
                 UserRepo userRepo = new UserRepo(getApplicationContext());
@@ -103,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                     User user = new User(name, id);
                     userRepo.insert(user);
                 }
+                Intent intent = new Intent(getApplicationContext(), CreatePostActivity.class);
+                startActivity(intent);
             }
 
             @Override
@@ -115,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
     }
 

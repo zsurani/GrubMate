@@ -92,6 +92,20 @@
                 android:layout_height="wrap_content"
                 android:textSize="18dp" />
 
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/radio_homemade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Homemade" />
+                <RadioButton android:id="@+id/radio_restaurant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Restaurant" />
+            </RadioGroup>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,6 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <CheckBox
                     android:id="@+id/american"
                     android:layout_width="120dp"
@@ -120,10 +135,12 @@
                     android:layout_height="wrap_content"
                     android:text="Fast Food" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <CheckBox
                     android:id="@+id/burger"
                     android:layout_width="120dp"
@@ -142,10 +159,12 @@
                     android:layout_height="wrap_content"
                     android:text="Asian" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <CheckBox
                     android:id="@+id/coffee"
                     android:layout_width="120dp"
@@ -164,10 +183,12 @@
                     android:layout_height="wrap_content"
                     android:text="Sandwich" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <CheckBox
                     android:id="@+id/sushi"
                     android:layout_width="120dp"
@@ -186,10 +207,12 @@
                     android:layout_height="wrap_content"
                     android:text="Dessert" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <CheckBox
                     android:id="@+id/bakery"
                     android:layout_width="120dp"
@@ -208,27 +231,17 @@
                     android:layout_height="wrap_content"
                     android:text="Thai" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <CheckBox
                     android:id="@+id/indian"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Indian" />
-
-                <CheckBox
-                    android:id="@+id/homemade"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:text="Homemade" />
-
-                <CheckBox
-                    android:id="@+id/restaurant"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:text="Restaurant" />
 
             </LinearLayout>
 
