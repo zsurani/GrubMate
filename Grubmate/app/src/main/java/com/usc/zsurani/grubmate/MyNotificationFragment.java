@@ -32,6 +32,7 @@ import java.util.List;
 public class MyNotificationFragment extends Fragment {
     private ListView notificationList;
     private Button createNotification;
+    private NotificationAdapter adapter;
 
     public static final int RESULT_SAVE_NOTIF = 111;
     public static final int RESULT_CANCEL_NOTIF = -111;
@@ -47,13 +48,11 @@ public class MyNotificationFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         View v = getView();
 
-        // TODO change this to be list of notifications from DB
-        ArrayList<Notifications> notifList = new ArrayList<>();
+        adapter = new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, getNotificationList());
+        notificationList = (ListView) v.findViewById(R.id.list_notifications);
+        notificationList.setAdapter(adapter);
 
-        notificationList = v.findViewById(R.id.list_notifications);
-        notificationList.setAdapter(new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, notifList));
-
-        createNotification =  v.findViewById(R.id.button_add_notification);
+        createNotification = (Button) v.findViewById(R.id.button_add_notification);
         createNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,10 +63,40 @@ public class MyNotificationFragment extends Fragment {
         });
 
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case RESULT_SAVE_NOTIF:
+                adapter = new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, getNotificationList());
+                notificationList.setAdapter(adapter);
+                break;
+            case RESULT_CANCEL_NOTIF:
+                // Don't do anything
+                break;
+        }
+    }
+
+    private List<Notifications> getNotificationList() {
+        String fbId = Profile.getCurrentProfile().getId();
+        UserRepo up = new UserRepo(getContext());
+        final int userId = up.getId(fbId);
+
+        List<Notifications> notifList = new ArrayList<>();
+
+        NotificationsRepo repo = new NotificationsRepo(getContext());
+        List<String> notifStrings = repo.getNotifications(userId);
+        for (String id : notifStrings) {
+            notifList.add(repo.getNotification(Integer.valueOf(id)));
+        }
+
+        return notifList;
+    }
     /*
      * The custom adapter for the Notifications list view.
      */
     private class NotificationAdapter extends ArrayAdapter<Notifications> {
+
         public NotificationAdapter(Context context, int textViewResourceId) {
             super(context, textViewResourceId);
         }
@@ -89,7 +118,7 @@ public class MyNotificationFragment extends Fragment {
             }
 
             // Get the Notifications object, and if it isn't null, populate the layout with its data
-            Notifications t = getItem(position);
+            final Notifications t = getItem(position);
 
             if (t != null) {
                 TextView textName = (TextView) v.findViewById(R.id.label_notification_name);
@@ -98,12 +127,24 @@ public class MyNotificationFragment extends Fragment {
 
                 String timeStart = t.getBeginTime();
                 String timeEnd = t.getEndTime();
+                String tags = t.getTags().toString();
+                if (tags.length() > 0) {
+                    tags = tags.substring(1, tags.length() - 1);
+                } else {
+                    tags = "none";
+                }
+                String categories = t.getCategory().toString();
+                if (categories.length() > 0) {
+                    categories = categories.substring(1, categories.length() - 1);
+                } else {
+                    categories = "none";
+                }
 
                 textName.setText(t.getName());
-                textInfo.setText(String.format(getResources().getString(R.string.text_notification_description), timeStart, timeEnd));
+                textInfo.setText(String.format(getResources().getString(R.string.text_notification_description), timeStart, timeEnd, tags, categories));
 
                 //if time is passed, button is disabled; else it's enabled
-                DateFormat df = new SimpleDateFormat("hh:mm");
+                DateFormat df = new SimpleDateFormat("hh:mm a");
                 Date end;
                 try {
                     end = df.parse(timeEnd);
@@ -113,16 +154,20 @@ public class MyNotificationFragment extends Fragment {
                 Date now = Calendar.getInstance().getTime();
 
                 if (now.before(end)) {
-                    buttonEnd.setEnabled(true);
-                } else {
                     buttonEnd.setEnabled(false);
+                } else {
+                    buttonEnd.setEnabled(true);
                 }
 
                 // on click listener for the "End Notification" button
                 buttonEnd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // TODO update notification / remove it from DB
+//                        NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
+//                        repo.deleteNotification(String.valueOf(t.getId()));
+
+                        // have to update adapter?
+
                     }
                 });
             }
@@ -130,4 +175,5 @@ public class MyNotificationFragment extends Fragment {
             return v;
         }
     }
+
 }
