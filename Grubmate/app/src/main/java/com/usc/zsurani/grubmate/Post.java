@@ -47,7 +47,7 @@ public class Post {
     String userRequested;
     String userAccepted;
     String homemade;
-
+    String user_rating;
 
     Integer id;
     String title;
@@ -106,6 +106,8 @@ public class Post {
         this.homemade = homemade_tag;
         Log.d("DEBUG", "in post");
     }
+
+    Post() {};
 
     /*
      * If request is accepted, update list of ids of accepted users to include new id
@@ -381,5 +383,55 @@ public class Post {
         return homemade;
     }
 
+    public String getUserRating() {
+        return user_rating;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setOwner_string(String owner_string) {
+        this.owner_string = owner_string;
+    }
+
+    public void setFood(String food) {
+        this.food = food;
+    }
+
+    public void setNum_requests(String num_requests) {
+        this.num_requests = num_requests;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setActive_status(String active_status) {
+        this.active_status = active_status;
+    }
+
+    public void setUserRequested(String userRequested) {
+        this.userRequested = userRequested;
+    }
+
+    public void setUserAccepted(String userAccepted) {
+        this.userAccepted = userAccepted;
+    }
+
+    public void setHomemade(String homemade) {
+        this.homemade = homemade;
+    }
+
+    public void setUser_rating(String rating) {
+        this.user_rating = rating;
+    }
 }

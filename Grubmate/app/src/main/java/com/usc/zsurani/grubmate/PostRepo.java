@@ -25,15 +25,23 @@ public class PostRepo {
         dbHelper = new DatabaseHandler(context);
     }
 
-    /*public int insert(Post post) {
+    public int insert(Post post) {
 
         //Open connection to write data
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT " + User.KEY_ID + " FROM " + User.TABLE
+                + " WHERE " + User.KEY_fbUniqueIdentifier + " = " + post.getOwner_string(), null);
+
+        String userId = "";
+        if (c.moveToFirst()) {
+            userId = c.getString(c.getColumnIndex(User.KEY_ID));
+        }
+
+        db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(Post.KEY_description, post.getDescription());
-        values.put(Post.KEY_owner, post.getOwner_string());
-        values.put(Post.KEY_owner, post.getOwner_string());
+        values.put(Post.KEY_owner, userId);
         values.put(Post.KEY_food, post.getFood());
         values.put(Post.KEY_num_requests, post.getNum_requests());
         values.put(Post.KEY_categories, post.getCategories());
@@ -52,7 +60,7 @@ public class PostRepo {
         db.close(); // Closing database connection
         return (int) post_id;
     }
-    */
+
 
 //    public void delete(int student_Id) {
 //
@@ -78,7 +86,6 @@ public class PostRepo {
 
     public Boolean newUser(String Id) {
         //Open connection to read only
-        Log.d("DEBUG", "here");
 
         int count = 0;
 
@@ -103,58 +110,97 @@ public class PostRepo {
         return true;
     }
 
-    public int insert(Post post) {
-        Set<String> imageSet = new HashSet<String>(post.getImages());
-        List<String> listImage = new ArrayList<String>(imageSet);
-        String images = TextUtils.join(", ", listImage);
+    public Post getPost(int postid) {
+        String postId = Integer.toString(postid);
+        Post post = new Post();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + Post.TABLE
+                + " WHERE " + Post.KEY_id + " = " + postId, null);
 
-        Set<String> categorySet = new HashSet<String>(post.getCategory());
-        List<String> listCategory = new ArrayList<String>(categorySet);
-        String category = TextUtils.join(", ", listCategory);
+        // looping through all rows and adding to list
 
-        Set<String> tagSet = new HashSet<String>(post.getTags());
-        List<String> listTags = new ArrayList<String>(tagSet);
-        String tag = TextUtils.join(", ", listTags);
+        if (c.moveToFirst()) {
+            do {
+                post.setFood(c.getString(c.getColumnIndex(Post.KEY_food)));
+                post.setOwner_string(c.getString(c.getColumnIndex(Post.KEY_owner)));
+                post.setDescription(c.getString(c.getColumnIndex(Post.KEY_description)));
+                post.setHomemade(c.getString(c.getColumnIndex(Post.KEY_homemadeNotRestaurant)));
+                post.setNum_requests(c.getString(c.getColumnIndex(Post.KEY_num_requests)));
+                post.setBeginTime(c.getString(c.getColumnIndex(Post.KEY_beginTime)));
+                post.setEndTime(c.getString(c.getColumnIndex(Post.KEY_endTime)));
+                post.setLocation(c.getString(c.getColumnIndex(Post.KEY_location)));
+                post.setCategories(c.getString(c.getColumnIndex(Post.KEY_categories)));
+                post.setTag(c.getString(c.getColumnIndex(Post.KEY_tags)));
+            } while (c.moveToNext());
+        }
 
-        Set<String> groupSet = new HashSet<String>(post.getGroupID());
-        List<String> listGroup = new ArrayList<String>(groupSet);
-        String group = TextUtils.join(", ", listGroup);
+        c = db.rawQuery("SELECT * FROM " + User.TABLE
+                + " WHERE " + User.KEY_ID + " = " + post.getOwner_string(), null);
 
-        Set<String> requestSet = new HashSet<String>(post.getAllRequesters());
-        List<String> listRequest = new ArrayList<String>(requestSet);
-        String allrequests = TextUtils.join(", ", listRequest);
 
-        Set<String> acceptSet = new HashSet<String>(post.getAcceptedRequesters());
-        List<String> listAccept = new ArrayList<String>(acceptSet);
-        String acceptedRequests = TextUtils.join(", ", listAccept);
+        if (c.moveToFirst()) {
+            post.setOwner_string(c.getString(c.getColumnIndex(User.KEY_name)));
+            post.setUser_rating(c.getString(c.getColumnIndex(User.KEY_rating)));
+        }
 
-        //Open connection to write data
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
+        c.close();
+        db.close();
 
-        values.put(Post.KEY_description, post.getDescription());
-        values.put(Post.KEY_owner, post.getOwner_string());
-        values.put(Post.KEY_food, post.getFood());
-        values.put(Post.KEY_images, images);
-        values.put(Post.KEY_num_requests, post.getNum_requests());
-        values.put(Post.KEY_categories, category);
-        values.put(Post.KEY_tags, tag);
-        values.put(Post.KEY_beginTime, post.getBeginTime());
-        values.put(Post.KEY_endTime, post.getEndTime());
-        values.put(Post.KEY_location, post.getLocation());
-        values.put(Post.KEY_active, post.getActive());
-        values.put(Post.KEY_groups, group);
-        values.put(Post.KEY_usersRequested, allrequests);
-        values.put(Post.KEY_usersAccepted, acceptedRequests);
-        values.put(Post.KEY_homemadeNotRestaurant, post.getHomemade());
-        values.put(Post.KEY_allFriendsCanView, post.getVisibility());
-        values.put(Post.KEY_maxRequesters, post.getMaxRequesters());
-
-        // Inserting Row
-        long postID = db.insert(Post.TABLE, null, values);
-        db.close(); // Closing database connection
-        return (int) postID;
+        return post;
     }
+
+//    public int insert(Post post) {
+//        Set<String> imageSet = new HashSet<String>(post.getImages());
+//        List<String> listImage = new ArrayList<String>(imageSet);
+//        String images = TextUtils.join(", ", listImage);
+//
+//        Set<String> categorySet = new HashSet<String>(post.getCategory());
+//        List<String> listCategory = new ArrayList<String>(categorySet);
+//        String category = TextUtils.join(", ", listCategory);
+//
+//        Set<String> tagSet = new HashSet<String>(post.getTags());
+//        List<String> listTags = new ArrayList<String>(tagSet);
+//        String tag = TextUtils.join(", ", listTags);
+//
+//        Set<String> groupSet = new HashSet<String>(post.getGroupID());
+//        List<String> listGroup = new ArrayList<String>(groupSet);
+//        String group = TextUtils.join(", ", listGroup);
+//
+//        Set<String> requestSet = new HashSet<String>(post.getAllRequesters());
+//        List<String> listRequest = new ArrayList<String>(requestSet);
+//        String allrequests = TextUtils.join(", ", listRequest);
+//
+//        Set<String> acceptSet = new HashSet<String>(post.getAcceptedRequesters());
+//        List<String> listAccept = new ArrayList<String>(acceptSet);
+//        String acceptedRequests = TextUtils.join(", ", listAccept);
+//
+//        //Open connection to write data
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//
+//        values.put(Post.KEY_description, post.getDescription());
+//        values.put(Post.KEY_owner, post.getOwner_string());
+//        values.put(Post.KEY_food, post.getFood());
+//        values.put(Post.KEY_images, images);
+//        values.put(Post.KEY_num_requests, post.getNum_requests());
+//        values.put(Post.KEY_categories, category);
+//        values.put(Post.KEY_tags, tag);
+//        values.put(Post.KEY_beginTime, post.getBeginTime());
+//        values.put(Post.KEY_endTime, post.getEndTime());
+//        values.put(Post.KEY_location, post.getLocation());
+//        values.put(Post.KEY_active, post.getActive());
+//        values.put(Post.KEY_groups, group);
+//        values.put(Post.KEY_usersRequested, allrequests);
+//        values.put(Post.KEY_usersAccepted, acceptedRequests);
+//        values.put(Post.KEY_homemadeNotRestaurant, post.getHomemade());
+//        values.put(Post.KEY_allFriendsCanView, post.getVisibility());
+//        values.put(Post.KEY_maxRequesters, post.getMaxRequesters());
+//
+//        // Inserting Row
+//        long postID = db.insert(Post.TABLE, null, values);
+//        db.close(); // Closing database connection
+//        return (int) postID;
+//    }
 
     public void updateDescription(String postId, String newDescription) {
 
