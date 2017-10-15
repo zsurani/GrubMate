@@ -41,12 +41,21 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_USER);
 
+        String CREATE_TABLE_USERTOREVIEW = "CREATE TABLE " + User.TABLE2  + "("
+                + User.KEY_ID2  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + User.KEY_userId + " INTEGER, "
+                + User.KEY_review + " TEXT)";
+
+        Log.d("SQL", CREATE_TABLE_USERTOREVIEW);
+
+        db.execSQL(CREATE_TABLE_USERTOREVIEW);
+
         String CREATE_TABLE_POST = "CREATE TABLE " + Post.TABLE  + "("
                 + Post.KEY_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + Post.KEY_description + " TEXT, "
                 + Post.KEY_owner + " INTEGER, "
                 + Post.KEY_food + " TEXT, "
-                + Post.KEY_images + " TEXT, "
+                + Post.KEY_images + " BLOB, "
                 + Post.KEY_num_requests + " TEXT, "
                 + Post.KEY_categories + " TEXT, "
                 + Post.KEY_tags + " TEXT, "
@@ -66,6 +75,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
         String CREATE_TABLE_GROUP = "CREATE TABLE " + Group.TABLE  + "("
                 + Group.KEY_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Group.KEY_ownerid + "TEXT, "
                 + Group.KEY_user + " TEXT)";
 
         Log.d("SQL", CREATE_TABLE_GROUP);
@@ -121,6 +131,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Group.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Transaction.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Notifications.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + User.TABLE2);
         onCreate(db);
     }
 

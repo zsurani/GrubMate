@@ -21,6 +21,7 @@ import com.facebook.HttpMethod;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     CallbackManager callbackManager;
     DatabaseHandler dbHandler;
     SQLiteDatabase db;
+    List<String> fbfriends = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,19 +69,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        Button getNotificationsFromUser = (Button) findViewById(R.id.button4);
-//        getNotificationsFromUser.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
-//                List<String> note = nr.getNotifications(1);
-//                for(String l : note)
-//                {
-//                    Log.d("NOTE", l);
-//                    Notifications n = nr.getNotification(Integer.parseInt(l));
-//                    Log.d("NOTIFCIATION", n.getName());
-//                }
-//            }
-//        });
+        Button getTransactionFromUser = (Button) findViewById(R.id.button4);
+        getTransactionFromUser.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TransactionRepo nr = new TransactionRepo(getApplicationContext());
+                List<String> note = nr.getTransactionsId(1);
+                for(String l : note)
+                {
+                    Log.d("T", l);
+                    Transaction n = nr.getTransaction(Integer.parseInt(l));
+                    Log.d("TRANSACTION", n.getStatus());
+                }
+            }
+        });
 
 
         loginButton = (LoginButton)findViewById(R.id.login_button);
@@ -90,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
+                fbfriends = getFriendsList();
                 String id = Profile.getCurrentProfile().getId();
                 UserRepo userRepo = new UserRepo(getApplicationContext());
                 boolean status = userRepo.newUser(id);
@@ -118,6 +121,43 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private List<String> getFriendsList(){
+        final List<String> friendslist = new ArrayList<String>();
+        new GraphRequest(AccessToken.getCurrentAccessToken(),"me/friends", null, HttpMethod.GET, new GraphRequest.Callback() {
+            public void onCompleted(GraphResponse response) {
+                /* handle the result */
+                Log.e("Friends List: 1", response.toString());
+                try {
+                    JSONObject responseObject = response.getJSONObject();
+                    JSONArray dataArray = responseObject.getJSONArray("data");
+
+                    for (int i = 0; i < dataArray.length(); i++) {
+                        JSONObject dataObject = dataArray.getJSONObject(i);
+                        String fbId = dataObject.getString("id");
+                        String fbName = dataObject.getString("name");
+                        Log.e("FbID", fbId);
+                        Log.e("FBName", fbName);
+                        friendslist.add(fbId);
+                    }
+                    Log.e("fbfriendslist", friendslist.toString());
+                    List<String> list = friendslist;
+                    String friends = "";
+                    if (list != null && list.size() > 0) {
+                        friends = list.toString();
+                        if (friends.contains("[")) {
+                            friends = (friends.substring(1, friends.length() - 1));
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } finally {
+//                    hideLoadingProgress();
+                }
+            }
+        }).executeAsync();
+        return friendslist;
     }
 
 }

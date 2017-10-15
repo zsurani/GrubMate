@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Grubmate</string>
 
-    <string name="facebook_app_id">1949927188614718</string>
+    <string name="facebook_app_id">2056580697903980</string>
 
     <!-- String Resources for Transactions -->
     <string name="text_transaction_history_label">Transaction History</string>

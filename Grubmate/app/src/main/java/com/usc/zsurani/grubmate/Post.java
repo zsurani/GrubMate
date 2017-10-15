@@ -47,7 +47,7 @@ public class Post {
     String userRequested;
     String userAccepted;
     String homemade;
-
+    String user_rating;
 
     Integer id;
     String title;
@@ -55,19 +55,21 @@ public class Post {
     Set<String> image;
     Set<String> category;
     Set<String> tags;
-    Set<Integer> groups;
+    Set<String> groups;
     Boolean active;
-    List<Integer> usersRequested;
-    List<Integer> usersAccepted;
+    Set<String> usersRequested;
+    Set<String> usersAccepted;
     Boolean visibleToAll;
     Integer maxAccepted;
     Boolean isHomemade;
+
+    byte[] photo_image;
 
     /*
      * Constructor which sets member variables of post when post is created
      */
     Post(Set<String> tags, Set<String> category, User provider,
-         Set<Integer> groupID, String title, String description,
+         Set<String> groupID, String title, String description,
          String beginTime, String endTime, String location, Set<String> imageLink,
          Boolean visibleToAllFriends, Integer maxAccepted, Boolean homemade) {
         //create variable tags? groupID add? title add? visible to all friends?
@@ -88,7 +90,7 @@ public class Post {
     // images in between food and num_requests
     // groups in between active and usersRequested
     // allFriendsCanView at end
-    Post(String description, String owner, String food, String num_requests, String categories, String tags,
+    Post(String description, String owner, String food, byte[] images, String num_requests, String categories, String tags,
          String beginTime, String endTime, String location, String active,
          String usersRequested, String usersAccepted, String homemade_tag) {
         this.description = description;
@@ -104,13 +106,16 @@ public class Post {
         this.userRequested = usersRequested;
         this.userAccepted = usersAccepted;
         this.homemade = homemade_tag;
+        this.photo_image = images;
         Log.d("DEBUG", "in post");
     }
+
+    Post() {};
 
     /*
      * If request is accepted, update list of ids of accepted users to include new id
      */
-    void updateAcceptedRequests(Integer userId) {
+    void updateAcceptedRequests(String userId) {
         usersAccepted.add(userId);
     }
 
@@ -118,7 +123,7 @@ public class Post {
      * When request is made, update list of ids of all users who requested the food to
      * include the new id
      */
-    void updateAllRequests(Integer userId) {
+    void updateAllRequests(String userId) {
         usersRequested.add(userId);
     }
 
@@ -173,7 +178,7 @@ public class Post {
      * make the post visible to them, then add group ID to list
      * of IDs storing all groups who have access to the post
      */
-    void addGroup(Integer groupId) {
+    void addGroup(String groupId) {
         groups.add(groupId);
     }
 
@@ -267,21 +272,21 @@ public class Post {
     /*
 	 * Returns list of User ids that have been accepted as receivers
 	 */
-    List<Integer> getAcceptedRequesters() {
+    Set<String> getAcceptedRequesters() {
         return usersAccepted;
     }
 
     /*
 	 * Returns a list of User ids that have requested on the post.
 	 */
-    List<Integer> getAllRequesters() {
+    Set<String> getAllRequesters() {
         return usersRequested;
     }
 
     /*
 	 * Returns list of Group ids that this post is visible to.
 	 */
-    Set<Integer> getGroupID() {
+    Set<String> getGroupID() {
         return groups;
     }
 
@@ -364,6 +369,16 @@ public class Post {
         return active_status;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public byte[] getPhoto_image() {
+        Log.d("here", "getting");
+        return photo_image;
+    }
+
+
     public String getUserRequested() {
         return userRequested;
     }
@@ -376,5 +391,59 @@ public class Post {
         return homemade;
     }
 
+    public String getUserRating() {
+        return user_rating;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setOwner_string(String owner_string) {
+        this.owner_string = owner_string;
+    }
+
+    public void setFood(String food) {
+        this.food = food;
+    }
+
+    public void setNum_requests(String num_requests) {
+        this.num_requests = num_requests;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setActive_status(String active_status) {
+        this.active_status = active_status;
+    }
+
+    public void setUserRequested(String userRequested) {
+        this.userRequested = userRequested;
+    }
+
+    public void setUserAccepted(String userAccepted) {
+        this.userAccepted = userAccepted;
+    }
+
+    public void setHomemade(String homemade) {
+        this.homemade = homemade;
+    }
+
+    public void setUser_rating(String rating) {
+        this.user_rating = rating;
+    }
+
+    public void setPhoto_image(byte[] photo_image) {
+        this.photo_image = photo_image;
+    }
 }

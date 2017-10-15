@@ -19,13 +19,36 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/view_post_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Name: "
                 android:textSize="18dp"
                 android:layout_margin="4dp"/>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/view_post_picture"/>
+
             <TextView
+                android:id="@+id/view_post_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="User: "
+                android:textSize="18dp"
+                android:layout_margin="4dp"/>
+
+            <TextView
+                android:id="@+id/view_post_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="User Rating: "
+                android:textSize="18dp"
+                android:layout_margin="4dp"/>
+
+            <TextView
+                android:id="@+id/view_post_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Description: "
@@ -33,6 +56,15 @@
                 android:layout_margin="4dp"/>
 
             <TextView
+                android:id="@+id/view_post_homemade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Homemade/Restaurant: "
+                android:textSize="18dp"
+                android:layout_margin="4dp"/>
+
+            <TextView
+                android:id="@+id/view_post_servings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Num Available Servings: "
@@ -40,6 +72,7 @@
                 android:layout_margin="4dp"/>
 
             <TextView
+                android:id="@+id/view_post_begin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pickup Time Begin: "
@@ -47,6 +80,7 @@
                 android:layout_margin="4dp"/>
 
             <TextView
+                android:id="@+id/view_post_end"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pickup Time End: "
@@ -54,6 +88,7 @@
                 android:layout_margin="4dp"/>
 
             <TextView
+                android:id="@+id/view_post_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pickup Location: "
@@ -61,6 +96,15 @@
                 android:layout_margin="4dp"/>
 
             <TextView
+                android:id="@+id/view_post_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Categories: "
+                android:textSize="18dp"
+                android:layout_margin="4dp"/>
+
+            <TextView
+                android:id="@+id/view_post_tags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tags: "
