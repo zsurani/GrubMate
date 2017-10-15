@@ -1,5 +1,6 @@
 package com.usc.zsurani.grubmate;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +17,10 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     private String [] posts;
     private ListView listFeed;
+    private NewsFeedAdapter adapter;
 
+    public static final int RESULT_SAVE_POST = 111;
+    public static final int RESULT_CANCEL_POST = -111;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +35,19 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         // TODO add Options menu to access other pages
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case RESULT_SAVE_NOTIF:
+                adapter = new MyNotificationActivity.NotificationAdapter(getApplicationContext(), R.layout.layout_notification_row, getNotificationList());
+                notificationList.setAdapter(adapter);
+                break;
+            case RESULT_CANCEL_NOTIF:
+                // Don't do anything
+                break;
+        }
     }
 
     private List<Post> getPostsList() {
