@@ -80,6 +80,8 @@ public class UserRepo {
 //        db.close(); // Closing database connection
 //    }
 
+    //public void updateReviews(String newReview, )
+
     public Boolean newUser(String Id) {
         //Open connection to read only
         Log.d("DEBUG", "here");
