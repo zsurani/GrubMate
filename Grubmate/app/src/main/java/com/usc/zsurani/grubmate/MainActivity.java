@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         dbHandler = new DatabaseHandler(this);
         db = dbHandler.getReadableDatabase();
-        dbHandler.delete(db);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         loginButton = (LoginButton)findViewById(R.id.login_button);
+        loginButton.setReadPermissions(Arrays.asList("user_friends"));
         dbHandler = new DatabaseHandler(getApplicationContext());
 
         callbackManager = CallbackManager.Factory.create();
