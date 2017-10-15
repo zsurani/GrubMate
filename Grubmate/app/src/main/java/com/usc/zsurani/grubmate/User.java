@@ -120,7 +120,11 @@ public class User {
             this.rating = (oldRating+rating)/numRatings;
 
          */
+        /*
+            The reason I added num ratings is so we can get the average to display on the UI
+         */
         this.rating +=rating;
+        numRatings++;
     }
 
     /*
@@ -224,6 +228,5 @@ public class User {
 	 * Returns list of the ids of the groups that the user has created
 	 */
     List<Integer> getGroupList(){return groups;}
-
 
 }
