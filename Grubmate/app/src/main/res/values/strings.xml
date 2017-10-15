@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Grubmate</string>
 
-    <string name="facebook_app_id">2056580697903980</string>
+    <string name="facebook_app_id">126633521374877</string>
 
     <!-- String Resources for Transactions -->
     <string name="text_transaction_history_label">Transaction History</string>
@@ -20,4 +20,12 @@
     <!-- String Resources for Notifications -->
     <string name="text_notification_description">From %1$s to %2$s.</string>
     <string name="text_end_notification">End Notification</string>
+
+    <string-array name="navigation_drawer_items_array">
+        <item>My Profile</item>
+        <item>My Newsfeed</item>
+        <item>My Groups</item>
+        <item>My Notifications</item>
+        <item>My Transactions</item>
+    </string-array>
 </resources>
