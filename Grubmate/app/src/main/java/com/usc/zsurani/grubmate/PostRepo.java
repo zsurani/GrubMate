@@ -574,5 +574,34 @@ public class PostRepo {
         db.close(); // Closing database connection
     }
 
+    public ArrayList<Post> returnAllPosts(){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor  c = db.rawQuery("SELECT * FROM " + Post.TABLE,null);
+        ArrayList<Post> toReturn = new ArrayList<Post>();
+        if (c.moveToFirst()) {
+            while (!c.isAfterLast()) {
+                Post post = new Post();
+                post.setFood(c.getString(c.getColumnIndex(Post.KEY_food)));
+                post.setOwner_string(c.getString(c.getColumnIndex(Post.KEY_owner)));
+                post.setDescription(c.getString(c.getColumnIndex(Post.KEY_description)));
+                post.setHomemade(c.getString(c.getColumnIndex(Post.KEY_homemadeNotRestaurant)));
+                post.setNum_requests(c.getString(c.getColumnIndex(Post.KEY_num_requests)));
+                post.setBeginTime(c.getString(c.getColumnIndex(Post.KEY_beginTime)));
+                post.setEndTime(c.getString(c.getColumnIndex(Post.KEY_endTime)));
+                String groupString = c.getString(c.getColumnIndex(Post.KEY_groups));
+                List<String> groupList = Arrays.asList(groupString.split(","));
+                Set<String> groupSet = new HashSet<String>(groupList);
+                post.setGroups(groupSet);
+                post.setLocation(c.getString(c.getColumnIndex(Post.KEY_location)));
+                post.setCategories(c.getString(c.getColumnIndex(Post.KEY_categories)));
+                post.setTag(c.getString(c.getColumnIndex(Post.KEY_tags)));
+                post.setPhoto_image(c.getBlob(c.getColumnIndex(Post.KEY_images)));
+                toReturn.add(post);
+                c.moveToNext();
+            }
+        }
+        return toReturn;
+    }
+
 
 }

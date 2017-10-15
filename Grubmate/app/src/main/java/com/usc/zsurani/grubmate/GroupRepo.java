@@ -36,6 +36,30 @@ public class GroupRepo {
         db.close(); // Closing database connection
     }
 
+    public Group getGroup(String groupId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  * FROM " + Group.TABLE
+                + " WHERE " +
+                Group.KEY_id + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(groupId) } );
+        Group toReturn = new Group();
+        if (cursor.moveToFirst()) {
+            do {
+                String usersInGroup = cursor.getString(cursor.getColumnIndex(Group.KEY_user));
+                List<String> groupList = Arrays.asList(usersInGroup.split(","));
+                Set<String> groupSet = new HashSet<String>(groupList);
+                toReturn.setUsers(groupSet);
+                toReturn.setOwner(cursor.getString(cursor.getColumnIndex(Group.KEY_ownerid)));
+                toReturn.setId(cursor.getString(cursor.getColumnIndex(Group.KEY_id)));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return toReturn;
+    }
+
     public void delete(String groupId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // It's a good practice to use parameter ?, instead of concatenate string
