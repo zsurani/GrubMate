@@ -42,7 +42,7 @@ public class UserRepo {
         Log.d("USEID", "in getId");
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT " + User.KEY_ID + " FROM " +
-                User.TABLE;
+                User.TABLE + "WHERE " + User.KEY_fbUniqueIdentifier + "=" + fbId;
         Log.d("USERID", selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
@@ -50,6 +50,27 @@ public class UserRepo {
         if (c.moveToFirst()) {
             do {
                 Log.d("USERID", "inside of c.moveToFirst");
+                d = c.getInt(c.getColumnIndex(User.KEY_ID));
+            } while (c.moveToNext());
+        }
+        db.close();
+
+        return d;
+    }
+
+    /*
+        has not been tested
+        gets user ID using name
+        * used specifically in create group activity
+     */
+    public int getUserId(String name){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT " + User.KEY_ID + " FROM " + User.TABLE + "WHERE " + User.KEY_name
+                + "=" + name;
+        Cursor c = db.rawQuery(selectQuery, null);
+        int d = -1;
+        if(c.moveToFirst()){
+            do {
                 d = c.getInt(c.getColumnIndex(User.KEY_ID));
             } while (c.moveToNext());
         }
@@ -79,6 +100,8 @@ public class UserRepo {
 //        db.update(Student.TABLE, values, Student.KEY_ID + "= ?", new String[] { String.valueOf(student.student_ID) });
 //        db.close(); // Closing database connection
 //    }
+
+    //public void updateReviews(String newReview, )
 
     public Boolean newUser(String Id) {
         //Open connection to read only
