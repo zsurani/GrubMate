@@ -23,12 +23,20 @@ public class PostRepo {
     public int insert(Post post) {
 
         //Open connection to write data
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT " + User.KEY_ID + " FROM " + User.TABLE
+                + " WHERE " + User.KEY_fbUniqueIdentifier + " = " + post.getOwner_string(), null);
+
+        String userId = "";
+        if (c.moveToFirst()) {
+            userId = c.getString(c.getColumnIndex(User.KEY_ID));
+        }
+
+        db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(Post.KEY_description, post.getDescription());
-        values.put(Post.KEY_owner, post.getOwner_string());
-        values.put(Post.KEY_owner, post.getOwner_string());
+        values.put(Post.KEY_owner, userId);
         values.put(Post.KEY_food, post.getFood());
         values.put(Post.KEY_num_requests, post.getNum_requests());
         values.put(Post.KEY_categories, post.getCategories());
@@ -72,7 +80,6 @@ public class PostRepo {
 
     public Boolean newUser(String Id) {
         //Open connection to read only
-        Log.d("DEBUG", "here");
 
         int count = 0;
 
@@ -97,4 +104,42 @@ public class PostRepo {
         return true;
     }
 
+    public Post getPost(int postid) {
+        String postId = Integer.toString(postid);
+        Post post = new Post();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + Post.TABLE
+                + " WHERE " + Post.KEY_id + " = " + postId, null);
+
+        // looping through all rows and adding to list
+
+        if (c.moveToFirst()) {
+            do {
+                post.setFood(c.getString(c.getColumnIndex(Post.KEY_food)));
+                post.setOwner_string(c.getString(c.getColumnIndex(Post.KEY_owner)));
+                post.setDescription(c.getString(c.getColumnIndex(Post.KEY_description)));
+                post.setHomemade(c.getString(c.getColumnIndex(Post.KEY_homemadeNotRestaurant)));
+                post.setNum_requests(c.getString(c.getColumnIndex(Post.KEY_num_requests)));
+                post.setBeginTime(c.getString(c.getColumnIndex(Post.KEY_beginTime)));
+                post.setEndTime(c.getString(c.getColumnIndex(Post.KEY_endTime)));
+                post.setLocation(c.getString(c.getColumnIndex(Post.KEY_location)));
+                post.setCategories(c.getString(c.getColumnIndex(Post.KEY_categories)));
+                post.setTag(c.getString(c.getColumnIndex(Post.KEY_tags)));
+            } while (c.moveToNext());
+        }
+
+        c = db.rawQuery("SELECT * FROM " + User.TABLE
+                + " WHERE " + User.KEY_ID + " = " + post.getOwner_string(), null);
+
+
+        if (c.moveToFirst()) {
+            post.setOwner_string(c.getString(c.getColumnIndex(User.KEY_name)));
+            post.setUser_rating(c.getString(c.getColumnIndex(User.KEY_rating)));
+        }
+
+        c.close();
+        db.close();
+
+        return post;
+    }
 }

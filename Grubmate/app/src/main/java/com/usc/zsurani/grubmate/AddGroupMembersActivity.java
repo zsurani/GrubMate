@@ -28,31 +28,31 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group_members);
 
-        memberName = (EditText) findViewById(R.id.member_name);
-        addingMembers = (Button) findViewById(R.id.adding_members);
-        savingChanges = (Button) findViewById(R.id.save_members);
-
-        String friendname = memberName.getText().toString();
-
-        addingMembers.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //Get friend ID
-                //push ID to Set
-
-            }
-        });
-
-        savingChanges.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent dummy = new Intent();
-                dummy.putExtra(MEMBERS_SET, friends);
-                setResult(CreateGroupActivity.RESULT_SAVE, dummy);
-                finish();
-            }
-        });
+//        memberName = (EditText) findViewById(R.id.member_name);
+//        addingMembers = (Button) findViewById(R.id.adding_members);
+//        savingChanges = (Button) findViewById(R.id.save_members);
+//
+//        String friendname = memberName.getText().toString();
+//
+//        addingMembers.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                //Get friend ID
+//                //push ID to Set
+//
+//            }
+//        });
+//
+//        savingChanges.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent dummy = new Intent();
+//                dummy.putExtra(MEMBERS_SET, friends);
+//                setResult(CreateGroupActivity.RESULT_SAVE, dummy);
+//                finish();
+//            }
+//        });
 
     }
 }

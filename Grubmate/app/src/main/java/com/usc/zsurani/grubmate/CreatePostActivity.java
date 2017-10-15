@@ -1,6 +1,7 @@
 package com.usc.zsurani.grubmate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -81,7 +82,7 @@ public class CreatePostActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 final String description = editDesc.getText().toString();
-                final String owner = Profile.getCurrentProfile().getFirstName() + " " + Profile.getCurrentProfile().getLastName();
+                final String owner = Profile.getCurrentProfile().getId();
                 final String food = editName.getText().toString();
                 // images
                 num_requests = editNumAvailable.getText().toString(); // error check for words? TODO
@@ -168,15 +169,17 @@ public class CreatePostActivity extends AppCompatActivity {
                 // images in between food and num_requests
                 // groups in between active and usersRequested
                 // allFriendsCanView at end
-                Log.d("DEBUG", "before post");
                 Post post = new Post(description, owner, food, num_requests, categories, tags,
                         beginTime, endTime, location, active, users, users, homemade_tag);
 
-                Log.d("DEBUG", "here in post");
                 PostRepo postRepo = new PostRepo(getApplicationContext());
-                postRepo.insert(post);
+                int postId = postRepo.insert(post);
+
+                Intent intent = new Intent(CreatePostActivity.this, ViewPostActivity.class);
+                intent.putExtra("postID", postId);
+                startActivity(intent);
             }
         });
 
-        }
     }
+}
