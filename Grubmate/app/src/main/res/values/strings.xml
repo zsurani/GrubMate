@@ -16,6 +16,7 @@
 
     <!-- String Resources for Posts -->
     <string name="text_button_request">Request</string>
+    <string name="text_button_view_details">View Full Post</string>
 
     <!-- String Resources for Notifications -->
     <string name="text_notification_description">From %1$s to %2$s.</string>
