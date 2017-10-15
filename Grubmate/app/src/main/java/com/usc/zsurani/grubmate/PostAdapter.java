@@ -40,7 +40,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(context.getApplicationContext());
-            v = vi.inflate(R.layout.layout_transaction_row, null);
+            v = vi.inflate(R.layout.layout_post_row, null);
         }
 
         Post t = getItem(position);
@@ -58,7 +58,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
                     find post info (name, description, times, tags, categories) with ID
                     if (already requested) disable request button
                  */
-    
+
             // TODO delete dummy data
     /*
             String name = getResources().getString(R.string.text_transaction_name);
@@ -66,7 +66,6 @@ public class PostAdapter extends ArrayAdapter<Post> {
             postName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
             postDesc.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
             requestButton.setText("Request");
->>>>>>> b958d746077b2390f56373b5900b76ae9c4467b7
 
         }
 

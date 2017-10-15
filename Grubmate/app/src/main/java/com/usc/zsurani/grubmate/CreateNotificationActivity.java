@@ -24,14 +24,13 @@ public class CreateNotificationActivity extends AppCompatActivity {
     private EditText editNotifTimeStart;
     private EditText editNotifTimeEnd;
     private EditText editNotifTags;
-    //private EditText editNotifCategory;
     private Button saveNotification;
 
     public static final String NOTIFICATION_NAME = "grubmate.notification.create.name";
     public static final String NOTIFICATION_START = "grubmate.notification.create.start_time";
     public static final String NOTIFICATION_END = "grubmate.notification.create.end_time";
     public static final String NOTIFICATION_TAGS = "grubmate.notification.create.tags";
-//    public static final String NOTIFICATION_CATEGORY = "grubmate.notification.create.category";
+    public static final String NOTIFICATION_CATEGORY = "grubmate.notification.create.category";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +53,9 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 String end = editNotifTimeEnd.getText().toString();
                 String tags = editNotifTags.getText().toString();
                 String[] split = tags.split(", ");
-                Set<String> t = new HashSet<String>(Arrays.asList(split));
+                HashSet<String> t = new HashSet<String>(Arrays.asList(split));
 
-                List<String> cate = new ArrayList<String>();
+                ArrayList<String> cate = new ArrayList<String>();
                 CheckBox c = (CheckBox) findViewById(R.id.checkBoxAmerican);
                 if (c.isChecked()) {
                     cate.add("American");
@@ -157,9 +156,8 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 Notifications n = new Notifications(name, t, cate, start, end, "POSTING", userId); //INPUTING A TEMP USER ID
                 n.setActiveStatus(true);
 
-
-
-                if (name.isEmpty() || start.isEmpty() || end.isEmpty() || tags.isEmpty()) { // add category
+                // if any field is not filled out, the user will not be able to save it
+                if (name.isEmpty() || start.isEmpty() || end.isEmpty() || tags.isEmpty() || cate.size() == 0) {
                     Toast.makeText(getApplicationContext(), "Please fill out all fields and try again", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -171,7 +169,8 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 dummy.putExtra(NOTIFICATION_NAME, name);
                 dummy.putExtra(NOTIFICATION_START, start);
                 dummy.putExtra(NOTIFICATION_END, end);
-                dummy.putExtra(NOTIFICATION_TAGS, tags);
+                dummy.putExtra(NOTIFICATION_TAGS, t);
+                dummy.putExtra(NOTIFICATION_CATEGORY, cate);
                 setResult(MyNotificationActivity.RESULT_SAVE_NOTIF, dummy);
                 finish();
             }

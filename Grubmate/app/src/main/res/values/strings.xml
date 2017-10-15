@@ -16,4 +16,8 @@
 
     <!-- String Resources for Posts -->
     <string name="text_button_request">Request</string>
+
+    <!-- String Resources for Notifications -->
+    <string name="text_notification_description">From %1$s to %2$s.</string>
+    <string name="text_end_notification">End Notification</string>
 </resources>
