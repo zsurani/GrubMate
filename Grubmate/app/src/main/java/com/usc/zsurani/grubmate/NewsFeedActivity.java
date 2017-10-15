@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class NewsFeedActivity extends AppCompatActivity {
 
     private String [] posts;
@@ -17,11 +19,13 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         listFeed = (ListView) findViewById(R.id.list_newsfeed);
 
-        // TODO add adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.layout_post_row, R.id.listText, posts);
+        // TODO list & adapter
+        ArrayList<Post> posts = new ArrayList<Post>();
+        PostAdapter adapter = new PostAdapter(getApplicationContext(), R.layout.layout_post_row, posts);
         listFeed.setAdapter(adapter);
 
         // TODO add Options menu to access other pages
+
     }
 
 

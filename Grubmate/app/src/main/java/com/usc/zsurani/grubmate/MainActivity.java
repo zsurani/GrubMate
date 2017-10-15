@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<String> getFriendsList(){
         final List<String> friendslist = new ArrayList<String>();
-        new GraphRequest(AccessToken.getCurrentAccessToken(),"me/friends", null, HttpMethod.GET, new GraphRequest.Callback() {
+        new GraphRequest(AccessToken.getCurrentAccessToken(),"me/invitable_friends", null, HttpMethod.GET, new GraphRequest.Callback() {
             public void onCompleted(GraphResponse response) {
                 /* handle the result */
     /*

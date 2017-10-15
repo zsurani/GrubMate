@@ -16,8 +16,12 @@ import com.facebook.Profile;
 import org.w3c.dom.Text;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
+
+    private int userId;
 
     private String name;
     private float rating;
@@ -31,8 +35,6 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView textNumRatings;
     private TextView textName;
     private ImageView profilePic;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,14 @@ public class ProfileActivity extends AppCompatActivity {
         //profilePic.setVisibility(View.VISIBLE);
 
         // TODO create custom adapter to put post info into rows on list view
+        List<Post> posts = new ArrayList<Post>();
+        postList.setAdapter(new PostAdapter(getApplicationContext(), R.layout.layout_post_row, posts));
+
+
+        // getting all the info to populate the profile page
+        UserRepo repo = new UserRepo(getApplicationContext());
+
+
     }
 
     //somehow need to get something that gets what profile we are looking at

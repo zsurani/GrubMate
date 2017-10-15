@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.facebook.Profile;
 
 import org.w3c.dom.Text;
 
@@ -28,6 +31,7 @@ public class MyNotificationActivity extends AppCompatActivity {
 
     private ListView notificationList;
     private Button createNotification;
+    private NotificationAdapter adapter;
 
     public static final int RESULT_SAVE_NOTIF = 111;
     public static final int RESULT_CANCEL_NOTIF = -111;
@@ -38,10 +42,9 @@ public class MyNotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_notification);
 
         // TODO change this to be list of notifications from DB
-        ArrayList<Notifications> notifList = new ArrayList<>();
-
+        adapter = new NotificationAdapter(getApplicationContext(), R.layout.layout_notification_row, getNotificationList());
         notificationList = (ListView) findViewById(R.id.list_notifications);
-        notificationList.setAdapter(new NotificationAdapter(getApplicationContext(), R.layout.layout_notification_row, notifList));
+        notificationList.setAdapter(adapter);
 
         createNotification = (Button) findViewById(R.id.button_add_notification);
         createNotification.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +64,8 @@ public class MyNotificationActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
             case RESULT_SAVE_NOTIF:
-//                saveNewNotification(data);
+                adapter = new NotificationAdapter(getApplicationContext(), R.layout.layout_notification_row, getNotificationList());
+                notificationList.setAdapter(adapter);
                 break;
             case RESULT_CANCEL_NOTIF:
                 // Don't do anything
@@ -69,21 +73,35 @@ public class MyNotificationActivity extends AppCompatActivity {
         }
     }
 
-//    private void saveNewNotification(Intent data) {
-//        // TODO get info and save it
-//        String name = data.getStringExtra(CreateNotificationActivity.NOTIFICATION_NAME);
-//        String start = data.getStringExtra(CreateNotificationActivity.NOTIFICATION_START);
-//        String end = data.getStringExtra(CreateNotificationActivity.NOTIFICATION_END);
-//        HashSet<String> tags = (HashSet<String>) data.getSerializableExtra(CreateNotificationActivity.NOTIFICATION_TAGS);
-//        ArrayList<String> categories = (ArrayList<String>) data.getSerializableExtra(CreateNotificationActivity.NOTIFICATION_CATEGORY);
-//
-//        // SAVE IT
-//    }
+    private List<Notifications> getNotificationList() {
+        String fbId = Profile.getCurrentProfile().getId();
+        UserRepo up = new UserRepo(getApplicationContext());
+        final int userId = up.getId(fbId);
+//        final int userId = 100;
+
+        List<Notifications> notifList = new ArrayList<>();
+        if (notifList.size() == 0) {
+            Log.d("NOTIFICATION ACTIVITY", "SIZE IS ZERO");
+        } else {
+            Log.d("NOTIFICATION ACTIVITY", "SIZE IS NOT !! ZERO");
+        }
+
+        NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
+        List<String> notifStrings = repo.getNotifications(userId);
+        for (String id : notifStrings) {
+            if (id == null) Log.d("NOTIFICATION ACTIVITY", "NULL STRING");
+            else Log.d("NOTIFICATION ACTIVITY", "STRING IS: " + id);
+            notifList.add(repo.getNotification(Integer.valueOf(id)));
+        }
+
+        return notifList;
+    }
 
     /*
      * The custom adapter for the Notifications list view.
      */
     private class NotificationAdapter extends ArrayAdapter<Notifications> {
+
         public NotificationAdapter(Context context, int textViewResourceId) {
             super(context, textViewResourceId);
         }
@@ -119,7 +137,7 @@ public class MyNotificationActivity extends AppCompatActivity {
                 textInfo.setText(String.format(getResources().getString(R.string.text_notification_description), timeStart, timeEnd));
 
                 //if time is passed, button is disabled; else it's enabled
-                DateFormat df = new SimpleDateFormat("hh:mm");
+                DateFormat df = new SimpleDateFormat("hh:mm a");
                 Date end;
                 try {
                    end = df.parse(timeEnd);
@@ -129,9 +147,9 @@ public class MyNotificationActivity extends AppCompatActivity {
                 Date now = Calendar.getInstance().getTime();
 
                 if (now.before(end)) {
-                    buttonEnd.setEnabled(true);
-                } else {
                     buttonEnd.setEnabled(false);
+                } else {
+                    buttonEnd.setEnabled(true);
                 }
 
                 // on click listener for the "End Notification" button

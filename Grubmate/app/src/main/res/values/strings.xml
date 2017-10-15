@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Grubmate</string>
-
     <string name="facebook_app_id">126633521374877</string>
 
     <!-- String Resources for Transactions -->
@@ -16,11 +15,12 @@
 
     <!-- String Resources for Posts -->
     <string name="text_button_request">Request</string>
+    <string name="text_button_view_details">View Full Post</string>
 
     <!-- String Resources for Notifications -->
     <string name="text_notification_description">From %1$s to %2$s.</string>
     <string name="text_end_notification">End Notification</string>
-
+    <!-- String resources for the nav menu -->
     <string-array name="navigation_drawer_items_array">
         <item>My Profile</item>
         <item>My Newsfeed</item>
@@ -28,4 +28,9 @@
         <item>My Notifications</item>
         <item>My Transactions</item>
     </string-array>
+
+    <!-- String Resources for Profile -->
+    <string name="text_profile_rating">Rating: %1$s</string>
+    <string name="text_profile_num_ratings">Num Ratings: %1$d</string>
+
 </resources>

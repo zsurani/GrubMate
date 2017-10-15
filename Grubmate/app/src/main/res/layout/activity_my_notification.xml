@@ -27,7 +27,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add New Group"
+        android:text="Add New Notification"
         android:id="@+id/button_add_notification"
         android:layout_margin="8dp"/>
 
