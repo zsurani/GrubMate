@@ -12,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.facebook.Profile;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,11 +62,23 @@ public class ProfileActivity extends AppCompatActivity {
         List<Post> posts = new ArrayList<Post>();
         postList.setAdapter(new PostAdapter(getApplicationContext(), R.layout.layout_post_row, posts));
 
+        // getting all the info to populate the profile page TODO this assumes it's the current user
+        String fbId = Profile.getCurrentProfile().getId();
+        UserRepo up = new UserRepo(getApplicationContext());
+        final int userId = up.getId(fbId);
 
-        // getting all the info to populate the profile page
-        UserRepo repo = new UserRepo(getApplicationContext());
+        String stringNumRatings = up.getNumRatings(String.valueOf(userId));
+        String stringRating = up.getRating(String.valueOf(userId));
+        String stringName = Profile.getCurrentProfile().getName();
+        Uri uri = Profile.getCurrentProfile().getProfilePictureUri(profilePic.getMaxWidth(), profilePic.getMaxHeight());
 
+        if (stringNumRatings.isEmpty()) stringNumRatings = "0";
+        if (stringRating.isEmpty()) stringRating = "N/A";
 
+        textNumRatings.setText(String.format(getResources().getString(R.string.text_profile_num_ratings), stringNumRatings));
+        textRating.setText(String.format(getResources().getString(R.string.text_profile_rating),stringRating));
+        textName.setText(stringName);
+        Picasso.with(this).load(uri).into(profilePic);
     }
 
     //somehow need to get something that gets what profile we are looking at

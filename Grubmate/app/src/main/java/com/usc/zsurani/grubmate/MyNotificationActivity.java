@@ -41,7 +41,6 @@ public class MyNotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_notification);
 
-        // TODO change this to be list of notifications from DB
         adapter = new NotificationAdapter(getApplicationContext(), R.layout.layout_notification_row, getNotificationList());
         notificationList = (ListView) findViewById(R.id.list_notifications);
         notificationList.setAdapter(adapter);
@@ -77,20 +76,12 @@ public class MyNotificationActivity extends AppCompatActivity {
         String fbId = Profile.getCurrentProfile().getId();
         UserRepo up = new UserRepo(getApplicationContext());
         final int userId = up.getId(fbId);
-//        final int userId = 100;
 
         List<Notifications> notifList = new ArrayList<>();
-        if (notifList.size() == 0) {
-            Log.d("NOTIFICATION ACTIVITY", "SIZE IS ZERO");
-        } else {
-            Log.d("NOTIFICATION ACTIVITY", "SIZE IS NOT !! ZERO");
-        }
 
         NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
         List<String> notifStrings = repo.getNotifications(userId);
         for (String id : notifStrings) {
-            if (id == null) Log.d("NOTIFICATION ACTIVITY", "NULL STRING");
-            else Log.d("NOTIFICATION ACTIVITY", "STRING IS: " + id);
             notifList.add(repo.getNotification(Integer.valueOf(id)));
         }
 
@@ -132,9 +123,21 @@ public class MyNotificationActivity extends AppCompatActivity {
 
                 String timeStart = t.getBeginTime();
                 String timeEnd = t.getEndTime();
+                String tags = t.getTags().toString();
+                if (tags.length() > 0) {
+                    tags = tags.substring(1, tags.length() - 1);
+                } else {
+                    tags = "none";
+                }
+                String categories = t.getCategory().toString();
+                if (categories.length() > 0) {
+                    categories = categories.substring(1, categories.length()-1);
+                } else {
+                    categories = "none";
+                }
 
                 textName.setText(t.getName());
-                textInfo.setText(String.format(getResources().getString(R.string.text_notification_description), timeStart, timeEnd));
+                textInfo.setText(String.format(getResources().getString(R.string.text_notification_description), timeStart, timeEnd, tags, categories));
 
                 //if time is passed, button is disabled; else it's enabled
                 DateFormat df = new SimpleDateFormat("hh:mm a");
