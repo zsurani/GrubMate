@@ -16,6 +16,15 @@
         tools:layout_editor_absoluteX="104dp" />
 
     <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Create Notification"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="152dp" />
+
+    <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
