@@ -57,7 +57,7 @@ public class CreateGroupActivity extends AppCompatActivity {
         switch (resultCode) {
             case RESULT_SAVE:
                 //getting unchecked cast error
-                Group group = new Group((HashSet<Integer>) data.getSerializableExtra(AddGroupMembersActivity.MEMBERS_SET), userId);
+//                Group group = new Group((HashSet<Integer>) data.getSerializableExtra(AddGroupMembersActivity.MEMBERS_SET), userId);
 
                 break;
         }
