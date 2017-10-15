@@ -1,8 +1,10 @@
 package com.usc.zsurani.grubmate;
 
 import android.content.Intent;
+import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -55,8 +57,8 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 String tags = editNotifTags.getText().toString();
                 String[] split = tags.split(", ");
                 HashSet<String> t = new HashSet<String>(Arrays.asList(split));
-
                 HashSet<String> cate = new HashSet<String>();
+              
                 //checks to see what checkboxs are checked and then add the
                 //name of the checkbox to an array
                 CheckBox c = (CheckBox) findViewById(R.id.checkBoxAmerican);
@@ -156,6 +158,7 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 Log.d("USERID", Integer.toString(userId));
 
                 Notifications n = new Notifications(name, t, cate, start, end, "POSTING", String.valueOf(userId)); //INPUTING A TEMP USER ID
+
                 n.setActiveStatus(true);
 
                 // if any field is not filled out, the user will not be able to save it
@@ -167,12 +170,17 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 NotificationsRepo np = new NotificationsRepo(getApplicationContext());
                 np.insert(n);
 
+                List<String> cList = new ArrayList<String>(cate);
+                String cString = TextUtils.join(", ", cList);
+
+
+
                 Intent dummy = new Intent();
                 dummy.putExtra(NOTIFICATION_NAME, name);
                 dummy.putExtra(NOTIFICATION_START, start);
                 dummy.putExtra(NOTIFICATION_END, end);
                 dummy.putExtra(NOTIFICATION_TAGS, t);
-                dummy.putExtra(NOTIFICATION_CATEGORY, cate);
+                dummy.putExtra(NOTIFICATION_CATEGORY, cString);
                 setResult(MyNotificationActivity.RESULT_SAVE_NOTIF, dummy);
                 finish();
             }
