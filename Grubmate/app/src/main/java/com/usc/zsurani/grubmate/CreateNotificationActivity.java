@@ -177,7 +177,4 @@ public class CreateNotificationActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }

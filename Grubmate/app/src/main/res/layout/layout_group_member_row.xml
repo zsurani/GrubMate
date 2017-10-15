@@ -19,5 +19,4 @@
         android:id="@+id/checkbox_member_added"
         android:layout_gravity="center_vertical"/>
 
-
 </LinearLayout>

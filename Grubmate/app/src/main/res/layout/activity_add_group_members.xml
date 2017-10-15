@@ -11,8 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
-        android:text="Select Group Members"
+        android:text="Enter Group Members"
         android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/member_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/label_member_name"
+        android:layout_toEndOf="@id/label_member_name" />
 
     <ListView
         android:layout_width="match_parent"
@@ -21,6 +28,14 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/adding_members"
+        android:textSize="18dp"
+        android:text="Add"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/save_members"
         android:textSize="18dp"
         android:text="Save"/>
 
