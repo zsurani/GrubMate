@@ -114,7 +114,7 @@ public class MyNotificationActivity extends AppCompatActivity {
             }
 
             // Get the Notifications object, and if it isn't null, populate the layout with its data
-            Notifications t = getItem(position);
+            final Notifications t = getItem(position);
 
             if (t != null) {
                 TextView textName = (TextView) v.findViewById(R.id.label_notification_name);
@@ -159,7 +159,11 @@ public class MyNotificationActivity extends AppCompatActivity {
                 buttonEnd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // TODO update notification / remove it from DB
+//                        NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
+//                        repo.deleteNotification(String.valueOf(t.getId()));
+
+                        // have to update adapter?
+
                     }
                 });
             }
