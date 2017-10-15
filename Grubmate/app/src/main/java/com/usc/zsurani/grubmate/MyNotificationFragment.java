@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,20 +66,20 @@ public class MyNotificationFragment extends Fragment {
 
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
-//
-//        switch (resultCode) {
-//            case RESULT_SAVE_NOTIF:
-//                adapter = new MyNotificationFragment.NotificationAdapter(getActivity().getApplicationContext(), R.layout.layout_notification_row, getNotificationList());
-//                notificationList.setAdapter(adapter);
-//                break;
-//            case RESULT_CANCEL_NOTIF:
-//                // Don't do anything
-//                break;
-//        }
-//    }
+        Log.d("NOTIFICATION FRAGMENT", "ON ACTIVITY RESULT !!");
+        switch (resultCode) {
+            case RESULT_SAVE_NOTIF:
+                adapter = new MyNotificationFragment.NotificationAdapter(getActivity().getApplicationContext(), R.layout.layout_notification_row, getNotificationList());
+                notificationList.setAdapter(adapter);
+                break;
+            case RESULT_CANCEL_NOTIF:
+                // Don't do anything
+                break;
+        }
+    }
 
     private List<Notifications> getNotificationList() {
         String fbId = Profile.getCurrentProfile().getId();
