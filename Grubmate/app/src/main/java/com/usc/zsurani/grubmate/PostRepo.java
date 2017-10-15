@@ -53,6 +53,7 @@ public class PostRepo {
         values.put(Post.KEY_usersAccepted, post.getUserAccepted());
         values.put(Post.KEY_usersRequested, post.getUserRequested());
         values.put(Post.KEY_homemadeNotRestaurant, post.getHomemade());
+        values.put(Post.KEY_images, post.getPhoto_image());
 
 
         // Inserting Row
