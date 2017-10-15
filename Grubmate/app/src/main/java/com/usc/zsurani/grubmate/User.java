@@ -22,7 +22,7 @@ public class User {
 
     public static final String TABLE2 = "UserToReview";
     public static final String KEY_ID2 = "id";
-    public static final String KEY_userId = "id";
+    public static final String KEY_userId = "userId";
     public static final String KEY_review = "review";
 
 

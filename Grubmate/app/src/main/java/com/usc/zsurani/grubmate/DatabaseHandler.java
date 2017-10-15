@@ -48,7 +48,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
         Log.d("SQL", CREATE_TABLE_USERTOREVIEW);
 
-        db.execSQL(CREATE_TABLE_USER);
+        db.execSQL(CREATE_TABLE_USERTOREVIEW);
 
         String CREATE_TABLE_POST = "CREATE TABLE " + Post.TABLE  + "("
                 + Post.KEY_id  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
