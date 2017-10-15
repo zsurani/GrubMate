@@ -1,16 +1,27 @@
 package com.usc.zsurani.grubmate;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.facebook.Profile;
+
+import java.util.HashSet;
+
 public class CreateGroupActivity extends AppCompatActivity {
 
     private EditText editName;
     private Button addGroupMembers;
     private Button saveChanges;
+
+    public static final int RESULT_SAVE = 111;
+
+    String fbId = Profile.getCurrentProfile().getId();
+    UserRepo up = new UserRepo(getApplicationContext());
+    final int userId = up.getId(fbId);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +36,27 @@ public class CreateGroupActivity extends AppCompatActivity {
         addGroupMembers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(CreateGroupActivity.this, AddGroupMembersActivity.class);
+                startActivityForResult(i, 0);
             }
         });
+
+        saveChanges.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO create intent to return info back to view group activity
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case RESULT_SAVE:
+                Group group = new Group((HashSet<Integer>) data.getSerializableExtra(AddGroupMembersActivity.MEMBERS_SET), userId);
+                break;
+        }
+
     }
 }
