@@ -2,106 +2,72 @@ package com.usc.zsurani.grubmate;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.Profile;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
-public class MyNotificationActivity extends AppCompatActivity {
+/**
+ * Created by Madison on 10/15/17.
+ */
 
+public class MyNotificationFragment extends Fragment {
     private ListView notificationList;
     private Button createNotification;
-    private NotificationAdapter adapter;
 
     public static final int RESULT_SAVE_NOTIF = 111;
     public static final int RESULT_CANCEL_NOTIF = -111;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_notification);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_my_notification, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        View v = getView();
 
         // TODO change this to be list of notifications from DB
-        adapter = new NotificationAdapter(getApplicationContext(), R.layout.layout_notification_row, getNotificationList());
-        notificationList = (ListView) findViewById(R.id.list_notifications);
-        notificationList.setAdapter(adapter);
+        ArrayList<Notifications> notifList = new ArrayList<>();
 
-        createNotification = (Button) findViewById(R.id.button_add_notification);
+        notificationList = v.findViewById(R.id.list_notifications);
+        notificationList.setAdapter(new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, notifList));
+
+        createNotification =  v.findViewById(R.id.button_add_notification);
         createNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // start new page for creating a notification
-                Intent i = new Intent(MyNotificationActivity.this, CreateNotificationActivity.class);
+                Intent i = new Intent(getActivity(), CreateNotificationActivity.class);
                 startActivityForResult(i, 0);
             }
         });
 
-
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case RESULT_SAVE_NOTIF:
-                adapter = new NotificationAdapter(getApplicationContext(), R.layout.layout_notification_row, getNotificationList());
-                notificationList.setAdapter(adapter);
-                break;
-            case RESULT_CANCEL_NOTIF:
-                // Don't do anything
-                break;
-        }
-    }
-
-    private List<Notifications> getNotificationList() {
-        String fbId = Profile.getCurrentProfile().getId();
-        UserRepo up = new UserRepo(getApplicationContext());
-        final int userId = up.getId(fbId);
-//        final int userId = 100;
-
-        List<Notifications> notifList = new ArrayList<>();
-        if (notifList.size() == 0) {
-            Log.d("NOTIFICATION ACTIVITY", "SIZE IS ZERO");
-        } else {
-            Log.d("NOTIFICATION ACTIVITY", "SIZE IS NOT !! ZERO");
-        }
-
-        NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
-        List<String> notifStrings = repo.getNotifications(userId);
-        for (String id : notifStrings) {
-            if (id == null) Log.d("NOTIFICATION ACTIVITY", "NULL STRING");
-            else Log.d("NOTIFICATION ACTIVITY", "STRING IS: " + id);
-            notifList.add(repo.getNotification(Integer.valueOf(id)));
-        }
-
-        return notifList;
-    }
-
     /*
      * The custom adapter for the Notifications list view.
      */
     private class NotificationAdapter extends ArrayAdapter<Notifications> {
-
         public NotificationAdapter(Context context, int textViewResourceId) {
             super(context, textViewResourceId);
         }
@@ -118,7 +84,7 @@ public class MyNotificationActivity extends AppCompatActivity {
             // If the View to convert doesn't exist, inflate a new one with the correct layout
             if (v == null) {
                 LayoutInflater vi;
-                vi = LayoutInflater.from(getApplicationContext());
+                vi = LayoutInflater.from(getContext());
                 v = vi.inflate(R.layout.layout_notification_row, null);
             }
 
@@ -137,19 +103,19 @@ public class MyNotificationActivity extends AppCompatActivity {
                 textInfo.setText(String.format(getResources().getString(R.string.text_notification_description), timeStart, timeEnd));
 
                 //if time is passed, button is disabled; else it's enabled
-                DateFormat df = new SimpleDateFormat("hh:mm a");
+                DateFormat df = new SimpleDateFormat("hh:mm");
                 Date end;
                 try {
-                   end = df.parse(timeEnd);
+                    end = df.parse(timeEnd);
                 } catch (Exception e) {
                     end = Calendar.getInstance().getTime();
                 }
                 Date now = Calendar.getInstance().getTime();
 
                 if (now.before(end)) {
-                    buttonEnd.setEnabled(false);
-                } else {
                     buttonEnd.setEnabled(true);
+                } else {
+                    buttonEnd.setEnabled(false);
                 }
 
                 // on click listener for the "End Notification" button
@@ -165,4 +131,3 @@ public class MyNotificationActivity extends AppCompatActivity {
         }
     }
 }
-

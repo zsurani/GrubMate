@@ -108,7 +108,9 @@ public class NotificationsRepo {
 
                 //gets the category as a string, splits by , and then puts into a list
                 String cateString = c.getString(c.getColumnIndex(Notifications.KEY_category));
-                String[] cateArray = cateString.split(",");
+                // TODO FIX THIS
+                String[] cateArray = new String[] {};
+                if (cateString != null) cateArray = cateString.split(",");
                 List<String> cate = Arrays.asList(cateArray);
 
                 //get the tags as a string, splits by , and then puts into a set
