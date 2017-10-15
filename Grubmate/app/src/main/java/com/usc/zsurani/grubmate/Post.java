@@ -63,6 +63,8 @@ public class Post {
     Integer maxAccepted;
     Boolean isHomemade;
 
+    byte[] photo_image;
+
     /*
      * Constructor which sets member variables of post when post is created
      */
@@ -88,7 +90,7 @@ public class Post {
     // images in between food and num_requests
     // groups in between active and usersRequested
     // allFriendsCanView at end
-    Post(String description, String owner, String food, String num_requests, String categories, String tags,
+    Post(String description, String owner, String food, byte[] images, String num_requests, String categories, String tags,
          String beginTime, String endTime, String location, String active,
          String usersRequested, String usersAccepted, String homemade_tag) {
         this.description = description;
@@ -104,6 +106,7 @@ public class Post {
         this.userRequested = usersRequested;
         this.userAccepted = usersAccepted;
         this.homemade = homemade_tag;
+        this.photo_image = images;
         Log.d("DEBUG", "in post");
     }
 
@@ -370,6 +373,11 @@ public class Post {
         return active;
     }
 
+    public byte[] getPhoto_image() {
+        Log.d("here", "getting");
+        return photo_image;
+    }
+
 
     public String getUserRequested() {
         return userRequested;
@@ -433,5 +441,9 @@ public class Post {
 
     public void setUser_rating(String rating) {
         this.user_rating = rating;
+    }
+
+    public void setPhoto_image(byte[] photo_image) {
+        this.photo_image = photo_image;
     }
 }

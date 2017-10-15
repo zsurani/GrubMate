@@ -53,6 +53,7 @@ public class PostRepo {
         values.put(Post.KEY_usersAccepted, post.getUserAccepted());
         values.put(Post.KEY_usersRequested, post.getUserRequested());
         values.put(Post.KEY_homemadeNotRestaurant, post.getHomemade());
+        values.put(Post.KEY_images, post.getPhoto_image());
 
 
         // Inserting Row
@@ -131,6 +132,7 @@ public class PostRepo {
                 post.setLocation(c.getString(c.getColumnIndex(Post.KEY_location)));
                 post.setCategories(c.getString(c.getColumnIndex(Post.KEY_categories)));
                 post.setTag(c.getString(c.getColumnIndex(Post.KEY_tags)));
+                post.setPhoto_image(c.getBlob(c.getColumnIndex(Post.KEY_images)));
             } while (c.moveToNext());
         }
 
@@ -563,6 +565,13 @@ public class PostRepo {
         cursor.close();
         db.close();
         return toReturn;
+    }
+
+    public void deletePost(String postId){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.delete(Post.TABLE, Post.KEY_id + "= ?", new String[] { String.valueOf(postId) });
+        db.close(); // Closing database connection
     }
 
 

@@ -23,9 +23,9 @@ public class Notifications {
     public static final String KEY_name = "name";
     public static final String KEY_type = "type";
 
-    Integer userID;
+    String userID;
     Integer id;
-    List<String> category;
+    Set<String> category;
     Set<String> tags;
     String beginTime;
     String endTime;
@@ -39,7 +39,7 @@ public class Notifications {
      * inputted criteria
      */
     Notifications(String postName, Set<String> tags,
-                  List<String> category, String timeStart, String timeEnd, String type, Integer userId){
+                  Set<String> category, String timeStart, String timeEnd, String type, String userId){
         name = postName;
         this.tags = tags;
         this.category = category;
@@ -115,7 +115,7 @@ public class Notifications {
     /*
      * Returns the category that the notification was created with
      */
-    List<String> getCategory(){return category;}
+    Set<String> getCategory(){return category;}
 
     /*
      * Returns a list of tags associated with the notification
@@ -137,7 +137,7 @@ public class Notifications {
     /*
     Returns the id of the user who owns the notification
      */
-    Integer getUserId(){return userID;}
+    String getUserId(){return userID;}
 
     /*
      * Returns time set by creator of notification of end

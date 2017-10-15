@@ -55,7 +55,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
                 + Post.KEY_description + " TEXT, "
                 + Post.KEY_owner + " INTEGER, "
                 + Post.KEY_food + " TEXT, "
-                + Post.KEY_images + " TEXT, "
+                + Post.KEY_images + " BLOB, "
                 + Post.KEY_num_requests + " TEXT, "
                 + Post.KEY_categories + " TEXT, "
                 + Post.KEY_tags + " TEXT, "
@@ -131,6 +131,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Group.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Transaction.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Notifications.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + User.TABLE2);
         onCreate(db);
     }
 

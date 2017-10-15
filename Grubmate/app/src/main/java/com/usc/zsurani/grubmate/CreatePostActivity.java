@@ -1,7 +1,18 @@
 package com.usc.zsurani.grubmate;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
+import android.os.ParcelFileDescriptor;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,10 +20,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.facebook.Profile;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class CreatePostActivity extends AppCompatActivity {
 
@@ -43,6 +60,8 @@ public class CreatePostActivity extends AppCompatActivity {
     private RadioButton homemade;
     private String num_requests;
 
+    ImageView viewImage;
+    private Bitmap yourbitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +76,7 @@ public class CreatePostActivity extends AppCompatActivity {
         editLocation = (EditText) findViewById(R.id.edit_post_location);
         editTags = (EditText) findViewById(R.id.edit_post_tags);
         buttonSave = (Button) findViewById(R.id.button_save_new_post);
+        viewImage = (ImageView) findViewById(R.id.viewImage);
 
         checkbox1 = (CheckBox) findViewById(R.id.american);
         checkbox2 = (CheckBox) findViewById(R.id.mexican);
@@ -76,6 +96,13 @@ public class CreatePostActivity extends AppCompatActivity {
         checkbox16 = (CheckBox) findViewById(R.id.indian);
 
         homemade = (RadioButton) findViewById(R.id.radio_homemade);
+
+        viewImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
 
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,10 +193,16 @@ public class CreatePostActivity extends AppCompatActivity {
                 final String categories = category;
                 final String users = "";
 
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                yourbitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+                byte[] image = stream.toByteArray();
+
+                Log.d("debug", Integer.toString(image.length));
+
                 // images in between food and num_requests
                 // groups in between active and usersRequested
                 // allFriendsCanView at end
-                Post post = new Post(description, owner, food, num_requests, categories, tags,
+                Post post = new Post(description, owner, food, image, num_requests, categories, tags,
                         beginTime, endTime, location, active, users, users, homemade_tag);
 
                 PostRepo postRepo = new PostRepo(getApplicationContext());
@@ -181,5 +214,105 @@ public class CreatePostActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void selectImage() {
+
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(CreatePostActivity.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo")) {
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, 1);
+
+                } else if (options[item].equals("Choose from Gallery")) {
+                    Intent intent = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 2);
+
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                byte[] BYTE;
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                viewImage.setImageBitmap(photo);
+                yourbitmap = photo;
+
+            } else if (requestCode == 2) {
+
+                Uri selectedImageUri = data.getData();
+                if (Build.VERSION.SDK_INT < 19) {
+                    String selectedImagePath = getPath(selectedImageUri);
+                    Bitmap bitmap = BitmapFactory.decodeFile(selectedImagePath);
+                    yourbitmap = bitmap;
+                    viewImage.setImageBitmap(bitmap);
+
+                } else {
+                    ParcelFileDescriptor parcelFileDescriptor;
+                    try {
+                        parcelFileDescriptor = getContentResolver().openFileDescriptor(selectedImageUri, "r");
+                        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+                        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+                        parcelFileDescriptor.close();
+                        viewImage.setImageBitmap(image);
+                        yourbitmap = image;
+
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+//                viewImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
+
+            }
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private String getPath(Uri selectedImageUri) {
+        // Will return "image:x*"
+        String wholeID = DocumentsContract.getDocumentId(selectedImageUri);
+
+// Split at colon, use second item in the array
+        String id = wholeID.split(":")[1];
+
+        String[] column = { MediaStore.Images.Media.DATA };
+
+// where id is equal to
+        String sel = MediaStore.Images.Media._ID + "=?";
+
+        Cursor cursor = getContentResolver().
+                query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        column, sel, new String[]{ id }, null);
+
+        String filePath = "";
+
+        int columnIndex = cursor.getColumnIndex(column[0]);
+
+        if (cursor.moveToFirst()) {
+            filePath = cursor.getString(columnIndex);
+        }
+
+        cursor.close();
+
+        return filePath;
     }
 }
