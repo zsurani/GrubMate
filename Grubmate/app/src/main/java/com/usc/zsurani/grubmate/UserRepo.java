@@ -79,6 +79,23 @@ public class UserRepo {
         return d;
     }
 
+    public String getName(int userId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT " + User.KEY_name + " FROM " + User.TABLE + "WHERE "
+                + User.KEY_ID + "=" + userId;
+        Cursor c = db.rawQuery(selectQuery, null);
+        String d = "";
+        if(c.moveToFirst()){
+            do {
+                d = c.getString(c.getColumnIndex(User.KEY_name));
+            } while (c.moveToNext());
+        }
+        db.close();
+
+        return d;
+
+    }
+
 //    public void delete(int student_Id) {
 //
 //        SQLiteDatabase db = dbHelper.getWritableDatabase();

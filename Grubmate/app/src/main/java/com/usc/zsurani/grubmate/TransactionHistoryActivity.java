@@ -89,6 +89,12 @@ public class TransactionHistoryActivity extends AppCompatActivity {
                     get PostRepo
                     find post info with ID
                  */
+                UserRepo ur = new UserRepo(getApplicationContext());
+                String provider = ur.getName(providerId);
+                String requester = ur.getName(requesterId);
+
+
+
 
                 // TODO delete dummy data
                 String name = getResources().getString(R.string.text_transaction_name);
