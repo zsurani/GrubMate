@@ -21,6 +21,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class PostAdapter extends ArrayAdapter<Post> {
 
+
     public PostAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }
@@ -28,6 +29,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
     public PostAdapter(Context context, int textViewResourceId, List<Post> items) {
         super(context, textViewResourceId, items);
     }
+    /*
 
     @NonNull
     @Override
@@ -63,6 +65,8 @@ public class PostAdapter extends ArrayAdapter<Post> {
 
             // TODO delete dummy data
 //            String name = getResources().getString(R.string.text_transaction_name);
+    /*
+            String name = getResources().getString(R.string.text_transaction_name);
 
 //            postName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
 //            postDesc.setText(String.format(getResources().getString(R.string.text_transaction_status), "status"));
@@ -71,5 +75,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
         }
 
         return v;
+
     }
+    */
 }

@@ -3,11 +3,14 @@ package com.usc.zsurani.grubmate;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.facebook.Profile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,97 +58,104 @@ public class CreateNotificationActivity extends AppCompatActivity {
 
                /*
                 List<String> cate = new ArrayList<String>();
-                CheckBox c = (CheckBox) findViewById(R.id.checkBox);
+                CheckBox c = (CheckBox) findViewById(R.id.checkBoxAmerican);
                 if (c.isChecked()) {
                     cate.add("American");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox2);
+                c = (CheckBox) findViewById(R.id.checkBoxMexican);
                 if (c.isChecked())
                 {
                     cate.add("Mexican");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox3);
+                c = (CheckBox) findViewById(R.id.checkBoxFastFood);
                 if (c.isChecked())
                 {
                     cate.add("Fast Food");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox4);
+                c = (CheckBox) findViewById(R.id.checkBoxBurger);
                 if (c.isChecked())
                 {
                     cate.add("Burger");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox5);
+                c = (CheckBox) findViewById(R.id.checkBoxPizza);
                 if (c.isChecked())
                 {
                     cate.add("Pizza");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox6);
+                c = (CheckBox) findViewById(R.id.checkBoxAsian);
                 if (c.isChecked())
                 {
                     cate.add("Asian");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox7);
+                c = (CheckBox) findViewById(R.id.checkBoxCoffee);
                 if (c.isChecked())
                 {
                     cate.add("Coffee");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox8);
+                c = (CheckBox) findViewById(R.id.checkBoxItalian);
                 if (c.isChecked())
                 {
                     cate.add("Italian");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox9);
+                c = (CheckBox) findViewById(R.id.checkBoxSandwich);
                 if (c.isChecked())
                 {
                     cate.add("Sandwich");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox10);
+                c = (CheckBox) findViewById(R.id.checkBoxSushi);
                 if (c.isChecked())
                 {
                     cate.add("Sushi");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox11);
+                c = (CheckBox) findViewById(R.id.checkBoxBreakfast);
                 if (c.isChecked())
                 {
                     cate.add("Breakfast Food");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox12);
+                c = (CheckBox) findViewById(R.id.checkBoxDessert);
                 if (c.isChecked())
                 {
                     cate.add("Dessert");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox13);
+                c = (CheckBox) findViewById(R.id.checkBoxBakery);
                 if (c.isChecked())
                 {
                     cate.add("Bakery");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox14);
+                c = (CheckBox) findViewById(R.id.checkBoxBoba);
                 if (c.isChecked())
                 {
                     cate.add("Boba");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox15);
+                c = (CheckBox) findViewById(R.id.checkBoxThai);
                 if (c.isChecked())
                 {
                     t.add("Thai");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox16);
+                c = (CheckBox) findViewById(R.id.checkBoxIndian);
                 if (c.isChecked())
                 {
                     cate.add("Indian");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox17);
+                c = (CheckBox) findViewById(R.id.checkBoxHomemade);
                 if (c.isChecked())
                 {
                     cate.add("Homemade");
                 }
-                c = (CheckBox) findViewById(R.id.checkBox18);
+                c = (CheckBox) findViewById(R.id.checkBoxRestaurant);
                 if (c.isChecked())
                 {
                     cate.add("Restaurant");
                 }
 
-                Notifications n = new Notifications(name, t, cate, start, end, "POSTING", 0); //INPUTING A TEMP USER ID
+                String fbId = Profile.getCurrentProfile().getId();
+                UserRepo up = new UserRepo(getApplicationContext());
+
+
+                int userId = up.getId(fbId); //need to add to use repo
+                Log.d("USERID", Integer.toString(userId));
+
+                Notifications n = new Notifications(name, t, cate, start, end, "POSTING", userId); //INPUTING A TEMP USER ID
                 n.setActiveStatus(true);
 
 
