@@ -43,6 +43,8 @@ public class ProfileFragment extends Fragment {
     private Button postButton;
     private Button reviewButton;
 
+    public static final String EXTRA_USER_ID = "grubmate.profile_fragment.user_id";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,7 +72,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        reviewList.setOnClickListener(new View.OnClickListener() {
+        reviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 reviewList.setVisibility(View.VISIBLE);
@@ -78,20 +80,27 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        // TODO create custom adapter to put post info into rows on list view
+        // TODO connect to db
         List<Post> posts = new ArrayList<Post>();
         postList.setAdapter(new PostAdapter(getContext(), R.layout.layout_post_row, posts));
 
-        // TODO create review list adapter
+        // TODO connect to db
+        List<String> reviews = new ArrayList<>();
+        reviewList.setAdapter(new ReviewAdapter(getContext(), R.layout.layout_review_row, reviews));
 
         setupProfile();
     }
 
     private void setupProfile() {
-        // getting all the info to populate the profile page TODO this assumes it's the current user
+        Bundle args = getArguments();
         String fbId = Profile.getCurrentProfile().getId();
         UserRepo up = new UserRepo(getContext());
-        final int userId = up.getId(fbId);
+        final int userId;
+        if (args == null) {
+            userId = up.getId(fbId);
+        } else {
+            userId = args.getInt(EXTRA_USER_ID);
+        }
 
         String stringNumRatings = up.getNumRatings(String.valueOf(userId));
         String stringRating = up.getRating(String.valueOf(userId));
