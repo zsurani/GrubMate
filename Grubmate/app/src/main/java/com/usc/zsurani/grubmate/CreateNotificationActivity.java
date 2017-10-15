@@ -165,7 +165,6 @@ public class CreateNotificationActivity extends AppCompatActivity {
 
                 NotificationsRepo np = new NotificationsRepo(getApplicationContext());
                 np.insert(n);
-                */
 
                 Intent dummy = new Intent();
                 dummy.putExtra(NOTIFICATION_NAME, name);
@@ -178,7 +177,4 @@ public class CreateNotificationActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }
