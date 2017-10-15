@@ -48,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
-        Intent i = new Intent(getApplicationContext(), CreateNotificationActivity.class);
-        startActivity(i);
+
 
         Button tv =(Button)findViewById(R.id.button2);
 
@@ -58,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent dbmanager = new Intent(getApplicationContext(),AndroidDatabaseManager.class);
                 startActivity(dbmanager);
+            }
+        });
+
+        Button notTest = (Button) findViewById(R.id.button3);
+        notTest.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), CreateNotificationActivity.class);
+                startActivity(i);
             }
         });
 

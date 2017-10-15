@@ -37,6 +37,27 @@ public class UserRepo {
         return (int) user_id;
     }
 
+    public int getId(String fbId)
+    {
+        Log.d("USEID", "in getId");
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT " + User.KEY_ID + " FROM " +
+                User.TABLE;
+        Log.d("USERID", selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        int d = -1;
+        if (c.moveToFirst()) {
+            do {
+                Log.d("USERID", "inside of c.moveToFirst");
+                d = c.getInt(c.getColumnIndex(User.KEY_ID));
+            } while (c.moveToNext());
+        }
+        db.close();
+
+        return d;
+    }
+
 //    public void delete(int student_Id) {
 //
 //        SQLiteDatabase db = dbHelper.getWritableDatabase();

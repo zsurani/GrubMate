@@ -30,6 +30,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
         super(context, textViewResourceId, items);
         context = current;
     }
+    /*
 
     @NonNull
     @Override
@@ -57,10 +58,20 @@ public class PostAdapter extends ArrayAdapter<Post> {
                     find post info (name, description, times, tags, categories) with ID
                     if (already requested) disable request button
                  */
+    
+            // TODO delete dummy data
+    /*
+            String name = getResources().getString(R.string.text_transaction_name);
 
+            postName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
+            postDesc.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
+            requestButton.setText("Request");
+>>>>>>> b958d746077b2390f56373b5900b76ae9c4467b7
 
         }
 
         return v;
+
     }
+    */
 }
