@@ -53,6 +53,7 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 String[] split = tags.split(", ");
                 Set<String> t = new HashSet<String>(Arrays.asList(split));
 
+               /*
                 List<String> cate = new ArrayList<String>();
                 CheckBox c = (CheckBox) findViewById(R.id.checkBox);
                 if (c.isChecked()) {
@@ -156,6 +157,7 @@ public class CreateNotificationActivity extends AppCompatActivity {
 
                 NotificationsRepo np = new NotificationsRepo(getApplicationContext());
                 np.insert(n);
+                */
 
                 Intent dummy = new Intent();
                 dummy.putExtra(NOTIFICATION_NAME, name);

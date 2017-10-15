@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 /**
  * Created by caseyklecan on 10/14/17.
  */
@@ -60,10 +62,10 @@ public class PostAdapter extends ArrayAdapter<Post> {
                  */
 
             // TODO delete dummy data
-            String name = getResources().getString(R.string.text_transaction_name);
+//            String name = getResources().getString(R.string.text_transaction_name);
 
-            postName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
-            postDesc.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
+//            postName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
+//            postDesc.setText(String.format(getResources().getString(R.string.text_transaction_status), "status"));
             requestButton.setText("Request");
 
         }

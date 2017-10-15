@@ -2,6 +2,7 @@ package com.usc.zsurani.grubmate;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import java.util.List;
@@ -33,20 +34,29 @@ public class Post {
     public static final String KEY_allFriendsCanView = "allFriendsCanView";
     public static final String KEY_maxRequesters = "maxRequesters";
 
-    Integer id;
-    String title;
     String description;
-    User owner;
+    String owner_string;
     String food;
-    Set<String> image;
-    Integer num_requests;
-    Set<String> category;
-    Set<String> tags;
+    String num_requests;
+    String categories;
+    String tag;
     String beginTime;
     String endTime;
     String location;
-    Boolean active;
+    String active_status;
+    String userRequested;
+    String userAccepted;
+    String homemade;
+
+
+    Integer id;
+    String title;
+    User owner;
+    Set<String> image;
+    Set<String> category;
+    Set<String> tags;
     Set<Integer> groups;
+    Boolean active;
     List<Integer> usersRequested;
     List<Integer> usersAccepted;
     Boolean visibleToAll;
@@ -75,10 +85,32 @@ public class Post {
         isHomemade = homemade;
     }
 
+    // images in between food and num_requests
+    // groups in between active and usersRequested
+    // allFriendsCanView at end
+    Post(String description, String owner, String food, String num_requests, String categories, String tags,
+         String beginTime, String endTime, String location, String active,
+         String usersRequested, String usersAccepted, String homemade_tag) {
+        this.description = description;
+        this.owner_string = owner;
+        this.food = food;
+        this.num_requests = num_requests;
+        this.categories = categories;
+        this.tag = tags;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+        this.location = location;
+        this.active_status = active;
+        this.userRequested = usersRequested;
+        this.userAccepted = usersAccepted;
+        this.homemade = homemade_tag;
+        Log.d("DEBUG", "in post");
+    }
+
     /*
      * If request is accepted, update list of ids of accepted users to include new id
      */
-    void updateAcceptedRequests(Integer userId){
+    void updateAcceptedRequests(Integer userId) {
         usersAccepted.add(userId);
     }
 
@@ -86,21 +118,21 @@ public class Post {
      * When request is made, update list of ids of all users who requested the food to
      * include the new id
      */
-    void updateAllRequests(Integer userId){
+    void updateAllRequests(Integer userId) {
         usersRequested.add(userId);
     }
 
     /*
      * If user updates description of post, update string containing description of post
      */
-    void updateDescription(String description){
+    void updateDescription(String description) {
         this.description = description;
     }
 
     /*
      * If user updates location of food, update string containing location
      */
-    void updateLocation(String loc){
+    void updateLocation(String loc) {
         location = loc;
     }
 
@@ -108,7 +140,7 @@ public class Post {
      * If user updates the maximum number of requesters they want to
      * accept, then update the integer storing this information
      */
-    void updateMaxRequesters(Integer maxNum){
+    void updateMaxRequesters(Integer maxNum) {
         maxAccepted = maxNum;
     }
 
@@ -117,14 +149,14 @@ public class Post {
      * the post visible to all friends on Facebook, sets boolean to
      * false if the post will only be visible to certain groups
      */
-    void updateVisibleToAll(Boolean visibleToAll){
+    void updateVisibleToAll(Boolean visibleToAll) {
         this.visibleToAll = visibleToAll;
     }
 
     /*
      * Returns true if post is on homemade food, returns false if post is on restaurant food
      */
-    Boolean isHomemade(){
+    Boolean isHomemade() {
         return isHomemade;
     }
 
@@ -132,7 +164,7 @@ public class Post {
      * If post is active, set boolean to true, but if the post is
      * now inactive, set boolean to false
      */
-    void setStatus(Boolean active){
+    void setStatus(Boolean active) {
         this.active = active;
     }
 
@@ -141,7 +173,7 @@ public class Post {
      * make the post visible to them, then add group ID to list
      * of IDs storing all groups who have access to the post
      */
-    void addGroup(Integer groupId){
+    void addGroup(Integer groupId) {
         groups.add(groupId);
     }
 
@@ -149,7 +181,7 @@ public class Post {
      * When editing the post, if user would like to add more categories,
      * then add string to list of categories for post
      */
-    void addCategory(String category){
+    void addCategory(String category) {
         this.category.add(category);
     }
 
@@ -157,7 +189,7 @@ public class Post {
      * When editing the post, if user would like to add more tags then
      * add string to list of tags for post
      */
-    void addTag(String tag){
+    void addTag(String tag) {
         tags.add(tag);
     }
 
@@ -165,7 +197,7 @@ public class Post {
      * If user adds an image of food, add string containing link to food
      * to list containing all images
      */
-    void addImage(String img){
+    void addImage(String img) {
         image.add(img);
     }
 
@@ -173,7 +205,7 @@ public class Post {
      * When editing the post, if user would like to remove a tag, then
      * remove string from list of tags for post
      */
-    void removeTag(String tag){
+    void removeTag(String tag) {
         tags.remove(tag);
     }
 
@@ -182,7 +214,7 @@ public class Post {
      * the post no longer visible to them, then remove group ID from
      * list of IDs storing all groups who have access to the post
      */
-    void removeGroup(Integer groupId){
+    void removeGroup(Integer groupId) {
         groups.remove(groupId);
     }
 
@@ -190,7 +222,7 @@ public class Post {
      * When editing the post, if user would like to remove a category,
      * then remove string from list of categories for post
      */
-    void removeCategory(String category){
+    void removeCategory(String category) {
         this.category.remove(category);
     }
 
@@ -198,7 +230,7 @@ public class Post {
      * If user removes image of food, remove string containing link to
      * food from list containing all images
      */
-    void removeImage(String img){
+    void removeImage(String img) {
         image.remove(img);
     }
 
@@ -206,14 +238,14 @@ public class Post {
      * Returns true if post is visible to all owner’s friends, false if post
      * is visible to only certain groups
      */
-    Boolean getVisibility(){
+    Boolean getVisibility() {
         return visibleToAll;
     }
 
     /*
      * Returns maximum number of accepted requests owner sets
      */
-    Integer getMaxRequesters(){
+    Integer getMaxRequesters() {
         return maxAccepted;
     }
 
@@ -221,66 +253,128 @@ public class Post {
      * Returns list of all images associated with post set
      * by owner of post
      */
-    Set<String> getImages(){
+    Set<String> getImages() {
         return image;
     }
 
     /*
      * Returns the User id of the provider.
      */
-    Integer getProviderID(){
+    Integer getProviderID() {
         return owner.getID();
     }
 
-	/*
+    /*
 	 * Returns list of User ids that have been accepted as receivers
 	 */
-        List<Integer> getAcceptedRequesters(){return usersAccepted;}
+    List<Integer> getAcceptedRequesters() {
+        return usersAccepted;
+    }
 
-	/*
+    /*
 	 * Returns a list of User ids that have requested on the post.
 	 */
-        List<Integer> getAllRequesters(){return usersRequested;}
+    List<Integer> getAllRequesters() {
+        return usersRequested;
+    }
 
-	/*
+    /*
 	 * Returns list of Group ids that this post is visible to.
 	 */
-        Set<Integer> getGroupID(){return groups;}
+    Set<Integer> getGroupID() {
+        return groups;
+    }
 
-	/*
+    /*
 	 * Returns list of strings that represent the various categories
 	 * that the post belongs to
 	 */
-            Set<String> getCategory(){return category;}
+    Set<String> getCategory() {
+        return category;
+    }
 
-	/*
+    /*
 	 * Returns list of strings that represent the various tags
 	 * that the post belongs to.
 	 */
-            Set<String> getTags(){return tags;}
+    Set<String> getTags() {
+        return tags;
+    }
 
-	/*
+    /*
 	 * Returns the beginning of the time when the delivery will be available
 	 */
-                String getBeginTime(){return beginTime;}
+    String getBeginTime() {
+        return beginTime;
+    }
 
-	/*
+    /*
 	 * Returns the end of the time when the delivery will be available
 	 */
-                String getEndTime(){return endTime;}
+    String getEndTime() {
+        return endTime;
+    }
 
-	/*
+    /*
 	 * Returns the description of the post.
 	 */
-                String getDescription(){return description;}
+    String getDescription() {
+        return description;
+    }
 
-	/*
+    /*
 	 * Sets the time when the owner wants to make the delivery available
 	 */
-            void setBeginTime(String time){beginTime = time;}
+    void setBeginTime(String time) {
+        beginTime = time;
+    }
 
-	/*
+    /*
 	 * Sets the time when the owner wants to set the latest delivery
 	 */
-            void setEndTime(String time){endTime = time;}
+    void setEndTime(String time) {
+        endTime = time;
+    }
+
+    public String getOwner_string() {
+        return owner_string;
+    }
+
+    public String getFood() {
+        return food;
+    }
+
+    public String getNum_requests() {
+        return num_requests;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getActive_status() {
+        return active_status;
+    }
+
+    public String getUserRequested() {
+        return userRequested;
+    }
+
+    public String getUserAccepted() {
+        return userAccepted;
+    }
+
+    public String getHomemade() {
+        return homemade;
+    }
+
+
 }
