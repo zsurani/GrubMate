@@ -66,8 +66,6 @@ public class TransactionHistoryActivity extends AppCompatActivity {
                 LayoutInflater vi;
                 vi = LayoutInflater.from(getApplicationContext());
                 v = vi.inflate(R.layout.layout_transaction_row, null);
-                // TODO delete this log line
-                Log.d("TRANSACTION HISTORY", "inflated transaction row to view");
             }
 
             Transaction t = getItem(position);
@@ -98,7 +96,18 @@ public class TransactionHistoryActivity extends AppCompatActivity {
                 transactName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
                 transactStatus.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
 
-                requestButton.setText("Cancel");
+                switch (status) {
+                    case "Accepted":
+                        requestButton.setEnabled(false);
+                        break;
+                    case "Denied":
+                        requestButton.setEnabled(false);
+                        break;
+                    case "Pending":
+                        requestButton.setEnabled(true);
+                        // change to cancel?
+                        break;
+                }
 
             }
 

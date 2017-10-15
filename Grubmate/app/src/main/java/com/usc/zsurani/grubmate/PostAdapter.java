@@ -19,12 +19,16 @@ import java.util.List;
 
 public class PostAdapter extends ArrayAdapter<Post> {
 
-    public PostAdapter(Context context, int textViewResourceId) {
+    private Context context;
+
+    public PostAdapter(Context context, int textViewResourceId, Context current) {
         super(context, textViewResourceId);
+        context = current;
     }
 
-    public PostAdapter(Context context, int textViewResourceId, List<Post> items) {
+    public PostAdapter(Context context, int textViewResourceId, Context current, List<Post> items) {
         super(context, textViewResourceId, items);
+        context = current;
     }
 
     @NonNull
@@ -34,10 +38,8 @@ public class PostAdapter extends ArrayAdapter<Post> {
 
         if (v == null) {
             LayoutInflater vi;
-            vi = LayoutInflater.from(getApplicationContext());
+            vi = LayoutInflater.from(context.getApplicationContext());
             v = vi.inflate(R.layout.layout_transaction_row, null);
-            // TODO delete this log line
-            Log.d("TRANSACTION HISTORY", "inflated transaction row to view");
         }
 
         Post t = getItem(position);
@@ -51,20 +53,11 @@ public class PostAdapter extends ArrayAdapter<Post> {
             // Get data from transaction to put into row
 
                 /* TODO once repo classes are set up
-                    get UserRepo
-                    find provider name with ID
-                    find requester name with ID
-
                     get PostRepo
-                    find post info with ID
+                    find post info (name, description, times, tags, categories) with ID
+                    if (already requested) disable request button
                  */
 
-            // TODO delete dummy data
-            String name = getResources().getString(R.string.text_transaction_name);
-
-            postName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
-            postDesc.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
-            requestButton.setText("Request");
 
         }
 
