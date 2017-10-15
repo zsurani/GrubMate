@@ -2,8 +2,11 @@ package com.usc.zsurani.grubmate;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +21,7 @@ public class NotificationsRepo {
         dbHelper = new DatabaseHandler(context);
     }
 
+    //inserts a notification into the database
     public int insert(Notifications n) {
 
         //Open connection to write data
@@ -54,5 +58,24 @@ public class NotificationsRepo {
         long notification_Id = db.insert(Notifications.TABLE, null, values);
         db.close(); // Closing database connection
         return (int) notification_Id;
+    }
+
+    //get list of notifications for the current user
+    public List<String> getNotifications(int userId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT " + Notifications.KEY_id +
+                " FROM " + Notifications.TABLE + " where " +
+                Notifications.KEY_userID + " = " + userId;
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        List<String> not = new ArrayList<String>();
+        if(c.moveToFirst()) {
+            do {
+                not.add(c.getString(c.getColumnIndex(Notifications.KEY_id)));
+                Log.d("DEBUG", c.getString(c.getColumnIndex(Notifications.KEY_id)));
+            } while (c.moveToNext());
+        }
+        db.close();
+        return not;
     }
 }

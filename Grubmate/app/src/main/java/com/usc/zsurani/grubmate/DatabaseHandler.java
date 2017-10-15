@@ -47,19 +47,18 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
                 + Post.KEY_owner + " INTEGER, "
                 + Post.KEY_food + " TEXT, "
                 + Post.KEY_images + " TEXT, "
-                + Post.KEY_num_requests + " INTEGER, "
+                + Post.KEY_num_requests + " TEXT, "
                 + Post.KEY_categories + " TEXT, "
                 + Post.KEY_tags + " TEXT, "
-                + Post.KEY_beginTime + " INTEGER, "
-                + Post.KEY_endTime + " Integer, "
+                + Post.KEY_beginTime + " TEXT, "
+                + Post.KEY_endTime + " TEXT, "
                 + Post.KEY_location + " TEXT, "
                 + Post.KEY_active + " TEXT, "
                 + Post.KEY_groups + " TEXT, "
                 + Post.KEY_usersRequested + " TEXT, "
                 + Post.KEY_usersAccepted + " TEXT, "
                 + Post.KEY_homemadeNotRestaurant + " TEXT, "
-                + Post.KEY_allFriendsCanView + " TEXT, "
-                + Post.KEY_maxRequesters + " INTEGER)";
+                + Post.KEY_allFriendsCanView + " TEXT)";
 
         Log.d("SQL", CREATE_TABLE_POST);
 

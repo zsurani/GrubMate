@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
         Button tv =(Button)findViewById(R.id.button2);
 
         tv.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +67,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button getNotificationsFromUser = (Button) findViewById(R.id.button4);
+        getNotificationsFromUser.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
+                List<String> note = nr.getNotifications(1);
+                for(String l : note)
+                {
+                    Log.d("NOTE", l);
+                }
+            }
+        });
 
 
         loginButton = (LoginButton)findViewById(R.id.login_button);
@@ -78,9 +88,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                //Intent i = new Intent(MainActivity.this, ProfileActivity.class);
-                //startActivity(i);
-
                 String id = Profile.getCurrentProfile().getId();
                 UserRepo userRepo = new UserRepo(getApplicationContext());
                 boolean status = userRepo.newUser(id);
@@ -89,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
                     User user = new User(name, id);
                     userRepo.insert(user);
                 }
+                Intent intent = new Intent(getApplicationContext(), CreatePostActivity.class);
+                startActivity(intent);
             }
 
             @Override
@@ -101,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
     }
 
