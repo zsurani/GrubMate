@@ -446,4 +446,12 @@ public class Post {
     public void setPhoto_image(byte[] photo_image) {
         this.photo_image = photo_image;
     }
+
+    public void setGroups(Set<String> groups){
+        this.groups = groups;
+    }
+
+    public Set<String> getGroups(){
+        return groups;
+    }
 }
