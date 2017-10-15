@@ -264,5 +264,12 @@ public class NotificationsRepo {
         db.close(); // Closing database connection
     }
 
+    public void deleteNotification(String notifId){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.delete(Notifications.TABLE, Notifications.KEY_id + "= ?", new String[] { String.valueOf(notifId) });
+        db.close(); // Closing database connection
+    }
+
 
 }
