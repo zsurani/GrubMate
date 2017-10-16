@@ -377,6 +377,9 @@ public class Post {
         Log.d("here", "getting");
         return photo_image;
     }
+    public String getTitle(){
+        return title;
+    }
 
 
     public String getUserRequested() {
@@ -453,5 +456,9 @@ public class Post {
 
     public Set<String> getGroups(){
         return groups;
+    }
+
+    public void setTitle(String t){
+        title = t;
     }
 }
