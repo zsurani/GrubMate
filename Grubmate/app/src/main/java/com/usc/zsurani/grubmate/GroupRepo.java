@@ -80,9 +80,9 @@ public class GroupRepo {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT  * FROM " + Group.TABLE
                 + " WHERE " +
-                Group.KEY_id + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+                Group.KEY_id + "=" + groupId;// It's a good practice to use parameter ?, instead of concatenate string
 
-        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(groupId) } );
+        Cursor cursor = db.rawQuery(selectQuery, null);
         Group toReturn = new Group();
         if (cursor.moveToFirst()) {
             do {
@@ -92,6 +92,7 @@ public class GroupRepo {
                 toReturn.setUsers(groupSet);
                 toReturn.setOwner(cursor.getString(cursor.getColumnIndex(Group.KEY_ownerid)));
                 toReturn.setId(cursor.getString(cursor.getColumnIndex(Group.KEY_id)));
+                toReturn.setName(cursor.getString(cursor.getColumnIndex(Group.KEY_name)));
             } while (cursor.moveToNext());
         }
 
@@ -165,7 +166,6 @@ public class GroupRepo {
                 Group.KEY_id +
                 " FROM " + Group.TABLE + " WHERE " + Group.KEY_ownerid + " = " + ownerId;
 
-        //Student student = new Student();
         ArrayList<String> toReturn = new ArrayList<String>();
 
         Cursor cursor = db.rawQuery(selectQuery, null);
