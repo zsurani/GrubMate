@@ -47,6 +47,8 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         groupName = extras.getString("groupName");
 
 
+
+
         memberName = (EditText) findViewById(R.id.member_name);
         addingMembers = (Button) findViewById(R.id.adding_members);
         savingChanges = (Button) findViewById(R.id.save_members);

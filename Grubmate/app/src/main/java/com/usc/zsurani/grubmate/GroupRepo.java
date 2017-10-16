@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Set;
@@ -217,6 +218,30 @@ public class GroupRepo {
             if(str.trim().contains(name.trim())) return true;
         }
         return false;
+    }
+
+    public ArrayList<String> getUser(String groupName){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Group.KEY_user +
+                " FROM " + Group.TABLE
+                + " WHERE " +
+                Group.KEY_name + " LIKE '" + groupName + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String toReturn = "";
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(Group.KEY_user));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        ArrayList<String> users = new ArrayList<>();
+
+        return users;
     }
 
 }

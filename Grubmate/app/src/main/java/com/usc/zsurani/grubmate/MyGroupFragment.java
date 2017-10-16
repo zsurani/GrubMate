@@ -115,11 +115,9 @@ public class MyGroupFragment extends Fragment {
                 textName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
-//                        repo.deleteNotification(String.valueOf(t.getId()));
-//
-//                        // have to update adapter?
-
+                        Intent i = new Intent(getApplicationContext(), AddGroupMembersActivity.class);
+                        i.putExtra("groupName", t.getName());
+                        startActivityForResult(i, 0);
                     }
                 });
             }
