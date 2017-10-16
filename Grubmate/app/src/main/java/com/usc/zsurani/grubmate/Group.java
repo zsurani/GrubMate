@@ -14,11 +14,14 @@ public class Group {
     public static final String KEY_id = "id";
     public static final String KEY_ownerid = "owner";
     public static final String KEY_user = "users";
+    public static final String KEY_name = "name";
 
     String id;
     //change to set for easier remove/add
     Set<String> users;
     String ownerId;
+
+    String name;
 
     /*
      * Constructor for when new group is created
@@ -60,6 +63,14 @@ public class Group {
     }
     public void setId(String id){
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 

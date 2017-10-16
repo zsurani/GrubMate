@@ -59,13 +59,12 @@ public class UserRepo {
     }
 
     /*
-        has not been tested
         gets user ID using name
         * used specifically in create group activity
      */
     public int getUserId(String name){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT " + User.KEY_ID + " FROM " + User.TABLE + "WHERE " + User.KEY_name
+        String selectQuery = "SELECT " + User.KEY_ID + " FROM " + User.TABLE + " WHERE " + User.KEY_name
                 + "=" + name;
         Cursor c = db.rawQuery(selectQuery, null);
         int d = -1;

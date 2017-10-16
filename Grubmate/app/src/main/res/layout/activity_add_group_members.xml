@@ -16,29 +16,43 @@
         android:text="Enter Group Members"
         android:gravity="center"/>
 
-    <!--<EditText-->
-    <!--android:id="@+id/member_name"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignBaseline="@id/label_member_name"-->
-    <!--android:layout_toEndOf="@id/label_member_name" />-->
+    <EditText
+        android:id="@+id/member_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Insert name here"
+        android:layout_alignBaseline="@id/label_member_name"
+        android:layout_toEndOf="@id/label_member_name" />
 
-    <!--<ListView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"></ListView>-->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/adding_members"
+        android:textSize="18dp"
+        android:text="Add"/>
 
-    <!--<Button-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:id="@+id/adding_members"-->
-    <!--android:textSize="18dp"-->
-    <!--android:text="Add"/>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Member Names"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 
-    <!--<Button-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:id="@+id/save_members"-->
-    <!--android:textSize="18dp"-->
-    <!--android:text="Save"/>-->
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/group_list">
+    </ListView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/save_members"
+        android:textSize="18dp"
+        android:text="Save"/>
 
 </LinearLayout>
