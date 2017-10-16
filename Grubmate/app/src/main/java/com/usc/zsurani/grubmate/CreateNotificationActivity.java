@@ -155,10 +155,8 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 String fbId = Profile.getCurrentProfile().getId();
                 UserRepo up = new UserRepo(getApplicationContext());
                 int userId = up.getId(fbId); //need to add to use repo
-                Log.d("USERID", Integer.toString(userId));
 
                 Notifications n = new Notifications(name, t, cate, start, end, "POSTING", String.valueOf(userId)); //INPUTING A TEMP USER ID
-
                 n.setActiveStatus(true);
 
                 // if any field is not filled out, the user will not be able to save it
@@ -173,15 +171,14 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 List<String> cList = new ArrayList<String>(cate);
                 String cString = TextUtils.join(", ", cList);
 
-
-
                 Intent dummy = new Intent();
                 dummy.putExtra(NOTIFICATION_NAME, name);
                 dummy.putExtra(NOTIFICATION_START, start);
                 dummy.putExtra(NOTIFICATION_END, end);
                 dummy.putExtra(NOTIFICATION_TAGS, t);
                 dummy.putExtra(NOTIFICATION_CATEGORY, cString);
-                setResult(MyNotificationFragment.RESULT_SAVE_NOTIF, dummy);
+                setResult(0, dummy);
+                Log.d("CREATE NOTIF", "FINISH");
                 finish();
             }
         });

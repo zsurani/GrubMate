@@ -1,5 +1,6 @@
 package com.usc.zsurani.grubmate;
 
+import android.app.Notification;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -29,9 +30,17 @@ public class NotificationsRepo {
     public int insert(Notifications n) {
 
         //Open connection to write data
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Notifications.TABLE;
+        Cursor c = db.rawQuery(selectQuery, null);
+        int nextId = 0;
+        if (c.moveToFirst()) {
+            nextId = c.getCount();
+        }
+
+        db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(n.KEY_id, n.getId());
+        values.put(n.KEY_id, nextId);
         values.put(n.KEY_userID, n.getUserId());
 
         //loops through the list of categories to turn into a string
@@ -108,7 +117,6 @@ public class NotificationsRepo {
 
                 //gets the category as a string, splits by , and then puts into a list
                 String cateString = c.getString(c.getColumnIndex(Notifications.KEY_category));
-                // TODO FIX THIS
                 String[] cateArray = new String[] {};
                 if (cateString != null) cateArray = cateString.split(",");
                 List<String> cate = Arrays.asList(cateArray);
@@ -121,7 +129,12 @@ public class NotificationsRepo {
                 Set<String> cateSet = new HashSet<String>(cate);
 
                 n = new Notifications(name, tag, cateSet, start, end, type, userId);
-                n.setActiveStatus(Boolean.parseBoolean(status));
+                if (status.equals("0")) {
+                    n.setActiveStatus(false);
+                }
+                else {
+                    n.setActiveStatus(true);
+                }
 
             } while (c.moveToNext());
         }
@@ -262,7 +275,8 @@ public class NotificationsRepo {
         values.put(Notifications.KEY_status, status);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Notifications.TABLE, values, Notifications.KEY_id + "= ?", new String[] { String.valueOf(notifId) });
+        db.update(Notifications.TABLE, values, Notifications.KEY_id + "=" + Integer.parseInt(notifId), null);
+
         db.close(); // Closing database connection
     }
 
