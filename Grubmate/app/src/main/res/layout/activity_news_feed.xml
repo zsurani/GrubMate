@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/label_post_description"
-            android:text="@string/text_post_description"
+            android:text="@string/text_food_name"
             android:textColor="@color/colorDarkGray"
             android:layout_marginRight="12dp"
             android:layout_marginLeft="12dp"

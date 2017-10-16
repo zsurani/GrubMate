@@ -4,7 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -601,6 +604,20 @@ public class PostRepo {
             }
         }
         return toReturn;
+    }
+
+    public List<Integer> getPosts(int userId) {
+        List<Integer> posts = new ArrayList<Integer>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " + Post.KEY_id + " FROM " + Post.TABLE + " WHERE " +
+                Post.KEY_owner + "= " + Integer.toString(userId);
+        Cursor c = db.rawQuery(selectQuery, null);
+        if(c.moveToFirst()) {
+            while(!c.isAfterLast()) {
+                posts.add(Integer.parseInt(c.getString(c.getColumnIndex(Post.KEY_id))));
+            }
+        }
+        return posts;
     }
 
 

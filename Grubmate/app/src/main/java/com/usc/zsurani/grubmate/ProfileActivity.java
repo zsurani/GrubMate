@@ -63,9 +63,10 @@ public class ProfileActivity extends AppCompatActivity {
         postList.setAdapter(new PostAdapter(getApplicationContext(), R.layout.layout_post_row, posts));
 
         // getting all the info to populate the profile page TODO this assumes it's the current user
+        //TO FIX: should send an extra with the user id that we want to get the profile of
         String fbId = Profile.getCurrentProfile().getId();
         UserRepo up = new UserRepo(getApplicationContext());
-        final int userId = up.getId(fbId);
+        final int userId = up.getId(fbId); // this is what we would need to change if it we want a different user
 
         String stringNumRatings = up.getNumRatings(String.valueOf(userId));
         String stringRating = up.getRating(String.valueOf(userId));
@@ -79,6 +80,14 @@ public class ProfileActivity extends AppCompatActivity {
         textRating.setText(String.format(getResources().getString(R.string.text_profile_rating),stringRating));
         textName.setText(stringName);
         Picasso.with(this).load(uri).into(profilePic);
+
+
+        //need to get all of the posts that the user owns
+        PostRepo pr = new PostRepo(getApplicationContext());
+
+
+        //Integer[] postIds = pr.getPosts(userId);
+
     }
 
     //somehow need to get something that gets what profile we are looking at

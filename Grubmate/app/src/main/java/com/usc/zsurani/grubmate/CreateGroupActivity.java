@@ -20,8 +20,8 @@ public class CreateGroupActivity extends AppCompatActivity {
     public static final int RESULT_SAVE = 111;
 
     String fbId = Profile.getCurrentProfile().getId();
-    UserRepo up = new UserRepo(getApplicationContext());
-    final int userId = up.getId(fbId);
+//    UserRepo up = new UserRepo(getApplicationContext());
+//    final int userId = up.getId(fbId);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +30,14 @@ public class CreateGroupActivity extends AppCompatActivity {
 
         editName = (EditText) findViewById(R.id.edit_group_name);
         addGroupMembers = (Button) findViewById(R.id.button_add_members);
-        saveChanges = (Button) findViewById(R.id.button_save_group_changes);
+//        saveChanges = (Button) findViewById(R.id.button_save_group_changes);
 
         // TODO all the listeners
         addGroupMembers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(CreateGroupActivity.this, AddGroupMembersActivity.class);
+                i.putExtra("groupName", editName.getText().toString());
                 startActivityForResult(i, 0);
             }
         });

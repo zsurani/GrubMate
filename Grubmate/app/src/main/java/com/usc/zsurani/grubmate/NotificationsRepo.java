@@ -46,7 +46,7 @@ public class NotificationsRepo {
         {
             tag += s + ",";
         }
-
+        values.put(n.KEY_category, cate);
         values.put(n.KEY_tags, tag);
         values.put(n.KEY_beginTime, n.getBeginTime());
         values.put(n.KEY_endTime, n.getEndTime());
