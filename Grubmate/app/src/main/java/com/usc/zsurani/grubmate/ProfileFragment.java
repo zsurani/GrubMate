@@ -43,7 +43,21 @@ public class ProfileFragment extends Fragment {
     private Button postButton;
     private Button reviewButton;
 
+    private Bundle args;
+
     public static final String EXTRA_USER_ID = "grubmate.profile_fragment.user_id";
+
+    /*
+     * CALL THIS when you're on a post for a different user, trying to pass that user's ID info
+     * into this class. TODO test the args work
+     */
+    public static ProfileFragment newInstance(int user_id) {
+        ProfileFragment frag = new ProfileFragment();
+        Bundle toAttach = new Bundle();
+        toAttach.putInt(EXTRA_USER_ID, user_id);
+        frag.setArguments(toAttach);
+        return frag;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +69,9 @@ public class ProfileFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         View v = getView();
+
+        args = getArguments();
+
         postList = (ListView) v.findViewById(R.id.list_posts);
         reviewList = (ListView) v.findViewById(R.id.list_reviews);
         textRating = (TextView) v.findViewById(R.id.label_ratings);
@@ -92,7 +109,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setupProfile() {
-        Bundle args = getArguments();
         String fbId = Profile.getCurrentProfile().getId();
         UserRepo up = new UserRepo(getContext());
         final int userId;
@@ -115,16 +131,6 @@ public class ProfileFragment extends Fragment {
         textName.setText(stringName);
         Picasso.with(getContext()).load(uri).into(profilePic);
     }
-
-    //somehow need to get something that gets what profile we are looking at
-//    void Profile(User u)
-//    {
-//        profilePic.setImageURI(u.getImg());
-//        textName.setText(u.getName());
-//        textRating.setText(u.getRating());
-//        //textNumRatings.setText(u.getNumRating()); //need to make the getNumRating method if we think this is needed
-//
-//    }
 
     private class ReviewAdapter extends ArrayAdapter<String> {
 
