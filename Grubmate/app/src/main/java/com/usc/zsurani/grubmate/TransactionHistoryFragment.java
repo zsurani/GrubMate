@@ -49,14 +49,31 @@ public class TransactionHistoryFragment extends Fragment {
         */
 
         // TODO remove dummy list
-        List<Transaction> dummyList= new ArrayList<Transaction>();
-        Transaction t = new Transaction(0, 0, "King Hall", -1);
-        t.setStatus("Accepted");
-        dummyList.add(t);
+//        List<Transaction> dummyList= new ArrayList<Transaction>();
+//        Transaction t = new Transaction(0, 0, "King Hall", -1);
+//        t.setStatus("Accepted");
+//        dummyList.add(t);
 
-        transactionList.setAdapter(new TransactionHistoryFragment.TransactionAdapter(getContext(), R.layout.layout_transaction_row, dummyList));
+        transactionList.setAdapter(new TransactionHistoryFragment.TransactionAdapter(getContext(), R.layout.layout_transaction_row, getTransactions()));
 
     }
+
+    private List<Transaction> getTransactions(){
+        String fbId = Profile.getCurrentProfile().getId();
+        UserRepo up = new UserRepo(getContext());
+        final int userId = up.getId(fbId);
+
+        TransactionRepo tr = new TransactionRepo(getContext());
+        List<Transaction> transList = new ArrayList<>();
+
+        List<String> transactions = tr.getTransactionsId(userId);
+        for (String id : transactions) {
+            transList.add(tr.getTransaction(Integer.valueOf(id)));
+        }
+
+        return transList;
+    }
+
 
     private class TransactionAdapter extends ArrayAdapter<Transaction> {
 
