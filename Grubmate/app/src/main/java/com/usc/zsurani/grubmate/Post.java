@@ -476,5 +476,15 @@ public class Post{
 
     public void setId(Integer newId){id = newId;}
 
+    public boolean matches(Notifications notif) {
+        // check tags
+
+
+        // check categories
+
+
+        // check time TODO
+        return false;
+    }
 
 }
