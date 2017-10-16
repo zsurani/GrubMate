@@ -85,7 +85,7 @@ public class ProfileFragment extends Fragment {
         profilePic = (ImageView) v.findViewById(R.id.image_profile_pic);
         postButton = (Button) v.findViewById(R.id.button_profile_see_posts);
         reviewButton = (Button) v.findViewById(R.id.button_profile_see_reviews);
-        //createPost = (Button) v.findViewById(R.id.create_post);
+        createPost = (Button) v.findViewById(R.id.create_post);
 
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +103,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-/*
+
         createPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,7 +111,6 @@ public class ProfileFragment extends Fragment {
                 startActivityForResult(i,0);
             }
         });
-*/
 
         // TODO connect to db
         List<Post> posts = new ArrayList<Post>();
