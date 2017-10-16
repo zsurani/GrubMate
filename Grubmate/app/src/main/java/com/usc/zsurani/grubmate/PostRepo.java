@@ -139,6 +139,7 @@ public class PostRepo {
             } while (c.moveToNext());
         }
 
+        Log.d("DEBUG - owner-string = ", post.getOwner_string());
         c = db.rawQuery("SELECT * FROM " + User.TABLE
                 + " WHERE " + User.KEY_ID + " = " + post.getOwner_string(), null);
 
@@ -468,6 +469,7 @@ public class PostRepo {
     }
 
     public void addNewRequestor(String postId, String userId){
+
         String oldReqList = getRequestors(postId);
         String newReqList = oldReqList + "," + userId;
 
@@ -747,4 +749,38 @@ public class PostRepo {
         return postList;
     }
 
+    public int getProviderId(int postId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_owner +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + postId;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int toReturn = -1;
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Post.KEY_owner)));
+            } while (cursor.moveToNext());
+        }
+        return toReturn;
+    }
+
+    public String[] getRequestors(int postId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_usersRequested +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + postId;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String[] r = null;
+        if (cursor.moveToFirst()) {
+
+               String s = cursor.getString(cursor.getColumnIndex(Post.KEY_usersRequested));
+                r = s.split(",");
+
+        }
+        return r;
+    }
 }

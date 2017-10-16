@@ -32,6 +32,7 @@ public class Notifications {
     Boolean status;
     String name;
     String type;
+    String requestID; //idk if we want to add this or not
 
     /*
      * Constructor (Type 1) for subscription type notification in
@@ -47,6 +48,8 @@ public class Notifications {
         this.endTime= timeEnd;
         this.type = type;
         this.userID = userId;
+        //idk if we want to add this or not
+        this.requestID = "N/A";
     }
 
     /*
@@ -58,6 +61,16 @@ public class Notifications {
                   String locationOfRequester, String type){
         //PostID, requesterID, providerID,locationOfRequester need to create variable?
         this.type = type;
+        this.userID = providerID.toString();
+        this.requestID = requesterID.toString();
+        this.setActiveStatus(true);
+        //idk if we want to add this or not
+        this.beginTime = "N/A";
+        this.endTime = "N/A";
+        this.category = null;
+        this.tags = null;
+
+
     }
 
     /*
