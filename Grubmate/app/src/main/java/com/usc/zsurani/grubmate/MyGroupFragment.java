@@ -69,11 +69,11 @@ public class MyGroupFragment extends Fragment {
 
         List<Group> groupList = new ArrayList<>();
 
-//        NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
-//        List<String> notifStrings = repo.getNotifications(userId);
-//        for (String id : notifStrings) {
-//            notifList.add(repo.getNotification(Integer.valueOf(id)));
-//        }
+        GroupRepo repo = new GroupRepo(getApplicationContext());
+        List<String> groupStrings = repo.getGroupsFromOwner(Integer.toString(userId));
+        for (String id : groupStrings) {
+            groupList.add(repo.getGroup(id));
+        }
 
         return groupList;
     }
