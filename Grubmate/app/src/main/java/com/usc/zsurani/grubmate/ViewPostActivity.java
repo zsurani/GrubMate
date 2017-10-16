@@ -95,6 +95,11 @@ public class ViewPostActivity extends AppCompatActivity {
                 //i.putExtra("frgToLoad", 0); //0 = profile
               // startActivity(i);
 
+
+                //MAKE REQUEST
+
+
+
             }
         });
     }

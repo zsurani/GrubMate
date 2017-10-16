@@ -41,14 +41,5 @@
         android:layout_marginTop="16dp"
         android:text="Add Members" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_save_group_changes"
-        android:layout_below="@id/button_add_members"
-        android:layout_marginTop="8dp"
-        android:text="Save Changes"/>
-
-
 
 </RelativeLayout>

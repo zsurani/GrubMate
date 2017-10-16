@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.List;
 import java.util.Set;
 
-public class Post {
+public class Post{
 
     public static final String TABLE = "Post";
     public static final String KEY_id = "id";
