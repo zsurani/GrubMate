@@ -33,7 +33,7 @@ public class NewsFeedFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
         View v = getView();
 
-        listFeed = (ListView) v.findViewById(R.id.list_newsfeed);
+//        listFeed = (ListView) v.findViewById(R.id.list_newsfeed);
 
         // TODO add adapter
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.layout_post_row, R.id.listText, posts);

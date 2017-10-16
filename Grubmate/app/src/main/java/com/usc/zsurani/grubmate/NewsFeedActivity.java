@@ -38,7 +38,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_feed);
 
-        listFeed = (ListView) findViewById(R.id.list_newsfeed);
+        //listFeed = (ListView) findViewById(R.id.list_newsfeed);
 
         // TODO list & adapter
         ArrayList<Post> posts = new ArrayList<Post>();
@@ -151,7 +151,7 @@ public class NewsFeedActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
-                        repo.deleteNotification(String.valueOf(t.getId()));
+                        //repo.deleteNotification(String.valueOf(t.getId()));
 
                         // have to update adapter?
 
