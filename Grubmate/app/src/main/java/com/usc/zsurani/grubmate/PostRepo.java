@@ -765,4 +765,22 @@ public class PostRepo {
         }
         return toReturn;
     }
+
+    public String[] getRequestors(int postId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_usersRequested +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + postId;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String[] r = null;
+        if (cursor.moveToFirst()) {
+
+               String s = cursor.getString(cursor.getColumnIndex(Post.KEY_usersRequested));
+                r = s.split(",");
+
+        }
+        return r;
+    }
 }

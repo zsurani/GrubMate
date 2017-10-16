@@ -36,6 +36,7 @@ public class ViewPostActivity extends AppCompatActivity {
     private ImageView image;
     private int postID;
     private Post post;
+    private PostRepo postRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class ViewPostActivity extends AppCompatActivity {
         tags = (TextView) findViewById(R.id.view_post_tags);
         image = (ImageView) findViewById(R.id.view_post_picture);
 
-        PostRepo postRepo = new PostRepo(getApplicationContext());
+         postRepo = new PostRepo(getApplicationContext());
         Log.d("DEBUG - postID", Integer.toString(postID));
         post = postRepo.getPost(postID);
         postName.setText("Name: " + post.getFood());
@@ -84,14 +85,30 @@ public class ViewPostActivity extends AppCompatActivity {
         Bitmap images2 = BitmapFactory.decodeByteArray(images, 0, images.length);
         image.setImageBitmap(images2);
 
+        //Log.d("DEBUG userreq", "post = " + postRepo.getRequestors(postID).length);
+
+        if(Integer.parseInt(post.getNum_requests()) <= (postRepo.getRequestors(postID).length - 1)) //because it starts wiht ","
+        {
+            buttonRequestOnPost.setEnabled(false);
+        } else {
+            buttonRequestOnPost.setEnabled(true);
+        }
+
+
         buttonRequestOnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //need to update the post with the user id of who is requesting
-                PostRepo pr = new PostRepo(getApplicationContext());
                 UserRepo ur = new UserRepo(getApplicationContext());
                 Integer userId = ur.getId(Profile.getCurrentProfile().getId());
-                pr.addNewRequestor(Integer.toString(postID), Integer.toString(userId));
+                postRepo.addNewRequestor(Integer.toString(postID), Integer.toString(userId));
+
+                if(Integer.parseInt(post.getNum_requests()) <= (postRepo.getRequestors(postID).length - 1)) //because it starts wiht ","
+                {
+                    buttonRequestOnPost.setEnabled(false);
+                } else {
+                    buttonRequestOnPost.setEnabled(true);
+                }
 
                 /*
                 //also need to create a 'request' notification for the owner of the post
