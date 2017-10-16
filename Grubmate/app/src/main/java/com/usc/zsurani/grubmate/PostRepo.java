@@ -64,6 +64,42 @@ public class PostRepo {
         return (int) post_id;
     }
 
+    public void update(Post post) {
+        //Open connection to write data
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT " + User.KEY_ID + " FROM " + User.TABLE
+                + " WHERE " + User.KEY_fbUniqueIdentifier + " = " + post.getOwner_string(), null);
+
+        String userId = "";
+        if (c.moveToFirst()) {
+            userId = c.getString(c.getColumnIndex(User.KEY_ID));
+        }
+
+        db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Post.KEY_description, post.getDescription());
+        values.put(Post.KEY_owner, userId);
+        values.put(Post.KEY_food, post.getFood());
+        values.put(Post.KEY_num_requests, post.getNum_requests());
+        values.put(Post.KEY_categories, post.getCategories());
+        values.put(Post.KEY_tags, post.getTag());
+        values.put(Post.KEY_beginTime, post.getBeginTime());
+        values.put(Post.KEY_endTime, post.getEndTime());
+        values.put(Post.KEY_location, post.getLocation());
+        values.put(Post.KEY_active, post.getActive_status());
+        values.put(Post.KEY_usersAccepted, post.getUserAccepted());
+        values.put(Post.KEY_usersRequested, post.getUserRequested());
+        values.put(Post.KEY_homemadeNotRestaurant, post.getHomemade());
+        values.put(Post.KEY_images, post.getPhoto_image());
+
+
+        // Inserting Row
+        db.update(Post.TABLE, values, Post.KEY_id+"="+post.getId(), null);
+        db.close(); // Closing database connection
+        c.close();
+    }
+
 
 //    public void delete(int student_Id) {
 //

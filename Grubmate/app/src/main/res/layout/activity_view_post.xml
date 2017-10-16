@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -111,13 +112,29 @@
                 android:textSize="18dp"
                 android:layout_margin="4dp"/>
 
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="REQUEST"
-                android:textSize="18sp"
-                android:layout_margin="4dp"
-                android:id="@+id/button_request_on_post_view"/>
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="235dp"
+                    android:layout_height="wrap_content"
+                    android:text="REQUEST"
+                    android:textSize="18sp"
+                    android:layout_margin="4dp"
+                    android:id="@+id/button_request_on_post_view"/>
+
+                <ImageButton
+                    android:id="@+id/edit_button"
+                    android:layout_width="44dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/ic_editing"
+                    android:layout_alignParentRight="true"
+                    />
+
+            </LinearLayout>
+
 
 
             <!-- TODO add categories, images, groups -->

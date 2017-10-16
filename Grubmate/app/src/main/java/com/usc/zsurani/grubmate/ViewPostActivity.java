@@ -13,13 +13,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.facebook.Profile;
+
 public class ViewPostActivity extends AppCompatActivity {
 
     private Button buttonRequestOnPost;
+    private ImageButton buttonEdit;
     private TextView postName;
     private TextView postUser;
     private TextView userRating;
@@ -61,6 +65,7 @@ public class ViewPostActivity extends AppCompatActivity {
         categories = (TextView) findViewById(R.id.view_post_categories);
         tags = (TextView) findViewById(R.id.view_post_tags);
         image = (ImageView) findViewById(R.id.view_post_picture);
+        buttonEdit = (ImageButton) findViewById(R.id.edit_button);
 
         PostRepo postRepo = new PostRepo(getApplicationContext());
         final Post post = postRepo.getPost(postID);
@@ -78,6 +83,12 @@ public class ViewPostActivity extends AppCompatActivity {
         byte[] images = post.getPhoto_image();
         Bitmap images2 = BitmapFactory.decodeByteArray(images, 0, images.length);
         image.setImageBitmap(images2);
+
+        if (post.getOwner_string().equals(Profile.getCurrentProfile().getName())) {
+            buttonEdit.setVisibility(View.VISIBLE);
+        } else {
+            buttonEdit.setVisibility(View.INVISIBLE);
+        }
 
         buttonRequestOnPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,5 +113,17 @@ public class ViewPostActivity extends AppCompatActivity {
 
             }
         });
+
+        // edit post button leads to create post page
+        buttonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), CreatePostActivity.class);
+                i.putExtra("postID", postID);
+                startActivity(i);
+            }
+        });
+
+
     }
 }
