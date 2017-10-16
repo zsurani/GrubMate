@@ -270,6 +270,11 @@ public class Post {
     }
 
     /*
+    Returns the user object associated with the owner.
+     */
+    User getProvider() { return owner;}
+
+    /*
 	 * Returns list of User ids that have been accepted as receivers
 	 */
     Set<String> getAcceptedRequesters() {
@@ -377,6 +382,9 @@ public class Post {
         Log.d("here", "getting");
         return photo_image;
     }
+    public String getTitle(){
+        return title;
+    }
 
 
     public String getUserRequested() {
@@ -453,5 +461,9 @@ public class Post {
 
     public Set<String> getGroups(){
         return groups;
+    }
+
+    public void setTitle(String t){
+        title = t;
     }
 }

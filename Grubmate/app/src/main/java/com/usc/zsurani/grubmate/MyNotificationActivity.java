@@ -159,8 +159,8 @@ public class MyNotificationActivity extends AppCompatActivity {
                 buttonEnd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
-//                        repo.deleteNotification(String.valueOf(t.getId()));
+                        NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
+                        repo.deleteNotification(String.valueOf(t.getId()));
 
                         // have to update adapter?
 

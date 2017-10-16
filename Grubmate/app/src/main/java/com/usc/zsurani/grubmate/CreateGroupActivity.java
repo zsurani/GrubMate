@@ -41,5 +41,27 @@ public class CreateGroupActivity extends AppCompatActivity {
                 startActivityForResult(i, 0);
             }
         });
+
+        saveChanges.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO create intent to return info back to view group activity
+                Intent i = new Intent(CreateGroupActivity.this, ViewGroupActivity.class);
+                startActivity(i);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case RESULT_SAVE:
+                //getting unchecked cast error
+//                Group group = new Group((HashSet<Integer>) data.getSerializableExtra(AddGroupMembersActivity.MEMBERS_SET), userId);
+
+                break;
+        }
+
     }
 }

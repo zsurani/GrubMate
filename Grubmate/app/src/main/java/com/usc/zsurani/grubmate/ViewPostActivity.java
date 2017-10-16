@@ -1,7 +1,12 @@
 package com.usc.zsurani.grubmate;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class ViewPostActivity extends AppCompatActivity {
@@ -32,12 +38,12 @@ public class ViewPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
 
-        int postID;
+        final int postID;
         Bundle extras = getIntent().getExtras();
-        if(extras == null) {
-            postID= 0;
+        if (extras == null) {
+            postID = 0;
         } else {
-            postID= extras.getInt("postID");
+            postID = extras.getInt("postID");
         }
 
         Log.d("hello", Integer.toString(postID));
@@ -58,17 +64,17 @@ public class ViewPostActivity extends AppCompatActivity {
 
         PostRepo postRepo = new PostRepo(getApplicationContext());
         final Post post = postRepo.getPost(postID);
-        postName.setText(post.getFood());
-        postUser.setText(post.getOwner_string());
-        userRating.setText(post.getUserRating());
-        description.setText(post.getDescription());
-        homemade.setText(post.getHomemade());
-        servings.setText(post.getNum_requests());
-        begin.setText(post.getBeginTime());
-        end.setText(post.getEndTime());
-        location.setText(post.getLocation());
-        categories.setText(post.getCategories());
-        tags.setText(post.getTag());
+        postName.setText("Name: " + post.getFood());
+        postUser.setText("User: " + post.getOwner_string());
+        userRating.setText("Rating: " + post.getUserRating());
+        description.setText("Description: " + post.getDescription());
+        homemade.setText("Homemade: " + post.getHomemade());
+        servings.setText("Servings: " + post.getNum_requests());
+        begin.setText("Start Time: " + post.getBeginTime());
+        end.setText("End Time: " + post.getEndTime());
+        location.setText("Location: " + post.getLocation());
+        categories.setText("Categories: " + post.getCategories());
+        tags.setText("Tags: " + post.getTag());
         byte[] images = post.getPhoto_image();
         Bitmap images2 = BitmapFactory.decodeByteArray(images, 0, images.length);
         image.setImageBitmap(images2);
@@ -76,6 +82,19 @@ public class ViewPostActivity extends AppCompatActivity {
         buttonRequestOnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            }
+        });
+
+        //goes to the user profile from the User label
+        postUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Post p = new Post(postID);
+                //ProfileActivity pa = new ProfileActivity(p.getProvider());
+               //Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                //i.putExtra("frgToLoad", 0); //0 = profile
+               //startActivity(i);
+
             }
         });
     }

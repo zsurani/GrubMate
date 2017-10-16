@@ -33,6 +33,12 @@ public class Group {
         this.ownerId = ownerId;
     }
 
+    Group(Set<String> users, String userId){
+        id = userId;
+        this.users = users;
+    }
+
+
     Group(){}
 
     /*
