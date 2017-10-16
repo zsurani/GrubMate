@@ -158,7 +158,7 @@ public class NewsFeedActivity extends AppCompatActivity {
                         PostRepo repo = new PostRepo(getApplicationContext());
                         Intent intent = new Intent(NewsFeedActivity.this, ViewPostActivity.class);
                         startActivity(intent);
-                        intent.putExtra("currPost", t);
+                        //intent.putExtra("currPost", t.getId());
 
                     }
                 });
