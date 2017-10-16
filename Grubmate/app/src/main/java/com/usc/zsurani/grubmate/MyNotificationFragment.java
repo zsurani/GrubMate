@@ -68,8 +68,7 @@ public class MyNotificationFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-        Log.d("NOTIFICATION FRAGMENT", "ON ACTIVITY RESULT !!");
+        //super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
             case RESULT_SAVE_NOTIF:
                 adapter = new MyNotificationFragment.NotificationAdapter(getActivity().getApplicationContext(), R.layout.layout_notification_row, getNotificationList());

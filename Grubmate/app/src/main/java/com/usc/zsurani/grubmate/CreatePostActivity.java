@@ -194,6 +194,7 @@ public class CreatePostActivity extends AppCompatActivity {
                 final String users = "";
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                //GETTING A NULL POINTER BELOW THIS
                 yourbitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
                 byte[] image = stream.toByteArray();
 

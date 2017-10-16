@@ -34,7 +34,7 @@ public class MyGroupFragment extends Fragment {
         View v = getView();
 
         groupList = (ListView) v.findViewById(R.id.list_groups);
-
+        //THIS IS THROWING a NULL POINTER BECAUSE groupNames was never initalized
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.layout_group_row, R.id.listText, groupNames);
         groupList.setAdapter(adapter);
 

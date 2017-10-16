@@ -58,17 +58,17 @@ public class ViewPostActivity extends AppCompatActivity {
 
         PostRepo postRepo = new PostRepo(getApplicationContext());
         final Post post = postRepo.getPost(postID);
-        postName.setText(post.getFood());
-        postUser.setText(post.getOwner_string());
-        userRating.setText(post.getUserRating());
-        description.setText(post.getDescription());
-        homemade.setText(post.getHomemade());
-        servings.setText(post.getNum_requests());
-        begin.setText(post.getBeginTime());
-        end.setText(post.getEndTime());
-        location.setText(post.getLocation());
-        categories.setText(post.getCategories());
-        tags.setText(post.getTag());
+        postName.setText("Name: " + post.getFood());
+        postUser.setText("User: " + post.getOwner_string());
+        userRating.setText("Rating: " + post.getUserRating());
+        description.setText("Description: " + post.getDescription());
+        homemade.setText("Homemade: " + post.getHomemade());
+        servings.setText("Servings: " + post.getNum_requests());
+        begin.setText("Start Time: " + post.getBeginTime());
+        end.setText("End Time: " + post.getEndTime());
+        location.setText("Location: " + post.getLocation());
+        categories.setText("Categories: " + post.getCategories());
+        tags.setText("Tags: " + post.getTag());
         byte[] images = post.getPhoto_image();
         Bitmap images2 = BitmapFactory.decodeByteArray(images, 0, images.length);
         image.setImageBitmap(images2);
