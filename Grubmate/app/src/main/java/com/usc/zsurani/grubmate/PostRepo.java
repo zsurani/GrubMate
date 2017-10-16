@@ -735,4 +735,25 @@ public class PostRepo {
         return toReturn;
     }
 
+    public List<Post> getPosts() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT * FROM " + Post.TABLE;
+
+        Cursor cursor = db.rawQuery(selectQuery, null );
+        List<Post> postList = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                Post post = new Post();
+                post.setFood(cursor.getString(cursor.getColumnIndex(Post.KEY_food)));
+                post.setDescription(cursor.getString(cursor.getColumnIndex(Post.KEY_description)));
+                post.setId(cursor.getInt(cursor.getColumnIndex(Post.KEY_id)));
+                postList.add(post);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return postList;
+    }
+
 }
