@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         dbHandler = new DatabaseHandler(this);
         db = dbHandler.getReadableDatabase();
 
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
         mTitle = mDrawerTitle = getTitle();
