@@ -482,14 +482,27 @@ public class Post{
 
     public void setId(Integer newId){id = newId;}
 
+    /*
+     * Checks to see if this post matches the tags & categories on the given Notifications object.
+     */
     public boolean matches(Notifications notif) {
-        // check tags
+        Set<String> notifTags = notif.getTags();
+        Set<String> notifCategories = notif.getCategory();
 
+        // check tags
+        for (String nTag : notifTags) {
+            if (tags.contains(nTag)) {
+                return true;
+            }
+        }
 
         // check categories
+        for (String nCat : notifCategories) {
+            if (category.contains(nCat)) {
+                return true;
+            }
+        }
 
-
-        // check time TODO
         return false;
     }
 

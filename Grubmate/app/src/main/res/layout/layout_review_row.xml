@@ -21,7 +21,8 @@
         android:id="@+id/text_profile_review"
         android:text="placeholder text here"
         android:layout_margin="16dp"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:textColor="@color/colorDarkGray"/>
         <!--android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
