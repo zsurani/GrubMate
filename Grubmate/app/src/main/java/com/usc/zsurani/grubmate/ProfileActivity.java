@@ -6,6 +6,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -84,9 +85,26 @@ public class ProfileActivity extends AppCompatActivity {
 
         //need to get all of the posts that the user owns
         PostRepo pr = new PostRepo(getApplicationContext());
+        Log.d("DEBUG", "creating the postRepo");
+        List<Integer> postIds = pr.getPosts(userId);
+        Log.d("DEBUG", "gotten all the post Ids");
+        Log.d("DEBUG", Integer.toString(postIds.size()));
+        List<Post> userPosts = new ArrayList<Post>();
+        for(int i = 0; i < postIds.size(); i++) {
+            Log.d("I = ", Integer.toString(i));
+            Log.d("DEBUG", Integer.toString(postIds.get(i)));
+            Integer postID = postIds.get(i);
+            Post post = pr.getPost(postID);
+
+            userPosts.add(post);
+            // Log.d("DEBUG", Integer.toString(p.getId()));
+        }
 
 
-        //Integer[] postIds = pr.getPosts(userId);
+        PostAdapter adapter = new PostAdapter(getApplicationContext(), R.layout.layout_post_row, userPosts);
+        postList.setAdapter(adapter);
+
+
 
     }
 

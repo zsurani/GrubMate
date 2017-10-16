@@ -266,6 +266,8 @@ public class Post{
      * Returns the User id of the provider.
      */
     Integer getProviderID() {
+        if(owner == null)
+            return -1;
         return owner.getID();
     }
 
@@ -386,6 +388,9 @@ public class Post{
         return title;
     }
 
+    public Integer getId() {
+        return id;
+    }
 
     public String getUserRequested() {
         return userRequested;
