@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/list_notifications"
+        android:layout_above="@+id/button_add_notification"
         android:layout_margin="8dp">
 
     </ListView>
@@ -29,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add New Notification"
-        android:id="@+id/button_add_notification"
-        android:layout_below="@id/list_notifications"
+        android:id="@id/button_add_notification"
+        android:layout_alignParentBottom="true"
         android:layout_margin="8dp"/>
 
 </RelativeLayout>
