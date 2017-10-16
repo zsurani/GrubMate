@@ -18,7 +18,7 @@ public class MyGroupActivity extends AppCompatActivity {
 
         groupList = (ListView) findViewById(R.id.list_groups);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.layout_group_row, R.id.listText, groupNames);
-        groupList.setAdapter(adapter);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.layout_group_row, R.id.listText, groupNames);
+        //groupList.setAdapter(adapter);
     }
 }
