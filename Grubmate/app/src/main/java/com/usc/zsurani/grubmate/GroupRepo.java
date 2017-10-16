@@ -220,7 +220,7 @@ public class GroupRepo {
         return false;
     }
 
-    public ArrayList<String> getUser(String groupName){
+    public List<String> getUser(String groupName){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT  " +
                 Group.KEY_user +
@@ -239,9 +239,8 @@ public class GroupRepo {
         cursor.close();
         db.close();
 
-        ArrayList<String> users = new ArrayList<>();
-
-        return users;
+        List<String> usersList = Arrays.asList(toReturn.split(","));
+        return usersList;
     }
 
 }
