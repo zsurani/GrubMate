@@ -81,26 +81,23 @@ public class TransactionHistoryActivity extends AppCompatActivity {
                 Integer postId = t.getPostID();
                 String status = t.getStatus();
 
-                /* TODO once repo classes are set up
-                    get UserRepo
-                    find provider name with ID
-                    find requester name with ID
-
-                    get PostRepo
-                    find post info with ID
-                 */
                 UserRepo ur = new UserRepo(getApplicationContext());
                 String provider = ur.getName(providerId);
                 String requester = ur.getName(requesterId);
 
+                PostRepo pr = new PostRepo(getApplicationContext());
+                final Post post = pr.getPost(postId);
+                String food = post.getFood();
 
-
+                String name = getResources().getString(R.string.text_transaction_name);
+                transactName.setText(String.format(name, provider, food, requester));
+                transactName.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
 
                 // TODO delete dummy data
-                String name = getResources().getString(R.string.text_transaction_name);
 
-                transactName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
-                transactStatus.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
+
+//                transactName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
+//                transactStatus.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
 
                 switch (status) {
                     case "Accepted":
