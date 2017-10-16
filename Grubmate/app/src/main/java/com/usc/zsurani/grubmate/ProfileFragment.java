@@ -1,6 +1,7 @@
 package com.usc.zsurani.grubmate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -43,6 +44,7 @@ public class ProfileFragment extends Fragment {
     private ImageView profilePic;
     private Button postButton;
     private Button reviewButton;
+    private Button createPost;
 
     private Bundle args;
 
@@ -81,6 +83,7 @@ public class ProfileFragment extends Fragment {
         profilePic = (ImageView) v.findViewById(R.id.image_profile_pic);
         postButton = (Button) v.findViewById(R.id.button_profile_see_posts);
         reviewButton = (Button) v.findViewById(R.id.button_profile_see_reviews);
+        createPost = (Button) v.findViewById(R.id.create_post);
 
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +100,15 @@ public class ProfileFragment extends Fragment {
                 postList.setVisibility(View.INVISIBLE);
             }
         });
+
+        createPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), CreatePostActivity.class);
+                startActivityForResult(i,0);
+            }
+        });
+
 
         // TODO connect to db
         List<Post> posts = new ArrayList<Post>();

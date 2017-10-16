@@ -84,4 +84,12 @@
         android:layout_margin="8dp"
         android:visibility="invisible"></ListView>
 
+    <Button
+        android:id="@+id/create_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/list_posts" />
+
 </RelativeLayout>
