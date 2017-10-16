@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.facebook.Profile;
+
 import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -32,7 +34,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
         super(context, textViewResourceId, items);
         this.context = context;
     }
-    /*
+
 
     @NonNull
     @Override
@@ -48,7 +50,6 @@ public class PostAdapter extends ArrayAdapter<Post> {
         Post t = getItem(position);
 
         if (t != null) {
-
             TextView postName = (TextView) v.findViewById(R.id.label_post_name);
             TextView postDesc = (TextView) v.findViewById(R.id.label_post_description);
             Button requestButton = (Button) v.findViewById(R.id.button_request);
@@ -60,11 +61,35 @@ public class PostAdapter extends ArrayAdapter<Post> {
                     find post info (name, description, times, tags, categories) with ID
                     if (already requested) disable request button
                  */
+            PostRepo pr = new PostRepo(getApplicationContext());
+            //postName.setText(t.getFood());
+
+            postName.setText(t.getFood());
+            Log.d("DEBUG", t.getFood());
+                    //pr.getFood(Integer.toString(t.getId())));
+            postDesc.setText(pr.getDescription(t.getDescription()));
+                    //Integer.toString(t.getId())));
+            requestButton.setText("Request");
+
+            UserRepo ur = new UserRepo(getApplicationContext());
+            Integer currUserId = ur.getId(Profile.getCurrentProfile().getId());
+            //String req = t.getUserAccepted();
+                    //pr.getAccepted(Integer.toString(t.getId()));
+            //String numReq = t.getNum_requests();
+                    //pr.getNumReq(Integer.toString(t.getId()));
+            //String[] s = req.split(",");
+            /*
+            if(currUserId == t.getProviderID() )//|| s.length == Integer.parseInt(numReq))
+            {
+               requestButton.setEnabled(false);
+            }
+            */
+
 
             // TODO delete dummy data
 //            String name = getResources().getString(R.string.text_transaction_name);
-    /*
-            String name = getResources().getString(R.string.text_transaction_name);
+
+            //String name = getResources().getString(R.string.text_transaction_name);
 
 //            postName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
 //            postDesc.setText(String.format(getResources().getString(R.string.text_transaction_status), "status"));
@@ -75,5 +100,5 @@ public class PostAdapter extends ArrayAdapter<Post> {
         return v;
 
     }
-    */
+
 }

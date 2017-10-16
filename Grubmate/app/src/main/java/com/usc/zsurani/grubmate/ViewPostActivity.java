@@ -91,9 +91,9 @@ public class ViewPostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Post p = new Post(postID);
                 //ProfileActivity pa = new ProfileActivity(p.getProvider());
-               //Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+              // Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
                 //i.putExtra("frgToLoad", 0); //0 = profile
-               //startActivity(i);
+              // startActivity(i);
 
             }
         });
