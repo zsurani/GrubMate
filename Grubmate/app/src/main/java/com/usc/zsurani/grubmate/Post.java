@@ -403,6 +403,8 @@ public class Post{
         return user_rating;
     }
 
+    public Integer getInt(){return id;}
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -466,4 +468,8 @@ public class Post{
     public void setTitle(String t){
         title = t;
     }
+
+    public void setId(Integer newId){id = newId;}
+
+
 }
