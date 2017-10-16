@@ -41,15 +41,6 @@ public class CreateGroupActivity extends AppCompatActivity {
                 startActivityForResult(i, 0);
             }
         });
-
-        saveChanges.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO create intent to return info back to view group activity
-                Intent i = new Intent(CreateGroupActivity.this, ViewGroupActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
     @Override
