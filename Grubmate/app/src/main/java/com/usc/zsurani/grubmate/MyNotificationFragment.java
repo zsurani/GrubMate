@@ -34,20 +34,24 @@ public class MyNotificationFragment extends Fragment {
     private ListView notificationList;
     private Button createNotification;
     private MyNotificationFragment.NotificationAdapter adapter;
+    private String status;
 
-    public static final int RESULT_SAVE_NOTIF = 111;
-    public static final int RESULT_CANCEL_NOTIF = -111;
+//    public static final String ARG_STATUS = "grubmate.notification.argument.status";
+//    public static final String RESULT_SAVE_NOTIF = "grubmate.notification.result.save";
+//    public static final String RESULT_LOAD_NOTIF = "grubmate.notification.result.load";
+
+    /*public static MyNotificationFragment newInstance(String callCode) {
+        MyNotificationFragment frag = new MyNotificationFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_STATUS, callCode);
+        frag.setArguments(args);
+        return frag;
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_my_notification, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        View v = getView();
+        View v = inflater.inflate(R.layout.activity_my_notification, container, false);
 
         adapter = new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, getNotificationList());
         notificationList = v.findViewById(R.id.list_notifications);
@@ -64,20 +68,27 @@ public class MyNotificationFragment extends Fragment {
             }
         });
 
+        return v;
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case RESULT_SAVE_NOTIF:
-                adapter = new MyNotificationFragment.NotificationAdapter(getActivity().getApplicationContext(), R.layout.layout_notification_row, getNotificationList());
-                notificationList.setAdapter(adapter);
-                break;
-            case RESULT_CANCEL_NOTIF:
-                // Don't do anything
-                break;
-        }
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        View v = getView();
+
+        refresh();
+
+        createNotification =  v.findViewById(R.id.button_add_notification);
+
+        createNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // start new page for creating a notification
+                Intent i = new Intent(getActivity(), CreateNotificationActivity.class);
+                startActivityForResult(i, 0);
+            }
+        });
     }
 
     private List<Notifications> getNotificationList() {
@@ -90,10 +101,20 @@ public class MyNotificationFragment extends Fragment {
         NotificationsRepo repo = new NotificationsRepo(getActivity().getApplicationContext());
         List<String> notifStrings = repo.getNotifications(userId);
         for (String id : notifStrings) {
-            notifList.add(repo.getNotification(Integer.valueOf(id)));
+            Notifications n = repo.getNotification(Integer.valueOf(id));
+            n.setId(Integer.valueOf(id));
+            notifList.add(n);
         }
 
         return notifList;
+    }
+
+    public void refresh() {
+        if (getView() != null) {
+            adapter = new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, getNotificationList());
+            notificationList = getView().findViewById(R.id.list_notifications);
+            notificationList.setAdapter(adapter);
+        }
     }
 
     /*
@@ -130,7 +151,7 @@ public class MyNotificationFragment extends Fragment {
             if (t != null) {
                 TextView textName = (TextView) v.findViewById(R.id.label_notification_name);
                 TextView textInfo = (TextView) v.findViewById(R.id.label_notification_description);
-                Button buttonEnd = (Button) v.findViewById(R.id.button_notification);
+                final Button buttonEnd = (Button) v.findViewById(R.id.button_notification);
 
                 String timeStart = t.getBeginTime();
                 String timeEnd = t.getEndTime();
@@ -160,23 +181,35 @@ public class MyNotificationFragment extends Fragment {
                 }
                 Date now = Calendar.getInstance().getTime();
 
-                if (now.before(end)) {
-                    buttonEnd.setEnabled(false);
-                } else {
-                    buttonEnd.setEnabled(true);
-                }
+//                if (now.before(end)) {
+//                    buttonEnd.setEnabled(false);
+//                } else {
+//                    buttonEnd.setEnabled(true);
+//                }
 
                 // on click listener for the "End Notification" button
                 buttonEnd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
-//                        repo.deleteNotification(String.valueOf(t.getId()));
+                        NotificationsRepo repo = new NotificationsRepo(getActivity().getApplicationContext());
+                        repo.updateStatus(String.valueOf(t.getId()), "0");
+                        t.setActiveStatus(false);
 
-                        // have to update adapter?
+                        // have to update adapter
+                        notifyDataSetChanged();
+
+                        buttonEnd.setEnabled(false);
 
                     }
                 });
+
+                if (!t.isActive()) {
+                    buttonEnd.setEnabled(false);
+                    buttonEnd.setText("Notification Cancelled");
+                } else {
+                    buttonEnd.setEnabled(true);
+                    buttonEnd.setText("End Notification");
+                }
             }
 
             return v;

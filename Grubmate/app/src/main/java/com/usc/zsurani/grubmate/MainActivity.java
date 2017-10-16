@@ -225,6 +225,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
+
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment current = fm.findFragmentById(R.id.content_frame);
+        if (current instanceof MyNotificationFragment) {
+            ((MyNotificationFragment) current).refresh();
+        }
     }
 
     private List<String> getFriendsList(){

@@ -8,13 +8,14 @@
     android:orientation="vertical">
 
 
-    <TextView
+    <!--<TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="My Notifications"
         android:textAlignment="center"
         android:textSize="24sp"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:id="@+id/label_my_notifications"/>-->
 
     <ListView
         android:layout_width="match_parent"
@@ -29,6 +30,7 @@
         android:layout_height="wrap_content"
         android:text="Add New Notification"
         android:id="@+id/button_add_notification"
+        android:layout_below="@id/list_notifications"
         android:layout_margin="8dp"/>
 
 </RelativeLayout>

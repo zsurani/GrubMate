@@ -84,6 +84,11 @@ public class Notifications {
     }
 
     /*
+     * Sets the ID for the current Notifications object.
+     */
+    void setId(int id) { this.id = id; }
+
+    /*
      * Returns true if notification (Type 1) is still active,
      * returns false if inactive
      */
@@ -148,7 +153,7 @@ public class Notifications {
     /*
      * Changes notification (Type 1) to true if active, false if inactive
      */
-    void setActiveStatus(Boolean active){}
+    void setActiveStatus(Boolean active){ this.status = active; }
 
     /*
      * Sets or changes the beginning time set in the notification
