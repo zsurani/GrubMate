@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ import java.util.List;
 public class MyNotificationFragment extends Fragment {
     private ListView notificationList;
     private Button createNotification;
-    private NotificationAdapter adapter;
+    private MyNotificationFragment.NotificationAdapter adapter;
 
     public static final int RESULT_SAVE_NOTIF = 111;
     public static final int RESULT_CANCEL_NOTIF = -111;
@@ -49,10 +50,11 @@ public class MyNotificationFragment extends Fragment {
         View v = getView();
 
         adapter = new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, getNotificationList());
-        notificationList = (ListView) v.findViewById(R.id.list_notifications);
+        notificationList = v.findViewById(R.id.list_notifications);
         notificationList.setAdapter(adapter);
 
-        createNotification = (Button) v.findViewById(R.id.button_add_notification);
+        createNotification =  v.findViewById(R.id.button_add_notification);
+
         createNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,12 +65,13 @@ public class MyNotificationFragment extends Fragment {
         });
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
             case RESULT_SAVE_NOTIF:
-                adapter = new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, getNotificationList());
+                adapter = new MyNotificationFragment.NotificationAdapter(getActivity().getApplicationContext(), R.layout.layout_notification_row, getNotificationList());
                 notificationList.setAdapter(adapter);
                 break;
             case RESULT_CANCEL_NOTIF:
@@ -84,7 +87,7 @@ public class MyNotificationFragment extends Fragment {
 
         List<Notifications> notifList = new ArrayList<>();
 
-        NotificationsRepo repo = new NotificationsRepo(getContext());
+        NotificationsRepo repo = new NotificationsRepo(getActivity().getApplicationContext());
         List<String> notifStrings = repo.getNotifications(userId);
         for (String id : notifStrings) {
             notifList.add(repo.getNotification(Integer.valueOf(id)));
@@ -92,17 +95,21 @@ public class MyNotificationFragment extends Fragment {
 
         return notifList;
     }
+
     /*
      * The custom adapter for the Notifications list view.
      */
     private class NotificationAdapter extends ArrayAdapter<Notifications> {
+        private Context context;
 
         public NotificationAdapter(Context context, int textViewResourceId) {
             super(context, textViewResourceId);
+            this.context = context;
         }
 
         public NotificationAdapter(Context context, int textViewResourceId, List<Notifications> items) {
             super(context, textViewResourceId, items);
+            this.context = context;
         }
 
         @NonNull
