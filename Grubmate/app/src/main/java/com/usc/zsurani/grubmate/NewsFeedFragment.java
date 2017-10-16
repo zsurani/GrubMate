@@ -54,7 +54,6 @@ public class NewsFeedFragment extends Fragment{
 
         return postList;
     }
-
 }
 
 
