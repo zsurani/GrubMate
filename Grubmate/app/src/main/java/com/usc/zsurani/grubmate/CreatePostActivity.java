@@ -31,6 +31,8 @@ import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static com.usc.zsurani.grubmate.ProfileFragment.newInstance;
+
 public class CreatePostActivity extends AppCompatActivity {
 
     private EditText editName;
@@ -41,6 +43,7 @@ public class CreatePostActivity extends AppCompatActivity {
     private EditText editLocation;
     private EditText editTags;
     private Button buttonSave;
+    private Button buttonDelete;
     private CheckBox checkbox1;
     private CheckBox checkbox2;
     private CheckBox checkbox3;
@@ -77,6 +80,7 @@ public class CreatePostActivity extends AppCompatActivity {
         editLocation = (EditText) findViewById(R.id.edit_post_location);
         editTags = (EditText) findViewById(R.id.edit_post_tags);
         buttonSave = (Button) findViewById(R.id.button_save_new_post);
+        buttonDelete = (Button) findViewById(R.id.button_delete_post);
         viewImage = (ImageView) findViewById(R.id.viewImage);
 
         checkbox1 = (CheckBox) findViewById(R.id.american);
@@ -245,6 +249,18 @@ public class CreatePostActivity extends AppCompatActivity {
                 Intent intent = new Intent(CreatePostActivity.this, ViewPostActivity.class);
                 intent.putExtra("postID", postId);
                 startActivity(intent);
+            }
+        });
+
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (postID != 0) {
+                    PostRepo postRepo = new PostRepo(getApplicationContext());
+                    postRepo.deletePost(postID);
+                }
+
+                finish();
             }
         });
 

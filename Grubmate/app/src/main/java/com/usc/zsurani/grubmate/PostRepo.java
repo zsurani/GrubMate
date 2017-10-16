@@ -607,10 +607,9 @@ public class PostRepo {
         return toReturn;
     }
 
-    public void deletePost(String postId){
+    public void deletePost(int postId){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        // It's a good practice to use parameter ?, instead of concatenate string
-        db.delete(Post.TABLE, Post.KEY_id + "=" + Integer.parseInt(postId), null);
+        db.delete(Post.TABLE, Post.KEY_id + "=" + postId, null);
         db.close(); // Closing database connection
     }
 
