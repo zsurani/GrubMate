@@ -262,7 +262,7 @@ public class NotificationsRepo {
         values.put(Notifications.KEY_status, status);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Notifications.TABLE, values, Notifications.KEY_id + "= ?", new String[] { String.valueOf(notifId) });
+        db.update(Notifications.TABLE, values, Notifications.KEY_id + "=" + Integer.parseInt(notifId), null);
         db.close(); // Closing database connection
     }
 

@@ -13,7 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import com.facebook.Profile;
 
 import java.text.DateFormat;
@@ -152,9 +156,9 @@ public class NewsFeedActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         PostRepo repo = new PostRepo(getApplicationContext());
-                        //repo.deleteNotification(String.valueOf(t.getId()));
-
-                        // have to update adapter?
+                        Intent intent = new Intent(NewsFeedActivity.this, ViewPostActivity.class);
+                        startActivity(intent);
+                        intent.putExtra("currPost", t);
 
                     }
                 });
