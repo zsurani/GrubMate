@@ -110,6 +110,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
                 final String description = editDesc.getText().toString();
                 final String owner = Profile.getCurrentProfile().getId();
+                Log.d("DEBUG- owner = ", owner);
                 final String food = editName.getText().toString();
                 // images
                 num_requests = editNumAvailable.getText().toString(); // error check for words? TODO

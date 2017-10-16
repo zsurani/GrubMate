@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.facebook.Profile;
+
 public class ViewPostActivity extends AppCompatActivity {
 
     private Button buttonRequestOnPost;
@@ -32,13 +34,15 @@ public class ViewPostActivity extends AppCompatActivity {
     private TextView categories;
     private TextView tags;
     private ImageView image;
+    private int postID;
+    private Post post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
 
-        final int postID;
+        //final int postID;
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             postID = 0;
@@ -63,7 +67,8 @@ public class ViewPostActivity extends AppCompatActivity {
         image = (ImageView) findViewById(R.id.view_post_picture);
 
         PostRepo postRepo = new PostRepo(getApplicationContext());
-        final Post post = postRepo.getPost(postID);
+        Log.d("DEBUG - postID", Integer.toString(postID));
+        post = postRepo.getPost(postID);
         postName.setText("Name: " + post.getFood());
         postUser.setText("User: " + post.getOwner_string());
         userRating.setText("Rating: " + post.getUserRating());
@@ -82,6 +87,17 @@ public class ViewPostActivity extends AppCompatActivity {
         buttonRequestOnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //need to update the post with the user id of who is requesting
+                PostRepo pr = new PostRepo(getApplicationContext());
+                UserRepo ur = new UserRepo(getApplicationContext());
+                Integer userId = ur.getId(Profile.getCurrentProfile().getId());
+                pr.addNewRequestor(Integer.toString(postID), Integer.toString(userId));
+
+                //also need to create a 'request' notification for the owner of the post
+                Notifications n = new Notifications(postID, userId, pr.getProviderId(postID), post.getLocation(), "REQUEST");
+                NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
+                nr.insert(n);
+
             }
         });
 
@@ -91,11 +107,9 @@ public class ViewPostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Post p = new Post(postID);
                 //ProfileActivity pa = new ProfileActivity(p.getProvider());
-              // Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                // Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
                 //i.putExtra("frgToLoad", 0); //0 = profile
-              // startActivity(i);
-
-
+                // startActivity(i);
                 //MAKE REQUEST
 
 

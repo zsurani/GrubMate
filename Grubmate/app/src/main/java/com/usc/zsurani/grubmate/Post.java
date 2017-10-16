@@ -266,8 +266,14 @@ public class Post{
      * Returns the User id of the provider.
      */
     Integer getProviderID() {
-        if(owner == null)
+        if(owner == null && owner_string == null)
             return -1;
+        if(owner_string != null)
+        {
+            //UserRepo ur = new UserRepo(g)
+            Log.d("DEBUG - owner_string", owner_string);
+            return Integer.parseInt(owner_string);
+        }
         return owner.getID();
     }
 
