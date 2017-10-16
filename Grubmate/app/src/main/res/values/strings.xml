@@ -2,6 +2,7 @@
     <string name="app_name">Grubmate</string>
     <string name="facebook_app_id">2056580697903980</string>
 
+
     <!-- String Resources for Transactions -->
     <string name="text_transaction_history_label">Transaction History</string>
     <string name="text_transaction_name">%1$s requested %2$s from %3$s</string>
@@ -20,6 +21,10 @@
     <!-- String Resources for Notifications -->
     <string name="text_notification_description">From %1$s to %2$s.  For tags %3$s and categories %4$s.</string>
     <string name="text_end_notification">Delete Notification</string>
+
+    <!-- String Resources for News Feed -->
+    <string name="text_post_description">From %1$s to %2$s.  For tags %3$s and categories %4$s.</string>
+    <string name="text_more_information">Get More Information</string>
 
     <!-- String Resources for Profile -->
     <string name="text_profile_rating">Rating: %1$s</string>
