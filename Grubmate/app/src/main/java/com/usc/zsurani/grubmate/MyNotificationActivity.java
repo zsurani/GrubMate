@@ -116,7 +116,7 @@ public class MyNotificationActivity extends AppCompatActivity {
             // Get the Notifications object, and if it isn't null, populate the layout with its data
             final Notifications t = getItem(position);
 
-            if (t != null) {
+            if (t != null ) {
                 TextView textName = (TextView) v.findViewById(R.id.label_notification_name);
                 TextView textInfo = (TextView) v.findViewById(R.id.label_notification_description);
                 Button buttonEnd = (Button) v.findViewById(R.id.button_notification);

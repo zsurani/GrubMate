@@ -93,10 +93,12 @@ public class ViewPostActivity extends AppCompatActivity {
                 Integer userId = ur.getId(Profile.getCurrentProfile().getId());
                 pr.addNewRequestor(Integer.toString(postID), Integer.toString(userId));
 
+                /*
                 //also need to create a 'request' notification for the owner of the post
                 Notifications n = new Notifications(postID, userId, pr.getProviderId(postID), post.getLocation(), "REQUEST");
                 NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
                 nr.insert(n);
+                */
 
             }
         });
