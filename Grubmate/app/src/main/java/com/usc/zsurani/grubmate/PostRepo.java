@@ -147,7 +147,6 @@ public class PostRepo {
             post.setOwner_string(c.getString(c.getColumnIndex(User.KEY_name)));
             post.setUser_rating(c.getString(c.getColumnIndex(User.KEY_rating)));
         }
-
         c.close();
         db.close();
 
@@ -612,13 +611,119 @@ public class PostRepo {
         String selectQuery =  "SELECT  " + Post.KEY_id + " FROM " + Post.TABLE + " WHERE " +
                 Post.KEY_owner + "= " + Integer.toString(userId);
         Cursor c = db.rawQuery(selectQuery, null);
+        Log.d("DEBUG", "preformed the query in getPosts");
         if(c.moveToFirst()) {
-            while(!c.isAfterLast()) {
+            do {
                 posts.add(Integer.parseInt(c.getString(c.getColumnIndex(Post.KEY_id))));
-            }
+            } while(c.moveToNext());
         }
+        c.close();
+        db.close();
         return posts;
     }
 
+    public String getFood(String postId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_food +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + Post.KEY_id;
+
+        Cursor cursor = db.rawQuery(selectQuery, null );
+        String toReturn = "";
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(Post.KEY_food));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return toReturn;
+    }
+    public String getDescription(String postId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_description +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + Post.KEY_id;
+
+        Cursor cursor = db.rawQuery(selectQuery, null );
+        String toReturn = "";
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(Post.KEY_description));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return toReturn;
+    }
+
+    public String getBeginTime(String postId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_beginTime +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + Post.KEY_id;
+
+        Cursor cursor = db.rawQuery(selectQuery, null );
+        String toReturn = "";
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(Post.KEY_beginTime));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return toReturn;
+    }
+
+    public String getEndTime(String postId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_endTime +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + Post.KEY_id;
+
+        Cursor cursor = db.rawQuery(selectQuery, null );
+        String toReturn = "";
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(Post.KEY_endTime));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return toReturn;
+    }
+
+    public String getNumReq(String postId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_num_requests +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + Post.KEY_id;
+
+        Cursor cursor = db.rawQuery(selectQuery, null );
+        String toReturn = "";
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(Post.KEY_num_requests));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return toReturn;
+    }
 
 }

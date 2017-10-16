@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.List;
 import java.util.Set;
 
-public class Post {
+public class Post{
 
     public static final String TABLE = "Post";
     public static final String KEY_id = "id";
@@ -266,6 +266,8 @@ public class Post {
      * Returns the User id of the provider.
      */
     Integer getProviderID() {
+        if(owner == null)
+            return -1;
         return owner.getID();
     }
 
@@ -386,6 +388,9 @@ public class Post {
         return title;
     }
 
+    public Integer getId() {
+        return id;
+    }
 
     public String getUserRequested() {
         return userRequested;
@@ -402,6 +407,8 @@ public class Post {
     public String getUserRating() {
         return user_rating;
     }
+
+    public Integer getInt(){return id;}
 
     public void setDescription(String description) {
         this.description = description;
@@ -466,4 +473,8 @@ public class Post {
     public void setTitle(String t){
         title = t;
     }
+
+    public void setId(Integer newId){id = newId;}
+
+
 }

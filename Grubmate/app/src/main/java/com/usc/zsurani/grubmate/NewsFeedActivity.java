@@ -13,7 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import com.facebook.Profile;
 
 import java.text.DateFormat;
@@ -128,6 +132,7 @@ public class NewsFeedActivity extends AppCompatActivity {
                 }
 
                 textName.setText(t.getTitle());
+                textInfo.setText(String.format(getResources().getString(R.string.text_food_name), t.getTitle()));
                 textInfo.setText(String.format(getResources().getString(R.string.text_post_description), timeStart, timeEnd, tags, categories));
 
                 //if time is passed, button is disabled; else it's enabled
@@ -150,10 +155,10 @@ public class NewsFeedActivity extends AppCompatActivity {
                 buttonEnd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        NotificationsRepo repo = new NotificationsRepo(getApplicationContext());
-                        //repo.deleteNotification(String.valueOf(t.getId()));
-
-                        // have to update adapter?
+                        PostRepo repo = new PostRepo(getApplicationContext());
+                        Intent intent = new Intent(NewsFeedActivity.this, ViewPostActivity.class);
+                        startActivity(intent);
+                        //intent.putExtra("currPost", t.getId());
 
                     }
                 });

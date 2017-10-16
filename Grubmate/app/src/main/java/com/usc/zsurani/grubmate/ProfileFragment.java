@@ -1,12 +1,14 @@
 package com.usc.zsurani.grubmate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +45,10 @@ public class ProfileFragment extends Fragment {
     private ImageView profilePic;
     private Button postButton;
     private Button reviewButton;
+    private Button createPost;
 
     private Bundle args;
+    private Integer userId;
 
     public static final String EXTRA_USER_ID = "grubmate.profile_fragment.user_id";
 
@@ -81,6 +85,7 @@ public class ProfileFragment extends Fragment {
         profilePic = (ImageView) v.findViewById(R.id.image_profile_pic);
         postButton = (Button) v.findViewById(R.id.button_profile_see_posts);
         reviewButton = (Button) v.findViewById(R.id.button_profile_see_reviews);
+        //createPost = (Button) v.findViewById(R.id.create_post);
 
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +103,16 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+/*
+        createPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), CreatePostActivity.class);
+                startActivityForResult(i,0);
+            }
+        });
+*/
+
         // TODO connect to db
         List<Post> posts = new ArrayList<Post>();
         postList.setAdapter(new PostAdapter(getContext(), R.layout.layout_post_row, posts));
@@ -107,12 +122,33 @@ public class ProfileFragment extends Fragment {
         reviewList.setAdapter(new ReviewAdapter(getContext(), R.layout.layout_review_row, reviews));
 
         setupProfile();
+
+        //need to get all of the posts that the user owns
+        PostRepo pr = new PostRepo(getContext());
+        Log.d("DEBUG", "creating the postRepo");
+        List<Integer> postIds = pr.getPosts(userId);
+        Log.d("DEBUG", "gotten all the post Ids");
+        Log.d("DEBUG", Integer.toString(postIds.size()));
+        List<Post> userPosts = new ArrayList<Post>();
+        for(int i = 0; i < postIds.size(); i++) {
+            Log.d("I = ", Integer.toString(i));
+            Log.d("DEBUG", Integer.toString(postIds.get(i)));
+            Integer postID = postIds.get(i);
+            Post post = pr.getPost(postID);
+
+            userPosts.add(post);
+           // Log.d("DEBUG", Integer.toString(p.getId()));
+        }
+
+
+        PostAdapter adapter = new PostAdapter(getContext(), R.layout.layout_post_row, userPosts);
+        postList.setAdapter(adapter);
     }
 
     private void setupProfile() {
         String fbId = Profile.getCurrentProfile().getId();
         UserRepo up = new UserRepo(getContext());
-        final int userId;
+        //final int userId;
         if (args == null) {
             userId = up.getId(fbId);
         } else {
