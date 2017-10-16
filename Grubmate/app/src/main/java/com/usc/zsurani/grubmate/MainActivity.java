@@ -264,7 +264,5 @@ public class MainActivity extends AppCompatActivity {
         }).executeAsync();
         return friendslist;
     }
-
-
 }
 
