@@ -36,8 +36,8 @@ public class NewsFeedFragment extends Fragment{
         listFeed = (ListView) v.findViewById(R.id.list_newsfeed);
 
         // TODO add adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.layout_post_row, R.id.listText, posts);
-        listFeed.setAdapter(adapter);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.layout_post_row, R.id.listText, posts);
+       // listFeed.setAdapter(adapter);
 
         // TODO add Options menu to access other pages
     }
