@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbHandler = new DatabaseHandler(this);
         db = dbHandler.getReadableDatabase();
+//        dbHandler.delete(db);
 
 
         FacebookSdk.sdkInitialize(getApplicationContext());
