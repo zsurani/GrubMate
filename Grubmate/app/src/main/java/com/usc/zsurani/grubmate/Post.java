@@ -270,6 +270,11 @@ public class Post {
     }
 
     /*
+    Returns the user object associated with the owner.
+     */
+    User getProvider() { return owner;}
+
+    /*
 	 * Returns list of User ids that have been accepted as receivers
 	 */
     Set<String> getAcceptedRequesters() {
