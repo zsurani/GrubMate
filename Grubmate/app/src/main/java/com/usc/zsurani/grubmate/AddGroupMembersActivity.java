@@ -46,6 +46,8 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         groupName = extras.getString("groupName");
 
+        GroupRepo groupRepo = new GroupRepo(getApplicationContext());
+        members = groupRepo.getUser(groupName);
 
         memberName = (EditText) findViewById(R.id.member_name);
         addingMembers = (Button) findViewById(R.id.adding_members);

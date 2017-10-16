@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Set;
@@ -61,6 +62,19 @@ public class GroupRepo {
         int userId = -1;
         if (c.moveToFirst()) userId = c.getInt(c.getColumnIndex(User.KEY_ID));
 
+        selectQuery =  "SELECT * FROM " + Group.TABLE + " WHERE " +
+                Group.KEY_name + " LIKE '" + groupName + "'";
+        Boolean found = false;
+
+        String key_id = "";
+        c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                found = true;
+                key_id = c.getString(c.getColumnIndex(Group.KEY_id));
+            } while (c.moveToNext());
+        }
+
         db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -72,8 +86,10 @@ public class GroupRepo {
         values.put(Group.KEY_ownerid, userId);
         values.put(Group.KEY_user, group_members);
         // Inserting Row
-        db.insert(Group.TABLE, null, values);
+        if (!found) db.insert(Group.TABLE, null, values);
+        else db.update(Group.TABLE, values, Group.KEY_id+"="+key_id, null);
         db.close(); // Closing database connection
+        c.close();
     }
 
     public Group getGroup(String groupId){
@@ -217,6 +233,45 @@ public class GroupRepo {
             if(str.trim().contains(name.trim())) return true;
         }
         return false;
+    }
+
+    public List<String> getUser(String groupName){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Group.KEY_user +
+                " FROM " + Group.TABLE
+                + " WHERE " +
+                Group.KEY_name + " LIKE '" + groupName + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String toReturn = "";
+        List<String> usersIdList = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(Group.KEY_user));
+            } while (cursor.moveToNext());
+        }
+
+        List<String> usersList = new ArrayList<>();
+        if (toReturn.equals("")) return usersList;
+
+        usersList = Arrays.asList(toReturn.split(","));
+        Log.d("debugging", usersList.toString());
+        for(int i = 0; i < usersList.size(); i++) {
+            Cursor c = db.rawQuery("SELECT * FROM " + User.TABLE + " WHERE " + User.KEY_ID + "=" + usersList.get(i), null);
+            Log.d("debugging", "SELECT * FROM " + User.TABLE + " WHERE " + User.KEY_ID + "=" + usersList.get(i));
+            String d = "";
+            if (c.moveToFirst()) {
+                d = c.getString(c.getColumnIndex(User.KEY_name));
+            }
+            usersIdList.add(d);
+        }
+        Log.d("debugging", usersIdList.toString());
+
+        cursor.close();
+        db.close();
+
+        return usersIdList;
     }
 
 }

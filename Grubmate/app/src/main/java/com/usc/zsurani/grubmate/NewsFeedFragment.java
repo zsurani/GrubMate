@@ -13,13 +13,19 @@ import android.widget.TextView;
 
 import com.facebook.Profile;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 /**
  * Created by Madison on 10/15/17.
  */
 
 public class NewsFeedFragment extends Fragment{
-    private String [] posts;
+
     private ListView listFeed;
+    private PostAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,19 +35,25 @@ public class NewsFeedFragment extends Fragment{
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        //need to fix the null pointed exceptions
         super.onActivityCreated(savedInstanceState);
         View v = getView();
 
-//        listFeed = (ListView) v.findViewById(R.id.list_newsfeed);
-
-        // TODO add adapter
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.layout_post_row, R.id.listText, posts);
-       // listFeed.setAdapter(adapter);
+        adapter = new PostAdapter(getApplicationContext(), R.layout.layout_post_row, getPostList());
+        listFeed = (ListView) v.findViewById(R.id.list_feed);
+        listFeed.setAdapter(adapter);
 
         // TODO add Options menu to access other pages
     }
 
+    private List<Post> getPostList() {
+
+        List<Post> postList = new ArrayList<>();
+
+        PostRepo repo = new PostRepo(getApplicationContext());
+        postList = repo.getPosts();
+
+        return postList;
+    }
 }
 
 

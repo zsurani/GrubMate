@@ -29,7 +29,6 @@ public class PostRepo {
     }
 
     public int insert(Post post) {
-
         //Open connection to write data
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT " + User.KEY_ID + " FROM " + User.TABLE
@@ -136,6 +135,7 @@ public class PostRepo {
                 post.setCategories(c.getString(c.getColumnIndex(Post.KEY_categories)));
                 post.setTag(c.getString(c.getColumnIndex(Post.KEY_tags)));
                 post.setPhoto_image(c.getBlob(c.getColumnIndex(Post.KEY_images)));
+                post.setId(postid);
             } while (c.moveToNext());
         }
 
@@ -214,7 +214,7 @@ public class PostRepo {
         values.put(Post.KEY_description, newDescription);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Post.TABLE, values, Post.KEY_id + "= ?", new String[] { String.valueOf(postId) });
+        db.update(Post.TABLE, values, Post.KEY_id + "= " + Integer.parseInt(postId), null);
         db.close(); // Closing database connection
     }
 
@@ -226,7 +226,7 @@ public class PostRepo {
         values.put(Post.KEY_food, newFood);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Post.TABLE, values, Post.KEY_id + "= ?", new String[] { String.valueOf(postId) });
+        db.update(Post.TABLE, values, Post.KEY_id + "= " + Integer.parseInt(postId), null);
         db.close(); // Closing database connection
     }
 
@@ -238,7 +238,7 @@ public class PostRepo {
         values.put(Post.KEY_beginTime, newBeginTime);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Post.TABLE, values, Post.KEY_id + "= ?", new String[] { String.valueOf(postId) });
+        db.update(Post.TABLE, values, Post.KEY_id + "= " + Integer.parseInt(postId), null);
         db.close(); // Closing database connection
     }
 
@@ -250,7 +250,7 @@ public class PostRepo {
         values.put(Post.KEY_endTime, newEndTime);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Post.TABLE, values, Post.KEY_id + "= ?", new String[] { String.valueOf(postId) });
+        db.update(Post.TABLE, values, Post.KEY_id + "= " + Integer.parseInt(postId), null);
         db.close(); // Closing database connection
     }
 
@@ -262,7 +262,7 @@ public class PostRepo {
         values.put(Post.KEY_location, newLocation);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Post.TABLE, values, Post.KEY_id + "= ?", new String[] { String.valueOf(postId) });
+        db.update(Post.TABLE, values, Post.KEY_id + "= " + Integer.parseInt(postId), null);
         db.close(); // Closing database connection
     }
 
@@ -274,7 +274,7 @@ public class PostRepo {
         values.put(Post.KEY_active, active);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Post.TABLE, values, Post.KEY_id + "= ?", new String[] { String.valueOf(postId) });
+        db.update(Post.TABLE, values, Post.KEY_id + "= " + Integer.parseInt(postId), null);
         db.close(); // Closing database connection
     }
 
@@ -286,7 +286,7 @@ public class PostRepo {
         values.put(Post.KEY_homemadeNotRestaurant,homemade );
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Post.TABLE, values, Post.KEY_id + "= ?", new String[] { String.valueOf(postId) });
+        db.update(Post.TABLE, values, Post.KEY_id + "=" + Integer.parseInt(postId), null);
         db.close(); // Closing database connection
     }
 
@@ -298,7 +298,7 @@ public class PostRepo {
         values.put(Post.KEY_allFriendsCanView, allView);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Post.TABLE, values, Post.KEY_id + "= ?", new String[] { String.valueOf(postId) });
+        db.update(Post.TABLE, values, Post.KEY_id + "= " + Integer.parseInt(postId), null);
         db.close(); // Closing database connection
     }
 
@@ -310,7 +310,7 @@ public class PostRepo {
         values.put(Post.KEY_maxRequesters, maxNum);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Post.TABLE, values, Post.KEY_id + "= ?", new String[] { String.valueOf(postId) });
+        db.update(Post.TABLE, values, Post.KEY_id + "= " + Integer.parseInt(postId), null);
         db.close(); // Closing database connection
     }
 
@@ -350,9 +350,9 @@ public class PostRepo {
                 Post.KEY_images +
                 " FROM " + Post.TABLE
                 + " WHERE " +
-                Post.KEY_id + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+                Post.KEY_id + "=" + Integer.parseInt(postId);// It's a good practice to use parameter ?, instead of concatenate string
 
-        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(postId) } );
+        Cursor cursor = db.rawQuery(selectQuery, null );
         String toReturn = "";
         if (cursor.moveToFirst()) {
             do {
@@ -401,9 +401,9 @@ public class PostRepo {
                 Post.KEY_categories +
                 " FROM " + Post.TABLE
                 + " WHERE " +
-                Post.KEY_id + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+                Post.KEY_id + "=" + Integer.parseInt(postId);// It's a good practice to use parameter ?, instead of concatenate string
 
-        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(postId) } );
+        Cursor cursor = db.rawQuery(selectQuery, null);
         String toReturn = "";
         if (cursor.moveToFirst()) {
             do {
@@ -452,9 +452,9 @@ public class PostRepo {
                 Post.KEY_tags +
                 " FROM " + Post.TABLE
                 + " WHERE " +
-                Post.KEY_id + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+                Post.KEY_id + "=" + Integer.parseInt(postId);// It's a good practice to use parameter ?, instead of concatenate string
 
-        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(postId) } );
+        Cursor cursor = db.rawQuery(selectQuery, null );
         String toReturn = "";
         if (cursor.moveToFirst()) {
             do {
@@ -503,9 +503,9 @@ public class PostRepo {
                 Post.KEY_usersRequested +
                 " FROM " + Post.TABLE
                 + " WHERE " +
-                Post.KEY_id + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+                Post.KEY_id + "=" + Integer.parseInt(postId);// It's a good practice to use parameter ?, instead of concatenate string
 
-        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(postId) } );
+        Cursor cursor = db.rawQuery(selectQuery, null );
         String toReturn = "";
         if (cursor.moveToFirst()) {
             do {
@@ -554,9 +554,9 @@ public class PostRepo {
                 Post.KEY_usersAccepted +
                 " FROM " + Post.TABLE
                 + " WHERE " +
-                Post.KEY_id + "=?";// It's a good practice to use parameter ?, instead of concatenate string
+                Post.KEY_id + "=" + Integer.parseInt(postId);// It's a good practice to use parameter ?, instead of concatenate string
 
-        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(postId) } );
+        Cursor cursor = db.rawQuery(selectQuery, null );
         String toReturn = "";
         if (cursor.moveToFirst()) {
             do {
@@ -572,7 +572,7 @@ public class PostRepo {
     public void deletePost(String postId){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.delete(Post.TABLE, Post.KEY_id + "= ?", new String[] { String.valueOf(postId) });
+        db.delete(Post.TABLE, Post.KEY_id + "=" + Integer.parseInt(postId), null);
         db.close(); // Closing database connection
     }
 
@@ -724,6 +724,27 @@ public class PostRepo {
         cursor.close();
         db.close();
         return toReturn;
+    }
+
+    public List<Post> getPosts() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT * FROM " + Post.TABLE;
+
+        Cursor cursor = db.rawQuery(selectQuery, null );
+        List<Post> postList = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                Post post = new Post();
+                post.setFood(cursor.getString(cursor.getColumnIndex(Post.KEY_food)));
+                post.setDescription(cursor.getString(cursor.getColumnIndex(Post.KEY_description)));
+                post.setId(cursor.getInt(cursor.getColumnIndex(Post.KEY_id)));
+                postList.add(post);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return postList;
     }
 
 }

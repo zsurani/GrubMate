@@ -31,10 +31,10 @@ import android.widget.ArrayAdapter;
 
 public class NewsFeedActivity extends AppCompatActivity {
 
-    private String [] posts;
+    private String[] posts;
     private ListView listFeed;
 
-    private NewsFeedAdapter adapter;
+//    private NewsFeedAdapter adapter;
 
 
     @Override
@@ -45,14 +45,16 @@ public class NewsFeedActivity extends AppCompatActivity {
         //listFeed = (ListView) findViewById(R.id.list_newsfeed);
 
         // TODO list & adapter
-        ArrayList<Post> posts = new ArrayList<Post>();
-        PostAdapter adapter = new PostAdapter(getApplicationContext(), R.layout.layout_post_row, posts);
-        listFeed.setAdapter(adapter);
-
+//        ArrayList<Post> posts = new ArrayList<Post>();
+//        PostAdapter adapter = new PostAdapter(getApplicationContext(), R.layout.layout_post_row, posts);
+//        listFeed.setAdapter(adapter);
+//
         // TODO add Options menu to access other pages
 
     }
+}
 
+    /*
     private List<Post> getPostsList() {
         String fbId = Profile.getCurrentProfile().getId();
         PostRepo pr = new PostRepo(getApplicationContext());
@@ -82,10 +84,10 @@ public class NewsFeedActivity extends AppCompatActivity {
         }
         return postsUserCanView;
     }
+    */
 
     /*
     * The custom adapter for the Notifications list view.
-    */
     private class NewsFeedAdapter extends ArrayAdapter<Post> {
 
         public NewsFeedAdapter(Context context, int textViewResourceId) {
@@ -167,6 +169,5 @@ public class NewsFeedActivity extends AppCompatActivity {
             return v;
         }
     }
+    */
 
-
-}
