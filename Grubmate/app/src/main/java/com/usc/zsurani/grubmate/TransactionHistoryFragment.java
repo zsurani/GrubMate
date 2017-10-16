@@ -43,7 +43,7 @@ public class TransactionHistoryFragment extends Fragment {
 
         transactionList = (ListView) v.findViewById(R.id.list_transaction_hist) ;
 
-        /* TODO once TransactionRepo etc. is set up
+        /* TODO once TransactionRepo etc. is set up (should be done)
           TransactionRepo repo = new TransactionRepo(getApplicationContext()); // not sure if this context is right
           // get list of transactions here and then populate the listview with those transactions
         */
@@ -109,13 +109,8 @@ public class TransactionHistoryFragment extends Fragment {
                 Integer postId = t.getPostID();
                 String status = t.getStatus();
 
-                /* TODO once repo classes are set up
-                    get UserRepo
-                    find provider name with ID
-                    find requester name with ID
-
-                    get PostRepo
-                    find post info with ID
+                /*
+                    gets provider, requester
                  */
                 UserRepo ur = new UserRepo(getContext());
                 String provider = ur.getName(providerId);
