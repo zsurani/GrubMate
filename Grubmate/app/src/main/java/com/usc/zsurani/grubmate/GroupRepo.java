@@ -230,16 +230,20 @@ public class GroupRepo {
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         String toReturn = "";
+        List<String> usersIdList = new ArrayList<>();
         if (cursor.moveToFirst()) {
             do {
                 toReturn = cursor.getString(cursor.getColumnIndex(Group.KEY_user));
             } while (cursor.moveToNext());
         }
 
+        List<String> usersList = new ArrayList<>();
+        if (toReturn.equals("")) return usersList;
+
         cursor.close();
         db.close();
 
-        List<String> usersList = Arrays.asList(toReturn.split(","));
+        usersList = Arrays.asList(toReturn.split(","));
         return usersList;
     }
 
