@@ -79,7 +79,7 @@ public class TransactionHistoryFragment extends Fragment {
                 v = vi.inflate(R.layout.layout_transaction_row, null);
             }
 
-            Transaction t = getItem(position);
+            final Transaction t = getItem(position);
 
             if (t != null) {
                 TextView transactName = (TextView) v.findViewById(R.id.label_transaction_name);
@@ -100,12 +100,23 @@ public class TransactionHistoryFragment extends Fragment {
                     get PostRepo
                     find post info with ID
                  */
+                UserRepo ur = new UserRepo(getContext());
+                String provider = ur.getName(providerId);
+                String requester = ur.getName(requesterId);
+
+                PostRepo pr = new PostRepo(getContext());
+                final Post post = pr.getPost(postId);
+                String food = post.getFood();
+
+                String name = getResources().getString(R.string.text_transaction_name);
+                transactName.setText(String.format(name, provider, food, requester));
+                transactName.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
 
                 // TODO delete dummy data
-                String name = getResources().getString(R.string.text_transaction_name);
-
-                transactName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
-                transactStatus.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
+//                String name = getResources().getString(R.string.text_transaction_name);
+//
+//                transactName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
+//                transactStatus.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
 
                 switch (status) {
                     case "Accepted":
