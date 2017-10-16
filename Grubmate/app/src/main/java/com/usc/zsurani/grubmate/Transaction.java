@@ -26,7 +26,13 @@ public class Transaction {
      * original post
      */
     Transaction(Integer provider, Integer requester,
-                String locOfRequester, Integer originalPost){}
+                String locOfRequester, Integer originalPost){
+        this.idProvider = provider;
+        this.idRequester = requester;
+        this.locRequester = locOfRequester;
+        this.originalPostID = originalPost;
+        this.status = "active";
+    }
 
     /*
      * Returns the User id of the provider

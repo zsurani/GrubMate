@@ -99,9 +99,11 @@ public class TransactionHistoryFragment extends Fragment {
             final Transaction t = getItem(position);
 
             if (t != null) {
+                TransactionRepo tr = new TransactionRepo(getContext());
                 TextView transactName = (TextView) v.findViewById(R.id.label_transaction_name);
                 TextView transactStatus = (TextView) v.findViewById(R.id.label_transaction_status);
                 Button requestButton = (Button) v.findViewById(R.id.button_transaction);
+
 
                 // Get data from transaction to put into row
                 Integer providerId = t.getProviderID();

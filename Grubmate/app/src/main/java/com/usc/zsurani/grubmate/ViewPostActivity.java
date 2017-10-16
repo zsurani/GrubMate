@@ -36,13 +36,16 @@ public class ViewPostActivity extends AppCompatActivity {
     private TextView categories;
     private TextView tags;
     private ImageView image;
+    private int postID;
+    private Post post;
+    private PostRepo postRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
 
-        final int postID;
+        //final int postID;
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             postID = 0;
@@ -67,8 +70,9 @@ public class ViewPostActivity extends AppCompatActivity {
         image = (ImageView) findViewById(R.id.view_post_picture);
         buttonEdit = (ImageButton) findViewById(R.id.edit_button);
 
-        PostRepo postRepo = new PostRepo(getApplicationContext());
-        final Post post = postRepo.getPost(postID);
+         postRepo = new PostRepo(getApplicationContext());
+        Log.d("DEBUG - postID", Integer.toString(postID));
+        post = postRepo.getPost(postID);
         postName.setText("Name: " + post.getFood());
         postUser.setText("User: " + post.getOwner_string());
         userRating.setText("Rating: " + post.getUserRating());
@@ -90,9 +94,43 @@ public class ViewPostActivity extends AppCompatActivity {
             buttonEdit.setVisibility(View.INVISIBLE);
         }
 
+        //Log.d("DEBUG userreq", "post = " + postRepo.getRequestors(postID).length);
+
+        if(Integer.parseInt(post.getNum_requests()) <= (postRepo.getRequestors(postID).length - 1)) //because it starts wiht ","
+        {
+            buttonRequestOnPost.setEnabled(false);
+        } else {
+            buttonRequestOnPost.setEnabled(true);
+        }
+
+
         buttonRequestOnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //need to update the post with the user id of who is requesting
+                UserRepo ur = new UserRepo(getApplicationContext());
+                Integer userId = ur.getId(Profile.getCurrentProfile().getId());
+                postRepo.addNewRequestor(Integer.toString(postID), Integer.toString(userId));
+
+                if(Integer.parseInt(post.getNum_requests()) <= (postRepo.getRequestors(postID).length - 1)) //because it starts wiht ","
+                {
+                    buttonRequestOnPost.setEnabled(false);
+                } else {
+                    buttonRequestOnPost.setEnabled(true);
+                }
+
+                /*
+                //also need to create a 'request' notification for the owner of the post
+                Notifications n = new Notifications(postID, userId, pr.getProviderId(postID), post.getLocation(), "REQUEST");
+                NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
+                nr.insert(n);
+                */
+
+                //assumes that if you request, you are automatically accepted so it creates a transaction
+                Transaction t = new Transaction(postRepo.getProviderId(postID), userId,
+                        postRepo.getLocation(postID), postID);
+                TransactionRepo tr = new TransactionRepo(getApplicationContext());
+                tr.insert(t);
             }
         });
 
@@ -102,15 +140,10 @@ public class ViewPostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Post p = new Post(postID);
                 //ProfileActivity pa = new ProfileActivity(p.getProvider());
-              // Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                // Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
                 //i.putExtra("frgToLoad", 0); //0 = profile
-              // startActivity(i);
-
-
+                // startActivity(i);
                 //MAKE REQUEST
-
-
-
             }
         });
 

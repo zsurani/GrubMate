@@ -53,12 +53,19 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
+    private boolean mHasFragment = false;
+
+    private static final String KEY_HAS_FRAGMENT = "grubmate.main_activity.has_fragment";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mHasFragment = savedInstanceState.getBoolean(KEY_HAS_FRAGMENT);
+        }
 
         dbHandler = new DatabaseHandler(this);
         db = dbHandler.getReadableDatabase();
+        //dbHandler.delete(db);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
@@ -127,6 +134,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // for screen rotation
+        if (mHasFragment)  {
+            // hide the main activity layout
+            loginButton.setVisibility(View.INVISIBLE);
+            tv.setVisibility(View.INVISIBLE);
+        } else {
+            // show the main activity (facebook layout)
+            loginButton.setVisibility(View.VISIBLE);
+            tv.setVisibility(View.VISIBLE);
+        }
+
         /*
         Integer intentFragment = getIntent().getExtras().getInt("frgToLoad");
         if(intentFragment != null)
@@ -136,6 +154,12 @@ public class MainActivity extends AppCompatActivity {
         */
 
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_HAS_FRAGMENT, mHasFragment);
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -184,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.button2).setVisibility(View.INVISIBLE);
             findViewById(R.id.login_button).setVisibility(View.INVISIBLE);
 
+            mHasFragment = true;
         } else {
             Log.e("MainActivity", "Error in creating fragment");
         }

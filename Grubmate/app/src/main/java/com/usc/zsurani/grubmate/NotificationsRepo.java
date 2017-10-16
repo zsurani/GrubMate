@@ -45,20 +45,28 @@ public class NotificationsRepo {
 
         //loops through the list of categories to turn into a string
         Set<String> l = n.getCategory();
-        List<String> list = new ArrayList<String>(l);
-        String cate = TextUtils.join(", ", list);
+        if(l != null) {
+            List<String> list = new ArrayList<String>(l);
+            String cate = TextUtils.join(", ", list);
+            values.put(n.KEY_category, cate);
+        }
 
         //loops through the list of tags to turn into a string
         Set<String> li = n.getTags();
-        String tag = "";
-        for(String s : li)
-        {
-            tag += s + ",";
+        if(li != null) {
+            String tag = "";
+            for (String s : li) {
+                tag += s + ",";
+            }
+            values.put(n.KEY_tags, tag);
         }
-        values.put(n.KEY_category, cate);
-        values.put(n.KEY_tags, tag);
-        values.put(n.KEY_beginTime, n.getBeginTime());
-        values.put(n.KEY_endTime, n.getEndTime());
+
+        if(n.getBeginTime() != null) {
+            values.put(n.KEY_beginTime, n.getBeginTime());
+        }
+        if(n.getEndTime() != null) {
+            values.put(n.KEY_endTime, n.getEndTime());
+        }
         values.put(n.KEY_status, n.isActive());
         values.put(n.KEY_name, n.getName());
         values.put(n.KEY_type, n.getType());
@@ -120,11 +128,13 @@ public class NotificationsRepo {
                 String[] cateArray = new String[] {};
                 if (cateString != null) cateArray = cateString.split(",");
                 List<String> cate = Arrays.asList(cateArray);
-
+                Set<String> tag = null;
                 //get the tags as a string, splits by , and then puts into a set
                 String tagString = c.getString(c.getColumnIndex(Notifications.KEY_tags));
-                String[] tagArray = tagString.split(",");
-                Set<String> tag = new HashSet<>(Arrays.asList(tagArray));
+                if(tagString == null) {
+                    String[] tagArray = tagString.split(",");
+                    tag = new HashSet<>(Arrays.asList(tagArray));
+                }
 
                 Set<String> cateSet = new HashSet<String>(cate);
 

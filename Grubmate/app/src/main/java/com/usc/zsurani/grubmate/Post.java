@@ -266,8 +266,14 @@ public class Post{
      * Returns the User id of the provider.
      */
     Integer getProviderID() {
-        if(owner == null)
+        if(owner == null && owner_string == null)
             return -1;
+        if(owner_string != null)
+        {
+            //UserRepo ur = new UserRepo(g)
+            Log.d("DEBUG - owner_string", owner_string);
+            return Integer.parseInt(owner_string);
+        }
         return owner.getID();
     }
 
@@ -476,5 +482,28 @@ public class Post{
 
     public void setId(Integer newId){id = newId;}
 
+    /*
+     * Checks to see if this post matches the tags & categories on the given Notifications object.
+     */
+    public boolean matches(Notifications notif) {
+        Set<String> notifTags = notif.getTags();
+        Set<String> notifCategories = notif.getCategory();
+
+        // check tags
+        for (String nTag : notifTags) {
+            if (tags.contains(nTag)) {
+                return true;
+            }
+        }
+
+        // check categories
+        for (String nCat : notifCategories) {
+            if (category.contains(nCat)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 }
