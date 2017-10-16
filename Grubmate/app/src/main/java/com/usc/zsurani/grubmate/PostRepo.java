@@ -783,4 +783,20 @@ public class PostRepo {
         }
         return r;
     }
+    public String getLocation(int postId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_location +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + postId;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String toReturn = "";
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(Post.KEY_location));
+            } while (cursor.moveToNext());
+        }
+        return toReturn;
+    }
 }

@@ -117,6 +117,11 @@ public class ViewPostActivity extends AppCompatActivity {
                 nr.insert(n);
                 */
 
+                //assumes that if you request, you are automatically accepted so it creates a transaction
+                Transaction t = new Transaction(postRepo.getProviderId(postID), userId,
+                        postRepo.getLocation(postID), postID);
+                TransactionRepo tr = new TransactionRepo(getApplicationContext());
+                tr.insert(t);
             }
         });
 

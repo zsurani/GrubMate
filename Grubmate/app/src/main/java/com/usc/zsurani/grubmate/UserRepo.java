@@ -83,7 +83,7 @@ public class UserRepo {
      */
     public String getName(int userId){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT " + User.KEY_name + " FROM " + User.TABLE + "WHERE "
+        String selectQuery = "SELECT " + User.KEY_name + " FROM " + User.TABLE + " WHERE "
                 + User.KEY_ID + "=" + userId;
         Cursor c = db.rawQuery(selectQuery, null);
         String d = "";
