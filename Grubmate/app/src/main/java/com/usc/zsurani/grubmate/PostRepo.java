@@ -31,17 +31,7 @@ public class PostRepo {
     public int insert(Post post) {
         //Open connection to write data
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + Post.TABLE;
-        Cursor c = db.rawQuery(selectQuery, null);
-        int nextId = 0;
-        if (c.moveToFirst()) {
-            nextId = c.getCount();
-        }
-
-        db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        //Open connection to write data
-        c = db.rawQuery("SELECT " + User.KEY_ID + " FROM " + User.TABLE
+        Cursor c = db.rawQuery("SELECT " + User.KEY_ID + " FROM " + User.TABLE
                 + " WHERE " + User.KEY_fbUniqueIdentifier + " = " + post.getOwner_string(), null);
 
         String userId = "";
@@ -50,8 +40,8 @@ public class PostRepo {
         }
 
         db = dbHelper.getWritableDatabase();
-        values = new ContentValues();
-        values.put(post.KEY_id, nextId);
+        ContentValues values = new ContentValues();
+
         values.put(Post.KEY_description, post.getDescription());
         values.put(Post.KEY_owner, userId);
         values.put(Post.KEY_food, post.getFood());
