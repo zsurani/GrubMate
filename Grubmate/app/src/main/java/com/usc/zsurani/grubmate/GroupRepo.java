@@ -117,6 +117,23 @@ public class GroupRepo {
         return toReturn;
     }
 
+    public int getGroupID(String name){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Group.TABLE + " WHERE " + Group.KEY_name + " = " +
+                name;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        int d = -1;
+        if (c.moveToFirst()) {
+            do {
+                d = c.getInt(c.getColumnIndex(User.KEY_ID));
+            } while (c.moveToNext());
+        }
+
+        return d;
+    }
+
+
     public void delete(String groupId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // It's a good practice to use parameter ?, instead of concatenate string

@@ -23,7 +23,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
-        
+
         Search search = new Search(getApplicationContext());
         List<Post> postsToDisplay= search.searchForPost(searchParam);
         adapter = new PostAdapter(getApplicationContext(), R.layout.layout_post_row, postsToDisplay);
