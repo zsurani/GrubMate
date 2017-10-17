@@ -15,6 +15,9 @@ public class Notifications {
     public static final String TABLE = "Notifs";
     public static final String KEY_id = "id";
     public static final String KEY_userID = "userID";
+    public static final String KEY_requestorID = "requestorID";
+    public static final String KEY_postID = "postID";
+    public static final String KEY_location = "location";
     public static final String KEY_category = "category";
     public static final String KEY_tags = "tags";
     public static final String KEY_beginTime = "beginTime";
@@ -24,7 +27,14 @@ public class Notifications {
     public static final String KEY_type = "type";
 
     String userID;
+
+
     Integer id;
+    Integer postID;
+    String requestID;
+    Integer requesterID;
+    Integer userId;
+
     Set<String> category;
     Set<String> tags;
     String beginTime;
@@ -32,7 +42,6 @@ public class Notifications {
     Boolean status;
     String name;
     String type;
-    String requestID; //idk if we want to add this or not
 
     /*
      * Constructor (Type 1) for subscription type notification in
@@ -60,9 +69,11 @@ public class Notifications {
     Notifications(Integer postID, Integer requesterID, Integer providerID,
                   String locationOfRequester, String type){
         //PostID, requesterID, providerID,locationOfRequester need to create variable?
+        this.postID = postID;
+        this.requesterID = requesterID;
+        this.userId = providerID;
+
         this.type = type;
-        this.userID = providerID.toString();
-        this.requestID = requesterID.toString();
         this.setActiveStatus(true);
         //idk if we want to add this or not
         this.beginTime = "N/A";
@@ -187,4 +198,28 @@ public class Notifications {
     Returns the type of the notification
      */
     String getType() {return type;}
+
+    public Integer getPostID() {
+        return postID;
+    }
+
+    public void setPostID(Integer postID) {
+        this.postID = postID;
+    }
+
+    public Integer getRequestID() {
+        return requesterID;
+    }
+
+    public void setRequestID(Integer requestID) {
+        this.requesterID = requestID;
+    }
+
+    public Integer getProvider() {
+        return userId;
+    }
+
+    public void setProvider(Integer userId) {
+        this.userId = userId;
+    }
 }

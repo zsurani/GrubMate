@@ -77,6 +77,25 @@ public class NotificationsRepo {
         return (int) notification_Id;
     }
 
+    public int insertRequest(Notifications n) {
+
+        //Open connection to write data
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(n.KEY_postID, n.getPostID());
+        values.put(n.KEY_requestorID, n.getRequestID());
+        values.put(n.KEY_userID, n.getProvider());
+        // true means still active; when provider responds, it turns inactive
+        values.put(n.KEY_status, "true");
+        values.put(n.KEY_type, "REQUEST");
+
+        // Inserting Row
+        long notification_Id = db.insert(Notifications.TABLE, null, values);
+        db.close(); // Closing database connection
+        return (int) notification_Id;
+    }
+
     //get list of notifications for the current user
     public List<String> getNotifications(int userId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -131,7 +150,8 @@ public class NotificationsRepo {
                 Set<String> tag = null;
                 //get the tags as a string, splits by , and then puts into a set
                 String tagString = c.getString(c.getColumnIndex(Notifications.KEY_tags));
-                if(tagString == null) {
+
+                if(tagString != null) {
                     String[] tagArray = tagString.split(",");
                     tag = new HashSet<>(Arrays.asList(tagArray));
                 }

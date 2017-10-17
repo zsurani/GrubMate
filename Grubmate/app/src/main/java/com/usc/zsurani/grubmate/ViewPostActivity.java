@@ -119,18 +119,10 @@ public class ViewPostActivity extends AppCompatActivity {
                     buttonRequestOnPost.setEnabled(true);
                 }
 
-                /*
-                //also need to create a 'request' notification for the owner of the post
-                Notifications n = new Notifications(postID, userId, pr.getProviderId(postID), post.getLocation(), "REQUEST");
-                NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
-                nr.insert(n);
-                */
-
-                //assumes that if you request, you are automatically accepted so it creates a transaction
-                Transaction t = new Transaction(postRepo.getProviderId(postID), userId,
-                        postRepo.getLocation(postID), postID);
-                TransactionRepo tr = new TransactionRepo(getApplicationContext());
-                tr.insert(t);
+                Intent i = new Intent(getApplicationContext(), EnterLocationActivity.class);
+                i.putExtra("postID", postID);
+                i.putExtra("userID", userId);
+                startActivity(i);
             }
         });
 
