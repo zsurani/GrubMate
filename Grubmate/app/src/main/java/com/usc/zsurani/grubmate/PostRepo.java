@@ -558,7 +558,7 @@ public class PostRepo {
 
     public void addNewAccepted(String postId, String userId){
         String oldAcceptedList = getAccepted(postId);
-        String newAcceptedList = oldAcceptedList + "," + postId;
+        String newAcceptedList = oldAcceptedList + "," + userId;
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();

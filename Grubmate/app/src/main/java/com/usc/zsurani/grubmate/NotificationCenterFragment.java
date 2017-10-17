@@ -24,6 +24,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 
 /**
  * A fragment for the Notification Center.
@@ -129,13 +131,12 @@ public class NotificationCenterFragment extends Fragment {
     }
 
     private List<Notifications> getOtherNotifs() {
-        List<Notifications> notifList = new ArrayList<>();
-        return notifList;
+        String fbId = Profile.getCurrentProfile().getId();
+        UserRepo up = new UserRepo(getActivity().getApplicationContext());
+        final int userId = up.getId(fbId);
 
-        // 1st case -> request
-
-
-
+        NotificationsRepo notificationsRepo = new NotificationsRepo(getActivity().getApplicationContext());
+        return notificationsRepo.getTransNotif(userId);
     }
 
     private List<Transaction> getNewTransactions() {
@@ -202,14 +203,14 @@ public class NotificationCenterFragment extends Fragment {
                 UserRepo userRepo = new UserRepo(v.getContext());
 
                 if (t.getType().equals("REQUEST")) { // and gets status
-                    textInfo.setText(userRepo.getName(t.getRequestID()) + "requests " + t.getFood());
+                    textInfo.setText(userRepo.getName(t.getRequestID()) + "requests food");
                     button_one.setText("Accept");
                     button_two.setText("Reject");
                 } else if (t.getType().equals("ACCEPTED")) {
                     textInfo.setText(userRepo.getName(t.getProvider()) + "has accepted your request");
                     button_one.setVisibility(View.INVISIBLE);
                     button_two.setVisibility(View.INVISIBLE);
-                } else {
+                } else if (t.getType().equals("REVIEW")) {
                     textInfo.setText("A rating and review has been requested");
                     button_one.setText("Rate");
                     button_two.setVisibility(View.INVISIBLE);
@@ -220,11 +221,24 @@ public class NotificationCenterFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         if (t.getType().equals("REQUEST")) {
+                            String fbId = Profile.getCurrentProfile().getId();
+                            UserRepo up = new UserRepo(getActivity().getApplicationContext());
+                            final int userId = up.getId(fbId);
+
+                            PostRepo postRepo = new PostRepo(getActivity().getApplicationContext());
+                            postRepo.addNewAccepted(Integer.toString(t.getPostID()), Integer.toString(userId));
+
+//                            Transaction transaction = new Transaction(postRepo.getProviderId(t.getPostID()),
+//                                    userId, postRepo.getLocation(t.getPostID()), t.getPostID());
+//                            TransactionRepo tr = new TransactionRepo(getApplicationContext());
+//                            transaction.setStatus("OPEN");
+//                            tr.insert(transaction);
+
+
+
                             // make notification inactive
                             // turns off buttons
                             // changes status
-                            // updates post
-                            // make transaction
                             // make new notification to requestor
                         } else {
                             // go to the rating page

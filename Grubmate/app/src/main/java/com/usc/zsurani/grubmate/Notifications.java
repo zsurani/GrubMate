@@ -108,6 +108,8 @@ public class Notifications {
         this.type = type;
     }
 
+    Notifications() {}
+
     /*
      * Sets the ID for the current Notifications object.
      */
