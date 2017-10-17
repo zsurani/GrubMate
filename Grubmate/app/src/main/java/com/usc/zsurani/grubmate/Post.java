@@ -536,20 +536,23 @@ public class Post{
         Set<String> notifTags = notif.getTags();
         Set<String> notifCategories = notif.getCategory();
 
-        if (tags == null) Log.d("POST", "TAGS NULL");
-        if (category == null) Log.d("POST", "CAT NULL");
+
 
         // check tags
-        for (String nTag : notifTags) {
-            if (tags.contains(nTag)) {
-                return true;
+        if (notifTags != null && tags != null) {
+            for (String nTag : notifTags) {
+                if (tags.contains(nTag)) {
+                    return true;
+                }
             }
         }
 
         // check categories
-        for (String nCat : notifCategories) {
-            if (category.contains(nCat)) {
-                return true;
+        if (notifCategories != null && category != null) {
+            for (String nCat : notifCategories) {
+                if (category.contains(nCat)) {
+                    return true;
+                }
             }
         }
 

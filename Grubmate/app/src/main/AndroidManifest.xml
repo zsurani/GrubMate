@@ -36,6 +36,7 @@
         <activity android:name=".AddGroupMembersActivity"></activity>
         <activity android:name=".AddGroupToPostActivity"></activity>
         <activity android:name=".EnterLocationActivity"></activity>
+        <activity android:name=".SearchResultsActivity"></activity>
     </application>
 
 </manifest>

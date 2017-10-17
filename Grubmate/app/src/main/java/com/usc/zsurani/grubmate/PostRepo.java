@@ -631,9 +631,13 @@ public class PostRepo {
                 post.setBeginTime(c.getString(c.getColumnIndex(Post.KEY_beginTime)));
                 post.setEndTime(c.getString(c.getColumnIndex(Post.KEY_endTime)));
                 String groupString = c.getString(c.getColumnIndex(Post.KEY_groups));
-                List<String> groupList = Arrays.asList(groupString.split(","));
-                Set<String> groupSet = new HashSet<String>(groupList);
-                post.setGroups(groupSet);
+                if (groupString!= null) {
+                    List<String> groupList = Arrays.asList(groupString.split(","));
+                    Set<String> groupSet = new HashSet<String>(groupList);
+                    post.setGroups(groupSet);
+                } else {
+                    post.setGroups(new HashSet<String>());
+                }
                 post.setLocation(c.getString(c.getColumnIndex(Post.KEY_location)));
                 post.setCategories(c.getString(c.getColumnIndex(Post.KEY_categories)));
                 post.setTag(c.getString(c.getColumnIndex(Post.KEY_tags)));

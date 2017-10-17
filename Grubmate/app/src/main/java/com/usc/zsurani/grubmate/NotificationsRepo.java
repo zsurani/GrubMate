@@ -159,7 +159,7 @@ public class NotificationsRepo {
                 Set<String> cateSet = new HashSet<String>(cate);
 
                 n = new Notifications(name, tag, cateSet, start, end, type, userId);
-                if (status.equals("0")) {
+                if (status == null || status.equals("0")) {
                     n.setActiveStatus(false);
                 }
                 else {
