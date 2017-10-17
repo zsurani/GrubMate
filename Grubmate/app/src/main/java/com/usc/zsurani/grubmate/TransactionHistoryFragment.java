@@ -77,6 +77,11 @@ public class TransactionHistoryFragment extends Fragment {
 
 
     private class TransactionAdapter extends ArrayAdapter<Transaction> {
+        Integer postId;
+        Integer requesterId;
+        Integer providerId;
+        TransactionRepo tr;
+
 
         public TransactionAdapter(Context context, int textViewResourceId) {
             super(context, textViewResourceId);
@@ -100,22 +105,18 @@ public class TransactionHistoryFragment extends Fragment {
             final Transaction t = getItem(position);
 
             if (t != null) {
-                TransactionRepo tr = new TransactionRepo(getContext());
+                tr = new TransactionRepo(getContext());
                 TextView transactName = (TextView) v.findViewById(R.id.label_transaction_name);
                 TextView transactStatus = (TextView) v.findViewById(R.id.label_transaction_status);
-                Button requestButton = (Button) v.findViewById(R.id.button_transaction);
+                final Button requestButton = (Button) v.findViewById(R.id.button_transaction);
 
 
                 // Get data from transaction to put into row
-                Integer providerId = t.getProviderID(); //tr.getProviderID();
-                Integer requesterId = t.getRequesterID();
-                Integer postId = t.getPostID();
+                providerId = t.getProviderID();
+                requesterId = t.getRequesterID();
+                postId = t.getPostID();
                 String status = t.getStatus();
 
-                Log.d("DEBUG - providerId", Integer.toString(providerId));
-                Log.d("DEBUG - requester", Integer.toString(requesterId));
-                Log.d("DEBUG - postId", Integer.toString(postId));
-                Log.d("DEBUG - status", status);
 
                 /*
                     gets provider, requester
@@ -132,27 +133,30 @@ public class TransactionHistoryFragment extends Fragment {
                 transactName.setText(String.format(name, provider, food, requester));
                 transactStatus.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
 
-                // TODO delete dummy data
-//                String name = getResources().getString(R.string.text_transaction_name);
-//
-//                transactName.setText(String.format(name, "Casey", "Mexican Food", "Shivangi"));
-//                transactStatus.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
-
                 switch (status) {
-                    case "Accepted":
-                        requestButton.setEnabled(false);
-                        break;
-                    case "Denied":
-                        requestButton.setEnabled(false);
-                        break;
-                    case "Pending":
+                    case "OPEN":
                         requestButton.setEnabled(true);
-                        // change to cancel?
+                        break;
+                    case "CLOSED":
+                        requestButton.setEnabled(false);
                         break;
                 }
 
+                requestButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        tr.updateStatus(t.getId(), "CLOSED");
+                        requestButton.setEnabled(false);
+                        Notifications n1 = new Notifications(postId, requesterId,
+                                providerId, "REVIEW");
+                        Notifications n2 = new Notifications(postId, providerId,
+                                requesterId, "REVIEW");
+                        NotificationsRepo nr = new NotificationsRepo(getContext());
+                        nr.insertReviewRequest(n1);
+                        nr.insertReviewRequest(n2);
+                    }
+                });
             }
-
             return v;
         }
     }

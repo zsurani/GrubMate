@@ -82,6 +82,7 @@ public class TransactionRepo {
                 String status = c.getString(c.getColumnIndex(Transaction.KEY_status));
 
                 t = new Transaction(Integer.parseInt(provider), Integer.parseInt(requester), location, Integer.parseInt(orginalPost));
+                t.setId(id);
                 t.setStatus(status);
                 Log.d("DEBUG", t.getStatus());
             } while (c.moveToNext());
@@ -105,6 +106,19 @@ public class TransactionRepo {
         }
         db.close();
         return i;
+    }
+
+    public void updateStatus(Integer id, String status) {
+        Log.d("DEBUG", "inside of updateStatus, status = " + status);
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Transaction.KEY_status, status);
+
+        db.update(Transaction.TABLE, values, Transaction.KEY_id + "= " + id, null);
+        Log.d("DEBUG", "id = " + id);
+        db.close(); // Closing database connection
     }
 
 }

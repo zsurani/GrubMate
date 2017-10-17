@@ -100,6 +100,11 @@ public class Notifications {
         //PostID, requesterID, providerID,locationOfRequester need to create variable?
         status = accepted;
         this.type = type;
+        this.requestID = Integer.toString(requesterID);
+        this.setProvider(providerID);
+        this.type = type;
+        this.postID = postID;
+
     }
 
     /*
@@ -107,10 +112,15 @@ public class Notifications {
      * is completed to all users involved, telling them to rate the
      * provider/receiver based on experience
      */
-    Notifications(Integer postID, List<Integer> receiversID,
+    Notifications(Integer postID, Integer receiversID,
                   Integer providerID, String type){
         //PostID, requesterID, providerID need to create variable?
         this.type = type;
+        this.postID = postID;
+        this.requesterID = receiversID;
+        this.setProvider(providerID);
+
+
     }
 
     Notifications() {}

@@ -48,6 +48,12 @@ public class EnterLocationActivity extends AppCompatActivity {
                         location.getText().toString(), "REQUEST");
                 NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
                 nr.insertRequest(n);
+
+                //Transaction t = new Transaction(pr.getProviderId(postID), userID,
+                //pr.getLocation(postID), postID);
+                //t.setStatus("OPEN");
+                //TransactionRepo tr = new TransactionRepo(getApplicationContext());
+                //tr.insert(t);
             }
         });
 

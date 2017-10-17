@@ -118,7 +118,7 @@ public class ViewPostActivity extends AppCompatActivity {
                 Integer userId = ur.getId(Profile.getCurrentProfile().getId());
                 postRepo.addNewRequestor(Integer.toString(postID), Integer.toString(userId));
 
-                if(Integer.parseInt(post.getNum_requests()) <= (postRepo.getRequestors(postID).length - 1)) //because it starts wiht ","
+                if(Integer.parseInt(post.getNum_requests()) <= (postRepo.getAccepted(Integer.toString(postID))).length() - 1) //because it starts wiht ","
                 {
                     buttonRequestOnPost.setEnabled(false);
                 } else {
