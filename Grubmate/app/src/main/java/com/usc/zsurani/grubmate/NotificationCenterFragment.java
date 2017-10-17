@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,18 +35,12 @@ public class NotificationCenterFragment extends Fragment {
     private ListView listSubscriptions;
     private ListView listRequests;
 
+    private boolean displaySubscriptions = false;
+    private static final String KEY_DISPLAY_SUB = "grubmate.notification_center.display_subscriptions";
+
     public NotificationCenterFragment() {
         // Required empty public constructor
     }
-
-//    public static NotificationCenterFragment newInstance(String param1, String param2) {
-//        NotificationCenterFragment fragment = new NotificationCenterFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,12 +52,55 @@ public class NotificationCenterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_notification_center, container, false);
 
+        if (savedInstanceState != null) {
+            displaySubscriptions = savedInstanceState.getBoolean(KEY_DISPLAY_SUB);
+        }
+
         buttonRequests = (Button) v.findViewById(R.id.button_notification_center_see_requests);
         buttonSubscriptions = (Button) v.findViewById(R.id.button_notification_center_see_subscriptions);
         listRequests = (ListView) v.findViewById(R.id.list_notification_center_requests);
         listSubscriptions = (ListView) v.findViewById(R.id.list_notification_center_subscriptions);
 
+        if (displaySubscriptions) {
+            PostAdapter subAdapter = new PostAdapter(getActivity().getApplicationContext(), R.layout.layout_post_row, getMatchingPosts());
+            listSubscriptions.setAdapter(subAdapter);
+            listRequests.setVisibility(View.INVISIBLE);
+            listSubscriptions.setVisibility(View.VISIBLE);
+        } else {
+            // TODO request list adapter
+
+            listRequests.setVisibility(View.VISIBLE);
+            listSubscriptions.setVisibility(View.INVISIBLE);
+        }
+
+
+        buttonSubscriptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PostAdapter subAdapter = new PostAdapter(getActivity().getApplicationContext(), R.layout.layout_post_row, getMatchingPosts());
+                listSubscriptions.setAdapter(subAdapter);
+                listRequests.setVisibility(View.INVISIBLE);
+                listSubscriptions.setVisibility(View.VISIBLE);
+            }
+        });
+
+        buttonRequests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO request list adapter
+
+                listRequests.setVisibility(View.VISIBLE);
+                listSubscriptions.setVisibility(View.INVISIBLE);
+            }
+        });
+
         return v;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_DISPLAY_SUB, displaySubscriptions);
     }
 
     private List<Post> getMatchingPosts() {
@@ -72,6 +110,12 @@ public class NotificationCenterFragment extends Fragment {
 
         PostRepo pr = new PostRepo(getActivity().getApplicationContext());
         List<Post> allPosts = pr.returnAllPosts();
+
+        for (Post post : allPosts) {
+            if (post.getTags() == null) Log.d("NOTIF CENTER" , "POST TAGS NULL");
+            if (post.getCategory() == null) Log.d("NOTIF CENTER", "POST CAT NULL");
+        }
+
         List<Post> matchingPosts = new ArrayList<>();
 
         for (Post post : allPosts) {
@@ -99,7 +143,11 @@ public class NotificationCenterFragment extends Fragment {
         NotificationsRepo repo = new NotificationsRepo(getActivity().getApplicationContext());
         List<String> notifStrings = repo.getNotifications(userId);
         for (String id : notifStrings) {
-            notifList.add(repo.getNotification(Integer.valueOf(id)));
+            Notifications n = repo.getNotification(Integer.valueOf(id));
+            n.setId(Integer.valueOf(id));
+            notifList.add(n);
+            if (n.getTags() == null) Log.d("NOTIF CENTER", "TAGS NULL");
+            if (n.getCategory() == null) Log.d("NOTIF CENTER", "CATEGORIES NULL");
         }
 
         return notifList;

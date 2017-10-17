@@ -13,13 +13,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.facebook.Profile;
+
 public class ViewPostActivity extends AppCompatActivity {
 
     private Button buttonRequestOnPost;
+    private ImageButton buttonEdit;
     private TextView postName;
     private TextView postUser;
     private TextView userRating;
@@ -32,13 +36,16 @@ public class ViewPostActivity extends AppCompatActivity {
     private TextView categories;
     private TextView tags;
     private ImageView image;
+    private int postID;
+    private Post post;
+    private PostRepo postRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
 
-        final int postID;
+        //final int postID;
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             postID = 0;
@@ -61,9 +68,11 @@ public class ViewPostActivity extends AppCompatActivity {
         categories = (TextView) findViewById(R.id.view_post_categories);
         tags = (TextView) findViewById(R.id.view_post_tags);
         image = (ImageView) findViewById(R.id.view_post_picture);
+        buttonEdit = (ImageButton) findViewById(R.id.edit_button);
 
-        PostRepo postRepo = new PostRepo(getApplicationContext());
-        final Post post = postRepo.getPost(postID);
+         postRepo = new PostRepo(getApplicationContext());
+        Log.d("DEBUG - postID", Integer.toString(postID));
+        post = postRepo.getPost(postID);
         postName.setText("Name: " + post.getFood());
         postUser.setText("User: " + post.getOwner_string());
         userRating.setText("Rating: " + post.getUserRating());
@@ -79,9 +88,41 @@ public class ViewPostActivity extends AppCompatActivity {
         Bitmap images2 = BitmapFactory.decodeByteArray(images, 0, images.length);
         image.setImageBitmap(images2);
 
+        if (post.getOwner_string().equals(Profile.getCurrentProfile().getName())) {
+            buttonEdit.setVisibility(View.VISIBLE);
+        } else {
+            buttonEdit.setVisibility(View.INVISIBLE);
+        }
+
+        //Log.d("DEBUG userreq", "post = " + postRepo.getRequestors(postID).length);
+
+        if(Integer.parseInt(post.getNum_requests()) <= (postRepo.getRequestors(postID).length - 1)) //because it starts wiht ","
+        {
+            buttonRequestOnPost.setEnabled(false);
+        } else {
+            buttonRequestOnPost.setEnabled(true);
+        }
+
+
         buttonRequestOnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //need to update the post with the user id of who is requesting
+                UserRepo ur = new UserRepo(getApplicationContext());
+                Integer userId = ur.getId(Profile.getCurrentProfile().getId());
+                postRepo.addNewRequestor(Integer.toString(postID), Integer.toString(userId));
+
+                if(Integer.parseInt(post.getNum_requests()) <= (postRepo.getRequestors(postID).length - 1)) //because it starts wiht ","
+                {
+                    buttonRequestOnPost.setEnabled(false);
+                } else {
+                    buttonRequestOnPost.setEnabled(true);
+                }
+
+                Intent i = new Intent(getApplicationContext(), EnterLocationActivity.class);
+                i.putExtra("postID", postID);
+                i.putExtra("userID", userId);
+                startActivity(i);
             }
         });
 
@@ -91,16 +132,23 @@ public class ViewPostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Post p = new Post(postID);
                 //ProfileActivity pa = new ProfileActivity(p.getProvider());
-              // Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                // Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
                 //i.putExtra("frgToLoad", 0); //0 = profile
-              // startActivity(i);
-
-
+                // startActivity(i);
                 //MAKE REQUEST
-
-
-
             }
         });
+
+        // edit post button leads to create post page
+        buttonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), CreatePostActivity.class);
+                i.putExtra("postID", postID);
+                startActivity(i);
+            }
+        });
+
+
     }
 }

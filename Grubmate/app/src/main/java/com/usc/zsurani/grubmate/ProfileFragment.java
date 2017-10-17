@@ -112,15 +112,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
-        // TODO connect to db
-        List<Post> posts = new ArrayList<Post>();
-        postList.setAdapter(new PostAdapter(getContext(), R.layout.layout_post_row, posts));
-
-        // TODO connect to db
-        List<String> reviews = new ArrayList<>();
-        reviewList.setAdapter(new ReviewAdapter(getContext(), R.layout.layout_review_row, reviews));
-
         setupProfile();
 
         //need to get all of the posts that the user owns
@@ -143,6 +134,11 @@ public class ProfileFragment extends Fragment {
 
         PostAdapter adapter = new PostAdapter(getContext(), R.layout.layout_post_row, userPosts);
         postList.setAdapter(adapter);
+
+        UserRepo ur = new UserRepo(getContext());
+        List<String> reviews = ur.getReviews(Integer.toString(userId));
+        reviewList.setAdapter(new ReviewAdapter(getContext(), R.layout.layout_review_row, reviews));
+
     }
 
     private void setupProfile() {
@@ -157,6 +153,7 @@ public class ProfileFragment extends Fragment {
 
         String stringNumRatings = up.getNumRatings(String.valueOf(userId));
         String stringRating = up.getRating(String.valueOf(userId));
+        Log.d("DEBUG - stringRating", stringNumRatings);
         String stringName = Profile.getCurrentProfile().getName();
         Uri uri = Profile.getCurrentProfile().getProfilePictureUri(profilePic.getMaxWidth(), profilePic.getMaxHeight());
 

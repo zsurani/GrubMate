@@ -33,7 +33,7 @@ public class UserRepo {
 
         // Inserting Row
         long user_id = db.insert(User.TABLE, null, values);
-        db.close(); // Closing database connection
+        //db.close(); // Closing database connection
         return (int) user_id;
     }
 
@@ -53,7 +53,7 @@ public class UserRepo {
                 d = c.getInt(c.getColumnIndex(User.KEY_ID));
             } while (c.moveToNext());
         }
-        db.close();
+        //db.close();
 
         return d;
     }
@@ -73,7 +73,7 @@ public class UserRepo {
                 d = c.getInt(c.getColumnIndex(User.KEY_ID));
             } while (c.moveToNext());
         }
-        db.close();
+        //db.close();
 
         return d;
     }
@@ -83,7 +83,7 @@ public class UserRepo {
      */
     public String getName(int userId){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT " + User.KEY_name + " FROM " + User.TABLE + "WHERE "
+        String selectQuery = "SELECT " + User.KEY_name + " FROM " + User.TABLE + " WHERE "
                 + User.KEY_ID + "=" + userId;
         Cursor c = db.rawQuery(selectQuery, null);
         String d = "";
@@ -92,7 +92,7 @@ public class UserRepo {
                 d = c.getString(c.getColumnIndex(User.KEY_name));
             } while (c.moveToNext());
         }
-        db.close();
+        //db.close();
 
         return d;
 
@@ -129,33 +129,29 @@ public class UserRepo {
 
         // Inserting Row
         long reviewID = db.insert(User.TABLE2, null, values);
-        db.close(); // Closing database connection
+        //db.close(); // Closing database connection
         return reviewID;
     }
 
-    public void addRating(String userId, String nRating){
+    public void addRating(String userId, Float nRating){
         //Open connection to write data
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        String oldRating = getRating(userId);
-        String newRating = oldRating + nRating;
+        Float oldRating = Float.parseFloat(getRating(userId));
+        Float newRating = oldRating + nRating;
+
+        Integer oldNum = Integer.parseInt(getNumRatings(userId));
+        Integer newNum = oldNum + 1;
+        Log.d("DEBUG", "new Num = " + newNum);
 
         ContentValues values = new ContentValues();
 
         values.put(User.KEY_rating, newRating);
+        values.put(User.KEY_numRatings, Integer.toString(newNum));
 
-        db.update(User.TABLE, values, User.KEY_ID + "=" + userId, null);
+        db.update(User.TABLE, values, User.KEY_ID + "=" + Integer.parseInt(userId), null);
 
-        String oldNum = getNumRatings(userId);
-        String newNum = Integer.toString(Integer.parseInt(oldRating) + Integer.parseInt(nRating));
-
-        values = new ContentValues();
-
-        values.put(User.KEY_rating, newNum);
-
-        db.update(User.TABLE, values, User.KEY_ID + "=" + userId, null);
-
-        db.close();
+        //db.close();
     }
 
     public String getNumRatings(String userId){
@@ -173,9 +169,9 @@ public class UserRepo {
                 toReturn = cursor.getString(cursor.getColumnIndex(User.KEY_numRatings));
             } while (cursor.moveToNext());
         }
-
+        Log.d("DEBUG", "getting rating = " + toReturn);
         cursor.close();
-        db.close();
+        //db.close();
         return toReturn;
     }
 
@@ -194,10 +190,15 @@ public class UserRepo {
                 toReturn = cursor.getString(cursor.getColumnIndex(User.KEY_rating));
             } while (cursor.moveToNext());
         }
-
         cursor.close();
-        db.close();
-        return toReturn;
+
+        int num = Integer.parseInt(getNumRatings(userId));
+        if(num == 0) {
+            return Integer.toString(0); //prevents a divide by 0 error
+        }
+        int rating = Integer.parseInt(toReturn) / num;
+        //db.close();
+        return Integer.toString(rating);
     }
 
     public ArrayList<String>  getReviews(String userId) {
@@ -220,7 +221,7 @@ public class UserRepo {
         }
 
         cursor.close();
-        db.close();
+        //db.close();
         return toReturn;
 
     }
@@ -244,7 +245,7 @@ public class UserRepo {
             }while(c.moveToNext());
         }
         c.close();
-        db.close();
+        //db.close();
 
         if (count > 0) {
             return false;

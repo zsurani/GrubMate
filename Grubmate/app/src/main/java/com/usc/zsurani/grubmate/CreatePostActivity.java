@@ -31,6 +31,8 @@ import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static com.usc.zsurani.grubmate.ProfileFragment.newInstance;
+
 public class CreatePostActivity extends AppCompatActivity {
 
     private EditText editName;
@@ -42,6 +44,7 @@ public class CreatePostActivity extends AppCompatActivity {
     private EditText editTags;
     private Button buttonSave;
     private Button selectGroup;
+    private Button buttonDelete;
     private CheckBox checkbox1;
     private CheckBox checkbox2;
     private CheckBox checkbox3;
@@ -59,6 +62,7 @@ public class CreatePostActivity extends AppCompatActivity {
     private CheckBox checkbox15;
     private CheckBox checkbox16;
     private RadioButton homemade;
+    private RadioButton restaurant;
     private String num_requests;
 
     ImageView viewImage;
@@ -78,6 +82,8 @@ public class CreatePostActivity extends AppCompatActivity {
         editTags = (EditText) findViewById(R.id.edit_post_tags);
 //        buttonSave = (Button) findViewById(R.id.button_save_new_post);
         selectGroup = (Button) findViewById(R.id.button_select_group);
+        buttonSave = (Button) findViewById(R.id.button_save_new_post);
+        buttonDelete = (Button) findViewById(R.id.button_delete_post);
         viewImage = (ImageView) findViewById(R.id.viewImage);
 
         checkbox1 = (CheckBox) findViewById(R.id.american);
@@ -98,6 +104,29 @@ public class CreatePostActivity extends AppCompatActivity {
         checkbox16 = (CheckBox) findViewById(R.id.indian);
 
         homemade = (RadioButton) findViewById(R.id.radio_homemade);
+        restaurant = (RadioButton) findViewById(R.id.radio_restaurant);
+
+        final int postID;
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            postID = 0;
+        } else {
+            postID = extras.getInt("postID");
+            PostRepo postRepo = new PostRepo(getApplicationContext());
+            final Post post = postRepo.getPost(postID);
+            editName.setText(post.getFood());
+            editDesc.setText(post.getDescription());
+            editNumAvailable.setText(post.getNum_requests());
+            editBeginTime.setText(post.getBeginTime());
+            editEndTime.setText(post.getEndTime());
+            editLocation.setText(post.getLocation());
+            if (post.getHomemade().equals("homemade")) homemade.setChecked(true);
+            else restaurant.setChecked(true);
+            editTags.setText(post.getTag());
+            byte[] images = post.getPhoto_image();
+            Bitmap images2 = BitmapFactory.decodeByteArray(images, 0, images.length);
+            viewImage.setImageBitmap(images2);
+        }
 
         viewImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +142,18 @@ public class CreatePostActivity extends AppCompatActivity {
                 Intent i = new Intent(CreatePostActivity.this, AddGroupToPostActivity.class);
                 i.putExtra("postID", post);
                 startActivity(i);
+            }
+        });
+
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (postID != 0) {
+                    PostRepo postRepo = new PostRepo(getApplicationContext());
+                    postRepo.deletePost(postID);
+                }
+
+                finish();
             }
         });
 
@@ -232,6 +273,7 @@ public class CreatePostActivity extends AppCompatActivity {
     private int createPost(){
                 final String description = editDesc.getText().toString();
                 final String owner = Profile.getCurrentProfile().getId();
+                Log.d("DEBUG- owner = ", owner);
                 final String food = editName.getText().toString();
                 // images
                 num_requests = editNumAvailable.getText().toString(); // error check for words? TODO
@@ -329,13 +371,22 @@ public class CreatePostActivity extends AppCompatActivity {
                         beginTime, endTime, location, active, users, users, homemade_tag);
 
                 PostRepo postRepo = new PostRepo(getApplicationContext());
-                int postId = postRepo.insert(post);
+
+                int postId;
+
+                if (postID != 0) {
+                    post.setId(postID);
+                    postRepo.update(post);
+                    postId = postID;
+                }
+                else postId = postRepo.insert(post);
 
         return postId;
 
 //                Intent intent = new Intent(CreatePostActivity.this, ViewPostActivity.class);
 //                intent.putExtra("postID", postId);
 //                startActivity(intent);
+
     }
 
 

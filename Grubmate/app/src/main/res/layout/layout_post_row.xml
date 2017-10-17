@@ -15,7 +15,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
         android:paddingLeft="4dp"
-        android:paddingRight="4dp"/>
+        android:paddingRight="4dp"
+        android:textColor="@color/colorDarkGray"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -26,7 +27,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
         android:paddingLeft="4dp"
-        android:paddingRight="4dp"/>
+        android:paddingRight="4dp"
+        android:textColor="@color/colorDarkGray"/>
 
     <Button
         android:layout_width="match_parent"

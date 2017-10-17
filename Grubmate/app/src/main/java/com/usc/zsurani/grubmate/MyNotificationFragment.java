@@ -155,18 +155,25 @@ public class MyNotificationFragment extends Fragment {
 
                 String timeStart = t.getBeginTime();
                 String timeEnd = t.getEndTime();
-                String tags = t.getTags().toString();
-                if (tags.length() > 0) {
-                    tags = tags.substring(1, tags.length() - 1);
-                } else {
-                    tags = "none";
+                String tags = "";
+                if (t.getTags() != null ) {
+                    tags = t.getTags().toString();
+                    if (tags.length() > 0) {
+                        tags = tags.substring(1, tags.length() - 1);
+                    } else {
+                        tags = "none";
+                    }
                 }
-                String categories = t.getCategory().toString();
-                if (categories.length() > 0) {
-                    categories = categories.substring(1, categories.length() - 1);
-                } else {
-                    categories = "none";
+                String categories = "";
+                if (t.getCategory() != null) {
+                    categories = t.getCategory().toString();
+                    if (categories.length() > 0) {
+                        categories = categories.substring(1, categories.length() - 1);
+                    } else {
+                        categories = "none";
+                    }
                 }
+
 
                 textName.setText(t.getName());
                 textInfo.setText(String.format(getResources().getString(R.string.text_notification_description), timeStart, timeEnd, tags, categories));

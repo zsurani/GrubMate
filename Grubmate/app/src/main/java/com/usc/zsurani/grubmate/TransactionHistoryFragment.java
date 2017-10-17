@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,15 +100,22 @@ public class TransactionHistoryFragment extends Fragment {
             final Transaction t = getItem(position);
 
             if (t != null) {
+                TransactionRepo tr = new TransactionRepo(getContext());
                 TextView transactName = (TextView) v.findViewById(R.id.label_transaction_name);
                 TextView transactStatus = (TextView) v.findViewById(R.id.label_transaction_status);
                 Button requestButton = (Button) v.findViewById(R.id.button_transaction);
 
+
                 // Get data from transaction to put into row
-                Integer providerId = t.getProviderID();
+                Integer providerId = t.getProviderID(); //tr.getProviderID();
                 Integer requesterId = t.getRequesterID();
                 Integer postId = t.getPostID();
                 String status = t.getStatus();
+
+                Log.d("DEBUG - providerId", Integer.toString(providerId));
+                Log.d("DEBUG - requester", Integer.toString(requesterId));
+                Log.d("DEBUG - postId", Integer.toString(postId));
+                Log.d("DEBUG - status", status);
 
                 /*
                     gets provider, requester
@@ -122,7 +130,7 @@ public class TransactionHistoryFragment extends Fragment {
 
                 String name = getResources().getString(R.string.text_transaction_name);
                 transactName.setText(String.format(name, provider, food, requester));
-                transactName.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
+                transactStatus.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
 
                 // TODO delete dummy data
 //                String name = getResources().getString(R.string.text_transaction_name);

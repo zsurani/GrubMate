@@ -36,6 +36,7 @@ public class TransactionHistoryActivity extends AppCompatActivity {
           TransactionRepo repo = new TransactionRepo(getApplicationContext()); // not sure if this context is right
           // get list of transactions here and then populate the listview with those transactions
         */
+        TransactionRepo repo = new TransactionRepo(getApplicationContext());
 
         // TODO remove dummy list
         List<Transaction> dummyList= new ArrayList<Transaction>();
@@ -78,8 +79,9 @@ public class TransactionHistoryActivity extends AppCompatActivity {
                 // Get data from transaction to put into row
                 Integer providerId = t.getProviderID();
                 Integer requesterId = t.getRequesterID();
-                Integer postId = t.getPostID();
+                int postId = t.getPostID();
                 String status = t.getStatus();
+
 
                 UserRepo ur = new UserRepo(getApplicationContext());
                 String provider = ur.getName(providerId);
@@ -87,11 +89,11 @@ public class TransactionHistoryActivity extends AppCompatActivity {
 
                 PostRepo pr = new PostRepo(getApplicationContext());
                 final Post post = pr.getPost(postId);
-                String food = post.getFood();
+                String food = pr.getFood(Integer.toString(postId));
 
                 String name = getResources().getString(R.string.text_transaction_name);
                 transactName.setText(String.format(name, provider, food, requester));
-                transactName.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
+                transactStatus.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
 
                 // TODO delete dummy data
 

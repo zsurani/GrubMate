@@ -64,6 +64,42 @@ public class PostRepo {
         return (int) post_id;
     }
 
+    public void update(Post post) {
+        //Open connection to write data
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT " + User.KEY_ID + " FROM " + User.TABLE
+                + " WHERE " + User.KEY_fbUniqueIdentifier + " = " + post.getOwner_string(), null);
+
+        String userId = "";
+        if (c.moveToFirst()) {
+            userId = c.getString(c.getColumnIndex(User.KEY_ID));
+        }
+
+        db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Post.KEY_description, post.getDescription());
+        values.put(Post.KEY_owner, userId);
+        values.put(Post.KEY_food, post.getFood());
+        values.put(Post.KEY_num_requests, post.getNum_requests());
+        values.put(Post.KEY_categories, post.getCategories());
+        values.put(Post.KEY_tags, post.getTag());
+        values.put(Post.KEY_beginTime, post.getBeginTime());
+        values.put(Post.KEY_endTime, post.getEndTime());
+        values.put(Post.KEY_location, post.getLocation());
+        values.put(Post.KEY_active, post.getActive_status());
+        values.put(Post.KEY_usersAccepted, post.getUserAccepted());
+        values.put(Post.KEY_usersRequested, post.getUserRequested());
+        values.put(Post.KEY_homemadeNotRestaurant, post.getHomemade());
+        values.put(Post.KEY_images, post.getPhoto_image());
+
+
+        // Inserting Row
+        db.update(Post.TABLE, values, Post.KEY_id+"="+post.getId(), null);
+        db.close(); // Closing database connection
+        c.close();
+    }
+
 
 //    public void delete(int student_Id) {
 //
@@ -139,6 +175,7 @@ public class PostRepo {
             } while (c.moveToNext());
         }
 
+        Log.d("DEBUG - owner-string = ", post.getOwner_string());
         c = db.rawQuery("SELECT * FROM " + User.TABLE
                 + " WHERE " + User.KEY_ID + " = " + post.getOwner_string(), null);
 
@@ -468,6 +505,7 @@ public class PostRepo {
     }
 
     public void addNewRequestor(String postId, String userId){
+
         String oldReqList = getRequestors(postId);
         String newReqList = oldReqList + "," + userId;
 
@@ -569,10 +607,9 @@ public class PostRepo {
         return toReturn;
     }
 
-    public void deletePost(String postId){
+    public void deletePost(int postId){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        // It's a good practice to use parameter ?, instead of concatenate string
-        db.delete(Post.TABLE, Post.KEY_id + "=" + Integer.parseInt(postId), null);
+        db.delete(Post.TABLE, Post.KEY_id + "=" + postId, null);
         db.close(); // Closing database connection
     }
 
@@ -591,17 +628,19 @@ public class PostRepo {
                 post.setBeginTime(c.getString(c.getColumnIndex(Post.KEY_beginTime)));
                 post.setEndTime(c.getString(c.getColumnIndex(Post.KEY_endTime)));
                 String groupString = c.getString(c.getColumnIndex(Post.KEY_groups));
-                List<String> groupList = Arrays.asList(groupString.split(","));
-                Set<String> groupSet = new HashSet<String>(groupList);
-                post.setGroups(groupSet);
+//                List<String> groupList = Arrays.asList(groupString.split(",")); // TODO FIX THIS
+//                Set<String> groupSet = new HashSet<String>(groupList);
+//                post.setGroups(groupSet);
                 post.setLocation(c.getString(c.getColumnIndex(Post.KEY_location)));
                 post.setCategories(c.getString(c.getColumnIndex(Post.KEY_categories)));
                 post.setTag(c.getString(c.getColumnIndex(Post.KEY_tags)));
                 post.setPhoto_image(c.getBlob(c.getColumnIndex(Post.KEY_images)));
                 toReturn.add(post);
+
                 c.moveToNext();
             }
         }
+
         return toReturn;
     }
 
@@ -747,4 +786,54 @@ public class PostRepo {
         return postList;
     }
 
+    public int getProviderId(int postId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_owner +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + postId;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int toReturn = -1;
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Post.KEY_owner)));
+            } while (cursor.moveToNext());
+        }
+        return toReturn;
+    }
+
+    public String[] getRequestors(int postId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_usersRequested +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + postId;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String[] r = null;
+        if (cursor.moveToFirst()) {
+
+               String s = cursor.getString(cursor.getColumnIndex(Post.KEY_usersRequested));
+                r = s.split(",");
+
+        }
+        return r;
+    }
+    public String getLocation(int postId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_location +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + postId;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String toReturn = "";
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getString(cursor.getColumnIndex(Post.KEY_location));
+            } while (cursor.moveToNext());
+        }
+        return toReturn;
+    }
 }
