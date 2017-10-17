@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/label_rating"
+        android:text="Rating: "
+        android:layout_centerHorizontal="true"
+        android:textSize="16dp"
+        android:layout_margin="4dp"/>
+    <RatingBar
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/label_rating"
+        android:id="@+id/user_rating"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/label_review"
+        android:layout_below="@id/user_rating"
+        android:text="Review: "
+        android:layout_centerHorizontal="true"
+        android:textSize="16dp"
+        android:layout_margin="4dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_review"
+        android:layout_toEndOf="@id/label_review"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_save_rating"
+        android:layout_below="@id/edit_review"
+        android:layout_marginTop="16dp"
+        android:text="Submit" />
+
+</LinearLayout>

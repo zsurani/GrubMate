@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     User user = new User(name, id);
                     userRepo.insert(user);
                 }
-                Intent intent = new Intent(getApplicationContext(), CreateGroupActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RatingReviewActivity.class);
                 startActivity(intent);
             }
 

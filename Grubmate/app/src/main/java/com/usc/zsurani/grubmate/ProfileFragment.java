@@ -156,6 +156,7 @@ public class ProfileFragment extends Fragment {
 
         String stringNumRatings = up.getNumRatings(String.valueOf(userId));
         String stringRating = up.getRating(String.valueOf(userId));
+        Log.d("DEBUG - stringRating", stringNumRatings);
         String stringName = Profile.getCurrentProfile().getName();
         Uri uri = Profile.getCurrentProfile().getProfilePictureUri(profilePic.getMaxWidth(), profilePic.getMaxHeight());
 
