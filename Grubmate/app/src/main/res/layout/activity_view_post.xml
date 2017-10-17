@@ -9,18 +9,22 @@
     android:id="@+id/view_post">
 
     <ScrollView
-        android:layout_width="344dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <!--android:layout_width="344dp"
         android:layout_height="471dp"
         tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        tools:layout_editor_absoluteX="8dp">-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
                 android:id="@+id/view_post_picture"/>
             <TextView
                 android:id="@+id/view_post_name"
