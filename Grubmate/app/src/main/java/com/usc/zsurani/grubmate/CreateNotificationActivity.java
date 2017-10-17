@@ -178,7 +178,6 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 dummy.putExtra(NOTIFICATION_TAGS, t);
                 dummy.putExtra(NOTIFICATION_CATEGORY, cString);
                 setResult(0, dummy);
-                Log.d("CREATE NOTIF", "FINISH");
                 finish();
             }
         });

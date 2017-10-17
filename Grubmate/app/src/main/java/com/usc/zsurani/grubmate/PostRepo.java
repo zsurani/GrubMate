@@ -636,9 +636,11 @@ public class PostRepo {
                 post.setTag(c.getString(c.getColumnIndex(Post.KEY_tags)));
                 post.setPhoto_image(c.getBlob(c.getColumnIndex(Post.KEY_images)));
                 toReturn.add(post);
+
                 c.moveToNext();
             }
         }
+
         return toReturn;
     }
 
