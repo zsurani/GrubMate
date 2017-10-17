@@ -35,13 +35,13 @@ public class AddGroupToPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_groups_for_post);
 
-        final int postID;
-        Bundle extras = getIntent().getExtras();
-        if (extras == null) {
-            postID = 0;
-        } else {
-            postID = extras.getInt("postID");
-        }
+//        final int postID;
+//        Bundle extras = getIntent().getExtras();
+//        if (extras == null) {
+//            postID = 0;
+//        } else {
+//            postID = extras.getInt("postID");
+//        }
 
         groupname = (EditText) findViewById(R.id.adding_group);
         viewGroup = (Button) findViewById(R.id.button_view_groups);
@@ -59,7 +59,10 @@ public class AddGroupToPostActivity extends AppCompatActivity {
         savePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent();
+                i.putExtra("groupname", groupname.getText().toString());
+                setResult(RESULT_OK, i);
+                finish();
             }
         });
     }
