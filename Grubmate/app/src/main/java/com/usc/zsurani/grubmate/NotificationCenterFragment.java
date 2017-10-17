@@ -153,4 +153,111 @@ public class NotificationCenterFragment extends Fragment {
         return notifList;
     }
 
+
+    /*
+     * The custom adapter for the Notifications list view.
+     */
+    private class TransnotifAdapter extends ArrayAdapter<Notifications> {
+        private Context context;
+
+        public TransnotifAdapter(Context context, int textViewResourceId) {
+            super(context, textViewResourceId);
+            this.context = context;
+        }
+
+        public TransnotifAdapter(Context context, int textViewResourceId, List<Notifications> items) {
+            super(context, textViewResourceId, items);
+            this.context = context;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View v = convertView;
+
+            // If the View to convert doesn't exist, inflate a new one with the correct layout
+            if (v == null) {
+                LayoutInflater vi;
+                vi = LayoutInflater.from(getContext());
+                v = vi.inflate(R.layout.layout_notification_row, null);
+            }
+
+            // Get the Notifications object, and if it isn't null, populate the layout with its data
+            final Notifications t = getItem(position);
+
+            if (t != null) {
+                TextView textName = (TextView) v.findViewById(R.id.label_notification_name);
+                TextView textInfo = (TextView) v.findViewById(R.id.label_notification_description);
+                final Button buttonEnd = (Button) v.findViewById(R.id.button_notification);
+
+                String timeStart = t.getBeginTime();
+                String timeEnd = t.getEndTime();
+                String tags = "";
+                if (t.getTags() != null ) {
+                    tags = t.getTags().toString();
+                    if (tags.length() > 0) {
+                        tags = tags.substring(1, tags.length() - 1);
+                    } else {
+                        tags = "none";
+                    }
+                }
+                String categories = "";
+                if (t.getCategory() != null) {
+                    categories = t.getCategory().toString();
+                    if (categories.length() > 0) {
+                        categories = categories.substring(1, categories.length() - 1);
+                    } else {
+                        categories = "none";
+                    }
+                }
+
+
+                textName.setText(t.getName());
+                textInfo.setText(String.format(getResources().getString(R.string.text_notification_description), timeStart, timeEnd, tags, categories));
+
+                //if time is passed, button is disabled; else it's enabled
+                DateFormat df = new SimpleDateFormat("hh:mm a");
+                Date end;
+                try {
+                    end = df.parse(timeEnd);
+                } catch (Exception e) {
+                    end = Calendar.getInstance().getTime();
+                }
+                Date now = Calendar.getInstance().getTime();
+
+//                if (now.before(end)) {
+//                    buttonEnd.setEnabled(false);
+//                } else {
+//                    buttonEnd.setEnabled(true);
+//                }
+
+                // on click listener for the "End Notification" button
+                buttonEnd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        NotificationsRepo repo = new NotificationsRepo(getActivity().getApplicationContext());
+                        repo.updateStatus(String.valueOf(t.getId()), "0");
+                        t.setActiveStatus(false);
+
+                        // have to update adapter
+                        notifyDataSetChanged();
+
+                        buttonEnd.setEnabled(false);
+
+                    }
+                });
+
+                if (!t.isActive()) {
+                    buttonEnd.setEnabled(false);
+                    buttonEnd.setText("Notification Cancelled");
+                } else {
+                    buttonEnd.setEnabled(true);
+                    buttonEnd.setText("End Notification");
+                }
+            }
+
+            return v;
+        }
+    }
+
 }
