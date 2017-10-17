@@ -21,20 +21,22 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="170dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Accept"
-            android:layout_marginRight="12dp"
+            android:layout_marginRight="6dp"
             android:layout_marginLeft="12dp"
-            android:id="@+id/button_notification1"/>
+            android:id="@+id/button_notification1"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/button_notification2"
-            android:layout_width="170dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="6dp"
             android:layout_marginRight="12dp"
-            android:text="Reject" />
+            android:text="Reject"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

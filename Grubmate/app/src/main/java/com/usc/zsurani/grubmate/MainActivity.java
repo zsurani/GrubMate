@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbHandler = new DatabaseHandler(this);
         db = dbHandler.getReadableDatabase();
-      //dbHandler.delete(db);
+//      dbHandler.delete(db);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
@@ -120,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
                     User user = new User(name, id);
                     userRepo.insert(user);
                 }
-                Intent intent = new Intent(getApplicationContext(), RatingReviewActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), NewsFeedFragment.class);
+//                startActivity(intent);
             }
 
             @Override

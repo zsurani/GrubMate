@@ -119,8 +119,8 @@ public class GroupRepo {
 
     public int getGroupID(String name){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + Group.TABLE + " WHERE " + Group.KEY_name + " = " +
-                name;
+        String selectQuery = "SELECT * FROM " + Group.TABLE + " WHERE " + Group.KEY_name + " like '" +
+                name + "'";
 
         Cursor c = db.rawQuery(selectQuery, null);
         int d = -1;
