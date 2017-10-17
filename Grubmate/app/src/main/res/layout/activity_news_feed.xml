@@ -7,6 +7,19 @@
     tools:context="com.usc.zsurani.grubmate.NewsFeedActivity"
     android:orientation="vertical">
 
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:id="@+id/search"
+            android:title="@string/search_title"
+            android:icon="@drawable/ic_search"
+            android:showAsAction="collapseActionView|ifRoom"
+            android:actionViewClass="android.widget.SearchView" />
+    </menu>
+
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -33,6 +33,9 @@
     <string name="text_post_button">See Posts</string>
     <string name="text_review_button">See Reviews</string>
 
+    <!-- String Resources for Menu -->
+    <string name="search_title">Search For Post</string>
+
     <!-- String resources for the nav menu -->
     <string-array name="navigation_drawer_items_array">
         <item>My Profile</item>

@@ -2,6 +2,8 @@ package com.usc.zsurani.grubmate;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,12 @@ public class NewsFeedFragment extends Fragment{
 
     private ListView listFeed;
     private PostAdapter adapter;
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, getActivity().getMenuInflater());
+        inflater.inflate(R.menu.options_menu, menu);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
