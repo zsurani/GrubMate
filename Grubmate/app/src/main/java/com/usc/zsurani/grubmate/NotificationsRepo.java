@@ -96,6 +96,22 @@ public class NotificationsRepo {
         return (int) notification_Id;
     }
 
+    public int insertReviewRequest(Notifications n) {
+        //Open connection to write data
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(n.KEY_postID, n.getPostID());
+        values.put(n.KEY_requestorID, n.getRequestID()); //who is being sent the rating
+        values.put(n.KEY_userID, n.getProvider()); //who we are rating
+        values.put(n.KEY_type, "REVIEW");
+
+        // Inserting Row
+        long notification_Id = db.insert(Notifications.TABLE, null, values);
+        db.close(); // Closing database connection
+        return (int) notification_Id;
+    }
+
     //get list of notifications for the current user
     public List<String> getNotifications(int userId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();

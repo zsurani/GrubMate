@@ -26,11 +26,6 @@ public class EnterLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_location);
 
-//        Transaction t = new Transaction(postRepo.getProviderId(postID), userId,
-//                postRepo.getLocation(postID), postID);
-//        TransactionRepo tr = new TransactionRepo(getApplicationContext());
-//        tr.insert(t);
-
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
         } else {
@@ -53,6 +48,12 @@ public class EnterLocationActivity extends AppCompatActivity {
                         location.getText().toString(), "REQUEST");
                 NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
                 nr.insertRequest(n);
+
+                Transaction t = new Transaction(pr.getProviderId(postID), userID,
+                pr.getLocation(postID), postID);
+                t.setStatus("OPEN");
+                TransactionRepo tr = new TransactionRepo(getApplicationContext());
+                tr.insert(t);
             }
         });
 
