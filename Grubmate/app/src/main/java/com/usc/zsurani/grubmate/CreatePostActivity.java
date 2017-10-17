@@ -263,13 +263,11 @@ public class CreatePostActivity extends AppCompatActivity {
                         beginTime, endTime, location, active, users, users, homemade_tag);
 
                 PostRepo postRepo = new PostRepo(getApplicationContext());
-                int postId = postRepo.insert(post);
 
                 GroupRepo gr = new GroupRepo(getApplicationContext());
                 int groupID = gr.getGroupID(groupname);
                 post.addGroup(Integer.toString(groupID));
                 
-//                int postId = postRepo.insert(post);
                 if (postID != 0) {
                     post.setId(postID);
                     postRepo.update(post);

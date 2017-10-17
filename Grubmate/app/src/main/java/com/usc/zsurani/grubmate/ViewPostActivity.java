@@ -103,7 +103,13 @@ public class ViewPostActivity extends AppCompatActivity {
             buttonRequestOnPost.setEnabled(true);
         }
 
-
+        if(postRepo.getRequestors(postID).length > 0)
+        {
+            buttonEdit.setEnabled(false);
+        } else {
+            buttonEdit.setEnabled(true);
+        }
+        
         buttonRequestOnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
