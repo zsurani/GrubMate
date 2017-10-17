@@ -80,6 +80,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
             public void onClick(View v) {
                 GroupRepo groupRepo = new GroupRepo(getApplicationContext());
                 groupRepo.insert(groupName, members);
+                finish();
             }
         });
     }

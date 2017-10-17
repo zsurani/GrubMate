@@ -67,7 +67,7 @@ public class CreatePostActivity extends AppCompatActivity {
     private String groupname;
 
     int postId;
-    int postID;
+//    int postID;
 
     ImageView viewImage;
     private Bitmap yourbitmap;
@@ -86,7 +86,7 @@ public class CreatePostActivity extends AppCompatActivity {
         editEndTime = (EditText) findViewById(R.id.edit_post_end_time);
         editLocation = (EditText) findViewById(R.id.edit_post_location);
         editTags = (EditText) findViewById(R.id.edit_post_tags);
-//        selectGroup = (Button) findViewById(R.id.button_select_group);
+        selectGroup = (Button) findViewById(R.id.button_select_group);
         buttonSave = (Button) findViewById(R.id.button_save_new_post);
         buttonDelete = (Button) findViewById(R.id.button_delete_post);
         viewImage = (ImageView) findViewById(R.id.viewImage);

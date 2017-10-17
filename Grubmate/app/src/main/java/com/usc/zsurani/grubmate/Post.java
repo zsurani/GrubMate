@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class Post{
     String userAccepted;
     String homemade;
     String user_rating;
+    String groupString;
 
     Integer id;
     String title;
@@ -180,6 +182,9 @@ public class Post{
      * of IDs storing all groups who have access to the post
      */
     void addGroup(String groupId) {
+        if (groups == null) {
+            groups = new HashSet<String>();
+        }
         groups.add(groupId);
     }
 
@@ -487,9 +492,27 @@ public class Post{
 
     public void setGroups(Set<String> groups){
         this.groups = groups;
+        if (groups.size() > 0) {
+            for (String group : groups) {
+                groupString += group + ", ";
+            }
+            groupString.substring(0, groupString.length()-2);
+        }
+    }
+
+    public void setGroupString(String grpString) {
+        groupString = grpString;
     }
 
     public Set<String> getGroups(){
+        if (groups == null && groupString != null) {
+            String[] split = groupString.split(", ");
+            Set<String> setToReturn = new HashSet<String>();
+            for (String s : split) {
+                setToReturn.add(s);
+            }
+            return setToReturn;
+        }
         return groups;
     }
 
@@ -498,6 +521,10 @@ public class Post{
     }
 
     public void setId(Integer newId){id = newId;}
+
+    public String getGroupString() {
+        return groupString;
+    }
 
     /*
      * Checks to see if this post matches the tags & categories on the given Notifications object.
