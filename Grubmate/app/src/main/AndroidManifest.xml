@@ -34,6 +34,7 @@
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
         <activity android:name=".AddGroupMembersActivity"></activity>
+        <activity android:name=".AddGroupToPostActivity"></activity>
         <activity android:name=".EnterLocationActivity"></activity>
     </application>
 

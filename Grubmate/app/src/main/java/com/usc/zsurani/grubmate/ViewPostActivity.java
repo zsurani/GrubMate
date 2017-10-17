@@ -23,7 +23,7 @@ import com.facebook.Profile;
 public class ViewPostActivity extends AppCompatActivity {
 
     private Button buttonRequestOnPost;
-    private ImageButton buttonEdit;
+    private Button buttonEdit;
     private TextView postName;
     private TextView postUser;
     private TextView userRating;
@@ -68,7 +68,7 @@ public class ViewPostActivity extends AppCompatActivity {
         categories = (TextView) findViewById(R.id.view_post_categories);
         tags = (TextView) findViewById(R.id.view_post_tags);
         image = (ImageView) findViewById(R.id.view_post_picture);
-        buttonEdit = (ImageButton) findViewById(R.id.edit_button);
+        buttonEdit = (Button) findViewById(R.id.edit_button);
 
          postRepo = new PostRepo(getApplicationContext());
         Log.d("DEBUG - postID", Integer.toString(postID));

@@ -26,6 +26,11 @@ public class Notifications {
     public static final String KEY_name = "name";
     public static final String KEY_type = "type";
 
+    public static final String TYPE_SUBSCRIPTION = "subscription";
+    public static final String TYPE_REQUEST = "request";
+    public static final String TYPE_ACCEPT = "accept";
+    public static final String TYPE_REVIEW = "review";
+
     String userID;
 
 
@@ -42,6 +47,7 @@ public class Notifications {
     Boolean status;
     String name;
     String type;
+    String food;
 
     /*
      * Constructor (Type 1) for subscription type notification in
@@ -116,6 +122,8 @@ public class Notifications {
 
 
     }
+
+    Notifications() {}
 
     /*
      * Sets the ID for the current Notifications object.
@@ -231,5 +239,13 @@ public class Notifications {
 
     public void setProvider(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getFood() {
+        return food;
+    }
+
+    public void setFood(String food) {
+        this.food = food;
     }
 }

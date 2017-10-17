@@ -24,6 +24,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 
 /**
  * A fragment for the Notification Center.
@@ -67,12 +69,11 @@ public class NotificationCenterFragment extends Fragment {
             listRequests.setVisibility(View.INVISIBLE);
             listSubscriptions.setVisibility(View.VISIBLE);
         } else {
-            // TODO request list adapter
-
+            TransnotifAdapter transAdapter = new TransnotifAdapter(getActivity().getApplicationContext(), R.layout.layout_transnotif_row, getOtherNotifs());
+            listRequests.setAdapter(transAdapter);
             listRequests.setVisibility(View.VISIBLE);
             listSubscriptions.setVisibility(View.INVISIBLE);
         }
-
 
         buttonSubscriptions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +88,8 @@ public class NotificationCenterFragment extends Fragment {
         buttonRequests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO request list adapter
-
+                TransnotifAdapter transnotifAdapter = new TransnotifAdapter(getActivity().getApplicationContext(), R.layout.layout_post_row, getOtherNotifs());
+                listSubscriptions.setAdapter(transnotifAdapter);
                 listRequests.setVisibility(View.VISIBLE);
                 listSubscriptions.setVisibility(View.INVISIBLE);
             }
@@ -129,6 +130,15 @@ public class NotificationCenterFragment extends Fragment {
         return matchingPosts;
     }
 
+    private List<Notifications> getOtherNotifs() {
+        String fbId = Profile.getCurrentProfile().getId();
+        UserRepo up = new UserRepo(getActivity().getApplicationContext());
+        final int userId = up.getId(fbId);
+
+        NotificationsRepo notificationsRepo = new NotificationsRepo(getActivity().getApplicationContext());
+        return notificationsRepo.getTransNotif(userId);
+    }
+
     private List<Transaction> getNewTransactions() {
         return null;
     }
@@ -151,6 +161,108 @@ public class NotificationCenterFragment extends Fragment {
         }
 
         return notifList;
+    }
+
+
+    /*
+     * The custom adapter for the Notifications list view.
+     */
+    private class TransnotifAdapter extends ArrayAdapter<Notifications> {
+        private Context context;
+
+        public TransnotifAdapter(Context context, int textViewResourceId) {
+            super(context, textViewResourceId);
+            this.context = context;
+        }
+
+        public TransnotifAdapter(Context context, int textViewResourceId, List<Notifications> items) {
+            super(context, textViewResourceId, items);
+            this.context = context;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View v = convertView;
+
+            // If the View to convert doesn't exist, inflate a new one with the correct layout
+            if (v == null) {
+                LayoutInflater vi;
+                vi = LayoutInflater.from(getContext());
+                v = vi.inflate(R.layout.layout_transnotif_row, null);
+            }
+
+            // Get the Notifications object, and if it isn't null, populate the layout with its data
+            final Notifications t = getItem(position);
+
+            if (t != null) {
+                TextView textInfo = (TextView) v.findViewById(R.id.label_description);
+                final Button button_one = (Button) v.findViewById(R.id.button_notification1);
+                final Button button_two = (Button) v.findViewById(R.id.button_notification2);
+
+                UserRepo userRepo = new UserRepo(v.getContext());
+
+                if (t.getType().equals("REQUEST")) { // and gets status
+                    textInfo.setText(userRepo.getName(t.getRequestID()) + " requests food");
+                    button_one.setText("Accept");
+                    button_two.setText("Reject");
+                } else if (t.getType().equals("ACCEPT")) {
+                    UserRepo up = new UserRepo(getActivity().getApplicationContext());
+                    textInfo.setText(up.getName(t.getProvider()) + " has accepted your request");
+                    button_one.setVisibility(View.INVISIBLE);
+                    button_two.setVisibility(View.INVISIBLE);
+                } else if (t.getType().equals("REVIEW")) {
+                    textInfo.setText("A rating and review has been requested");
+                    button_one.setText("Rate");
+                    button_two.setVisibility(View.INVISIBLE);
+                }
+
+                // on click listener for the "End Notification" button
+                button_one.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (t.getType().equals("REQUEST")) {
+                            String fbId = Profile.getCurrentProfile().getId();
+                            UserRepo up = new UserRepo(getActivity().getApplicationContext());
+                            final int userId = up.getId(fbId);
+
+                            PostRepo postRepo = new PostRepo(getActivity().getApplicationContext());
+                            postRepo.addNewAccepted(Integer.toString(t.getPostID()), Integer.toString(userId));
+
+                            button_one.setEnabled(false);
+                            button_two.setEnabled(false);
+
+//                            Transaction transaction = new Transaction(postRepo.getProviderId(t.getPostID()),
+//                                    userId, postRepo.getLocation(t.getPostID()), t.getPostID());
+//                            TransactionRepo tr = new TransactionRepo(getApplicationContext());
+//                            transaction.setStatus("OPEN");
+//                            tr.insert(transaction);
+
+                            NotificationsRepo notificationsRepo = new NotificationsRepo(getActivity().getApplicationContext());
+                            notificationsRepo.insertAccepted(t.getRequestID(), t.getPostID(), userId);
+
+                        } else {
+                            // go to the rating page
+                        }
+                    }
+                });
+
+                button_two.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        button_one.setEnabled(false);
+                        button_two.setEnabled(false);
+                        // make notification inactive
+                        // turns off buttons
+                        // changes status
+                    }
+                });
+
+            }
+
+            return v;
+        }
     }
 
 }

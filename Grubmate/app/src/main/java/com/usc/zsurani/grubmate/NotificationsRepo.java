@@ -332,5 +332,76 @@ public class NotificationsRepo {
         db.close(); // Closing database connection
     }
 
+    public List<Notifications> getTransNotif(Integer userId) {
+        List<Notifications> notifList = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
+        // 1st type
+        String selectQuery = "SELECT * FROM " + Notifications.TABLE + " where " +
+                Notifications.KEY_type + " = 'REQUEST' AND " + Notifications.KEY_userID + " = "
+                + userId;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if(c.moveToFirst()) {
+            do {
+                Notifications notification = new Notifications();
+                notification.type = "REQUEST";
+                notification.setRequestID(c.getInt(c.getColumnIndex(Notifications.KEY_requestorID)));
+                notification.status = Boolean.parseBoolean(c.getString(c.getColumnIndex(Notifications.KEY_status)));
+                notification.setPostID(c.getInt(c.getColumnIndex(Notifications.KEY_postID)));
+                notifList.add(notification);
+            } while (c.moveToNext());
+        }
+
+        // 2nd type
+        selectQuery = "SELECT * FROM " + Notifications.TABLE + " where " +
+                Notifications.KEY_type + " = 'ACCEPT' AND " + Notifications.KEY_requestorID + " = "
+                + userId;
+
+        c = db.rawQuery(selectQuery, null);
+        if(c.moveToFirst()) {
+            do {
+                Notifications notification = new Notifications();
+                notification.type = "ACCEPT";
+                notification.setRequestID(c.getInt(c.getColumnIndex(Notifications.KEY_requestorID)));
+                notification.setPostID(c.getInt(c.getColumnIndex(Notifications.KEY_postID)));
+                notification.setProvider(c.getInt(c.getColumnIndex(Notifications.KEY_userID)));
+                notifList.add(notification);
+            } while (c.moveToNext());
+        }
+
+        // 3rd type
+        selectQuery = "SELECT * FROM " + Notifications.TABLE + " where " +
+                Notifications.KEY_type + " = 'REVIEW' AND " + Notifications.KEY_requestorID + " = "
+                + userId;
+
+        c = db.rawQuery(selectQuery, null);
+        if(c.moveToFirst()) {
+            do {
+                Notifications notification = new Notifications();
+                notification.type = "REVIEW";
+                notification.setRequestID(c.getInt(c.getColumnIndex(Notifications.KEY_requestorID)));
+                notification.setProvider(c.getInt(c.getColumnIndex(Notifications.KEY_userID)));
+                notifList.add(notification);
+            } while (c.moveToNext());
+        }
+
+        db.close();
+        return notifList;
+
+    }
+
+    public void insertAccepted(Integer requesterId, Integer postId, Integer userId) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Notifications.KEY_requestorID, requesterId);
+        values.put(Notifications.KEY_postID, postId);
+        values.put(Notifications.KEY_type,"ACCEPT");
+        values.put(Notifications.KEY_userID, userId);
+
+        // Inserting Row
+        long notification_Id = db.insert(Notifications.TABLE, null, values);
+        db.close(); // Closing database connection
+    }
 }

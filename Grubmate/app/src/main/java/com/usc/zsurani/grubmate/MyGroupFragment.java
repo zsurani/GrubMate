@@ -35,6 +35,11 @@ public class MyGroupFragment extends Fragment {
     private GroupAdapter adapter;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.activity_mygroups, container, false);
@@ -45,10 +50,10 @@ public class MyGroupFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         View v = getView();
 
-        groupList = (ListView) v.findViewById(R.id.list_groups);
+        groupList = (ListView) v.findViewById(android.R.id.list);
 
         adapter = new GroupAdapter(getApplicationContext(), R.layout.layout_group_row, getGroupList());
-        groupList = (ListView) v.findViewById(R.id.list_groups);
+        groupList = (ListView) v.findViewById(android.R.id.list);
         groupList.setAdapter(adapter);
 
         createGroup = (Button) v.findViewById(R.id.create_group);

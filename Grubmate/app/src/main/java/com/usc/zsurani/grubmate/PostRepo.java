@@ -56,6 +56,7 @@ public class PostRepo {
         values.put(Post.KEY_usersRequested, post.getUserRequested());
         values.put(Post.KEY_homemadeNotRestaurant, post.getHomemade());
         values.put(Post.KEY_images, post.getPhoto_image());
+        values.put(Post.KEY_groups, post.getGroupString());
 
 
         // Inserting Row
@@ -92,6 +93,7 @@ public class PostRepo {
         values.put(Post.KEY_usersRequested, post.getUserRequested());
         values.put(Post.KEY_homemadeNotRestaurant, post.getHomemade());
         values.put(Post.KEY_images, post.getPhoto_image());
+        values.put(Post.KEY_groups, post.getGroupString());
 
 
         // Inserting Row
@@ -172,6 +174,7 @@ public class PostRepo {
                 post.setTag(c.getString(c.getColumnIndex(Post.KEY_tags)));
                 post.setPhoto_image(c.getBlob(c.getColumnIndex(Post.KEY_images)));
                 post.setId(postid);
+                post.setGroupString(c.getString(c.getColumnIndex(Post.KEY_groups)));
             } while (c.moveToNext());
         }
 
@@ -558,7 +561,7 @@ public class PostRepo {
 
     public void addNewAccepted(String postId, String userId){
         String oldAcceptedList = getAccepted(postId);
-        String newAcceptedList = oldAcceptedList + "," + postId;
+        String newAcceptedList = oldAcceptedList + "," + userId;
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -628,9 +631,9 @@ public class PostRepo {
                 post.setBeginTime(c.getString(c.getColumnIndex(Post.KEY_beginTime)));
                 post.setEndTime(c.getString(c.getColumnIndex(Post.KEY_endTime)));
                 String groupString = c.getString(c.getColumnIndex(Post.KEY_groups));
-//                List<String> groupList = Arrays.asList(groupString.split(",")); // TODO FIX THIS
-//                Set<String> groupSet = new HashSet<String>(groupList);
-//                post.setGroups(groupSet);
+                List<String> groupList = Arrays.asList(groupString.split(","));
+                Set<String> groupSet = new HashSet<String>(groupList);
+                post.setGroups(groupSet);
                 post.setLocation(c.getString(c.getColumnIndex(Post.KEY_location)));
                 post.setCategories(c.getString(c.getColumnIndex(Post.KEY_categories)));
                 post.setTag(c.getString(c.getColumnIndex(Post.KEY_tags)));
