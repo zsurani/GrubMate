@@ -71,6 +71,8 @@ public class CreatePostActivity extends AppCompatActivity {
 
     ImageView viewImage;
     private Bitmap yourbitmap;
+    int postID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +86,7 @@ public class CreatePostActivity extends AppCompatActivity {
         editEndTime = (EditText) findViewById(R.id.edit_post_end_time);
         editLocation = (EditText) findViewById(R.id.edit_post_location);
         editTags = (EditText) findViewById(R.id.edit_post_tags);
-//        buttonSave = (Button) findViewById(R.id.button_save_new_post);
-        selectGroup = (Button) findViewById(R.id.button_select_group);
+//        selectGroup = (Button) findViewById(R.id.button_select_group);
         buttonSave = (Button) findViewById(R.id.button_save_new_post);
         buttonDelete = (Button) findViewById(R.id.button_delete_post);
         viewImage = (ImageView) findViewById(R.id.viewImage);
@@ -110,7 +111,10 @@ public class CreatePostActivity extends AppCompatActivity {
         homemade = (RadioButton) findViewById(R.id.radio_homemade);
         restaurant = (RadioButton) findViewById(R.id.radio_restaurant);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3943160fbe10279566ab9dfc09e0950ef820904b
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             postID = 0;
@@ -139,6 +143,7 @@ public class CreatePostActivity extends AppCompatActivity {
             }
         });
 
+<<<<<<< HEAD
         selectGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +153,17 @@ public class CreatePostActivity extends AppCompatActivity {
                 startActivityForResult(i, 0);
             }
         });
+=======
+//        selectGroup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int post = createPost();
+//                Intent i = new Intent(CreatePostActivity.this, AddGroupToPostActivity.class);
+//                i.putExtra("postID", post);
+//                startActivity(i);
+//            }
+//        });
+>>>>>>> 3943160fbe10279566ab9dfc09e0950ef820904b
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,7 +280,8 @@ public class CreatePostActivity extends AppCompatActivity {
                         beginTime, endTime, location, active, users, users, homemade_tag);
 
                 PostRepo postRepo = new PostRepo(getApplicationContext());
-
+                int postId = postRepo.insert(post);
+                
                 GroupRepo gr = new GroupRepo(getApplicationContext());
                 int groupID = gr.getGroupID(groupname);
                 post.addGroup(Integer.toString(groupID));

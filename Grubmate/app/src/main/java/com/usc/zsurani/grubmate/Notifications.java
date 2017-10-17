@@ -42,6 +42,7 @@ public class Notifications {
     Boolean status;
     String name;
     String type;
+    String food;
 
     /*
      * Constructor (Type 1) for subscription type notification in
@@ -221,5 +222,13 @@ public class Notifications {
 
     public void setProvider(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getFood() {
+        return food;
+    }
+
+    public void setFood(String food) {
+        this.food = food;
     }
 }
