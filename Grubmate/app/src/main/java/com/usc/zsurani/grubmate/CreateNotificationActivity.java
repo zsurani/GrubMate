@@ -156,7 +156,7 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 UserRepo up = new UserRepo(getApplicationContext());
                 int userId = up.getId(fbId); //need to add to use repo
 
-                Notifications n = new Notifications(name, t, cate, start, end, "POSTING", String.valueOf(userId)); //INPUTING A TEMP USER ID
+                Notifications n = new Notifications(name, t, cate, start, end, Notifications.TYPE_SUBSCRIPTION, String.valueOf(userId)); //INPUTING A TEMP USER ID
                 n.setActiveStatus(true);
 
                 // if any field is not filled out, the user will not be able to save it

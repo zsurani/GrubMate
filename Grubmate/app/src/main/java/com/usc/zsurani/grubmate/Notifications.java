@@ -26,6 +26,11 @@ public class Notifications {
     public static final String KEY_name = "name";
     public static final String KEY_type = "type";
 
+    public static final String TYPE_SUBSCRIPTION = "subscription";
+    public static final String TYPE_REQUEST = "request";
+    public static final String TYPE_ACCEPT = "accept";
+    public static final String TYPE_REVIEW = "review";
+
     String userID;
 
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.usc.zsurani.grubmate.CreateNotificationActivity"
     android:orientation="vertical"
-    android:layout_margin="12dp">
+    android:layout_margin="16dp">
 
 
     <ScrollView

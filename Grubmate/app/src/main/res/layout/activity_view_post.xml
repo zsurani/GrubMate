@@ -5,52 +5,70 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.usc.zsurani.grubmate.ViewPostActivity"
-    android:layout_margin="12dp"
+    android:layout_margin="16dp"
     android:id="@+id/view_post">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <!--android:layout_width="344dp"
-        android:layout_height="471dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:id="@+id/view_post_picture"/>
-            <TextView
-                android:id="@+id/view_post_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Name: "
-                android:textSize="18dp"
-                android:layout_margin="4dp"/>
-            <TextView
-                android:id="@+id/view_post_user"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onClick"
-                android:clickable="true"
-                android:text="User: "
-                android:textSize="18dp"
-                android:layout_margin="4dp"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
 
-            <TextView
-                android:id="@+id/view_post_rating"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="User Rating: "
-                android:textSize="18dp"
-                android:layout_margin="4dp"/>
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/view_post_picture"
+                    android:layout_marginRight="20dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/view_post_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Name: "
+                        android:textSize="18dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/view_post_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:text="User: "
+                        android:textSize="18dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/view_post_rating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="User Rating: "
+                        android:textSize="18dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/view_post_desc"
@@ -58,7 +76,8 @@
                 android:layout_height="wrap_content"
                 android:text="Description: "
                 android:textSize="18dp"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/view_post_homemade"
@@ -66,7 +85,8 @@
                 android:layout_height="wrap_content"
                 android:text="Homemade/Restaurant: "
                 android:textSize="18dp"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/view_post_servings"
@@ -74,7 +94,8 @@
                 android:layout_height="wrap_content"
                 android:text="Num Available Servings: "
                 android:textSize="18dp"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/view_post_begin"
@@ -82,7 +103,8 @@
                 android:layout_height="wrap_content"
                 android:text="Pickup Time Begin: "
                 android:textSize="18dp"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/view_post_end"
@@ -90,7 +112,8 @@
                 android:layout_height="wrap_content"
                 android:text="Pickup Time End: "
                 android:textSize="18dp"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/view_post_location"
@@ -98,7 +121,8 @@
                 android:layout_height="wrap_content"
                 android:text="Pickup Location: "
                 android:textSize="18dp"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/view_post_categories"
@@ -106,7 +130,8 @@
                 android:layout_height="wrap_content"
                 android:text="Categories: "
                 android:textSize="18dp"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/view_post_tags"
@@ -114,34 +139,35 @@
                 android:layout_height="wrap_content"
                 android:text="Tags: "
                 android:textSize="18dp"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                android:layout_weight="1"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_weight="1">
 
                 <Button
-                    android:layout_width="235dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="REQUEST"
                     android:textSize="18sp"
                     android:layout_margin="4dp"
-                    android:id="@+id/button_request_on_post_view"/>
+                    android:id="@+id/button_request_on_post_view"
+                    android:layout_weight="1"/>
 
-                <ImageButton
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/edit_button"
-                    android:layout_width="44dp"
-                    android:layout_height="40dp"
-                    android:src="@mipmap/ic_editing"
-                    android:layout_alignParentRight="true"
-                    />
+                    android:text="Edit"
+                    android:textSize="18sp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"/>
 
             </LinearLayout>
 
-
-
-            <!-- TODO add categories, images, groups -->
 
         </LinearLayout>
     </ScrollView>
