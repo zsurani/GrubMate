@@ -191,7 +191,11 @@ public class UserRepo {
             } while (cursor.moveToNext());
         }
         cursor.close();
+
         int num = Integer.parseInt(getNumRatings(userId));
+        if(num == 0) {
+            return Integer.toString(0); //prevents a divide by 0 error
+        }
         int rating = Integer.parseInt(toReturn) / num;
         //db.close();
         return Integer.toString(rating);
