@@ -110,11 +110,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
         homemade = (RadioButton) findViewById(R.id.radio_homemade);
         restaurant = (RadioButton) findViewById(R.id.radio_restaurant);
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 3943160fbe10279566ab9dfc09e0950ef820904b
+        
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             postID = 0;
@@ -143,7 +139,6 @@ public class CreatePostActivity extends AppCompatActivity {
             }
         });
 
-<<<<<<< HEAD
         selectGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,17 +148,6 @@ public class CreatePostActivity extends AppCompatActivity {
                 startActivityForResult(i, 0);
             }
         });
-=======
-//        selectGroup.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int post = createPost();
-//                Intent i = new Intent(CreatePostActivity.this, AddGroupToPostActivity.class);
-//                i.putExtra("postID", post);
-//                startActivity(i);
-//            }
-//        });
->>>>>>> 3943160fbe10279566ab9dfc09e0950ef820904b
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -281,7 +265,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
                 PostRepo postRepo = new PostRepo(getApplicationContext());
                 int postId = postRepo.insert(post);
-                
+
                 GroupRepo gr = new GroupRepo(getApplicationContext());
                 int groupID = gr.getGroupID(groupname);
                 post.addGroup(Integer.toString(groupID));
