@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.facebook.Profile;
 public class ViewPostActivity extends AppCompatActivity {
 
     private Button buttonRequestOnPost;
+    private ImageButton buttonEdit;
     private TextView postName;
     private TextView postUser;
     private TextView userRating;
@@ -66,6 +68,7 @@ public class ViewPostActivity extends AppCompatActivity {
         categories = (TextView) findViewById(R.id.view_post_categories);
         tags = (TextView) findViewById(R.id.view_post_tags);
         image = (ImageView) findViewById(R.id.view_post_picture);
+        buttonEdit = (ImageButton) findViewById(R.id.edit_button);
 
          postRepo = new PostRepo(getApplicationContext());
         Log.d("DEBUG - postID", Integer.toString(postID));
@@ -84,6 +87,12 @@ public class ViewPostActivity extends AppCompatActivity {
         byte[] images = post.getPhoto_image();
         Bitmap images2 = BitmapFactory.decodeByteArray(images, 0, images.length);
         image.setImageBitmap(images2);
+
+        if (post.getOwner_string().equals(Profile.getCurrentProfile().getName())) {
+            buttonEdit.setVisibility(View.VISIBLE);
+        } else {
+            buttonEdit.setVisibility(View.INVISIBLE);
+        }
 
         //Log.d("DEBUG userreq", "post = " + postRepo.getRequestors(postID).length);
 
@@ -110,13 +119,10 @@ public class ViewPostActivity extends AppCompatActivity {
                     buttonRequestOnPost.setEnabled(true);
                 }
 
-                /*
-                //also need to create a 'request' notification for the owner of the post
-                Notifications n = new Notifications(postID, userId, pr.getProviderId(postID), post.getLocation(), "REQUEST");
-                NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
-                nr.insert(n);
-                */
-
+                Intent i = new Intent(getApplicationContext(), EnterLocationActivity.class);
+                i.putExtra("postID", postID);
+                i.putExtra("userID", userId);
+                startActivity(i);
             }
         });
 
@@ -130,10 +136,19 @@ public class ViewPostActivity extends AppCompatActivity {
                 //i.putExtra("frgToLoad", 0); //0 = profile
                 // startActivity(i);
                 //MAKE REQUEST
-
-
-
             }
         });
+
+        // edit post button leads to create post page
+        buttonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), CreatePostActivity.class);
+                i.putExtra("postID", postID);
+                startActivity(i);
+            }
+        });
+
+
     }
 }

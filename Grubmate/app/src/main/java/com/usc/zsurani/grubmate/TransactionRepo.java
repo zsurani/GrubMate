@@ -89,4 +89,22 @@ public class TransactionRepo {
         return t;
     }
 
+    public Integer getProviderId(Integer id) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT " + Transaction.KEY_idProvider +
+                " FROM " + Transaction.TABLE + " where " +
+                Transaction.KEY_id+ " = " + id;
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        Integer i = -1;
+        if(c.moveToFirst()) {
+            do {
+                i = Integer.parseInt(c.getString(c.getColumnIndex(Transaction.KEY_idProvider)));
+                //Log.d("DEBUG", c.getString(c.getColumnIndex(Transaction.KEY_id)));
+            } while (c.moveToNext());
+        }
+        db.close();
+        return i;
+    }
+
 }

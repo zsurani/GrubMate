@@ -112,7 +112,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
         // TODO connect to db
         List<Post> posts = new ArrayList<Post>();
         postList.setAdapter(new PostAdapter(getContext(), R.layout.layout_post_row, posts));
