@@ -20,7 +20,6 @@
         android:text="Delete Member"
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
-        android:id="@+id/button_member"
-        android:textColor="@color/colorDarkGray"/>
+        android:id="@+id/button_member"/>
 
 </LinearLayout>

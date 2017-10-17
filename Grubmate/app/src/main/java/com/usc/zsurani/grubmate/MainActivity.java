@@ -75,13 +75,14 @@ public class MainActivity extends AppCompatActivity {
 
         setupToolbar();
 
-        DataModel[] drawerItem = new DataModel[5];
+        DataModel[] drawerItem = new DataModel[6];
 
         drawerItem[0] = new DataModel("My Profile");
         drawerItem[1] = new DataModel("My Newsfeed");
         drawerItem[2] = new DataModel("My Groups");
         drawerItem[3] = new DataModel("My Notifications");
         drawerItem[4] = new DataModel("My Transactions");
+        drawerItem[5] = new DataModel("Notification Center");
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -189,6 +190,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 4:
                 fragment = new TransactionHistoryFragment();
+                break;
+            case 5:
+                fragment = new NotificationCenterFragment();
                 break;
 
             default:
