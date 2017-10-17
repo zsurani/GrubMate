@@ -203,11 +203,12 @@ public class NotificationCenterFragment extends Fragment {
                 UserRepo userRepo = new UserRepo(v.getContext());
 
                 if (t.getType().equals("REQUEST")) { // and gets status
-                    textInfo.setText(userRepo.getName(t.getRequestID()) + "requests food");
+                    textInfo.setText(userRepo.getName(t.getRequestID()) + " requests food");
                     button_one.setText("Accept");
                     button_two.setText("Reject");
-                } else if (t.getType().equals("ACCEPTED")) {
-                    textInfo.setText(userRepo.getName(t.getProvider()) + "has accepted your request");
+                } else if (t.getType().equals("ACCEPT")) {
+                    UserRepo up = new UserRepo(getActivity().getApplicationContext());
+                    textInfo.setText(up.getName(t.getProvider()) + " has accepted your request");
                     button_one.setVisibility(View.INVISIBLE);
                     button_two.setVisibility(View.INVISIBLE);
                 } else if (t.getType().equals("REVIEW")) {
@@ -228,18 +229,18 @@ public class NotificationCenterFragment extends Fragment {
                             PostRepo postRepo = new PostRepo(getActivity().getApplicationContext());
                             postRepo.addNewAccepted(Integer.toString(t.getPostID()), Integer.toString(userId));
 
+                            button_one.setEnabled(false);
+                            button_two.setEnabled(false);
+
 //                            Transaction transaction = new Transaction(postRepo.getProviderId(t.getPostID()),
 //                                    userId, postRepo.getLocation(t.getPostID()), t.getPostID());
 //                            TransactionRepo tr = new TransactionRepo(getApplicationContext());
 //                            transaction.setStatus("OPEN");
 //                            tr.insert(transaction);
 
+                            NotificationsRepo notificationsRepo = new NotificationsRepo(getActivity().getApplicationContext());
+                            notificationsRepo.insertAccepted(t.getRequestID(), t.getPostID(), userId);
 
-
-                            // make notification inactive
-                            // turns off buttons
-                            // changes status
-                            // make new notification to requestor
                         } else {
                             // go to the rating page
                         }
@@ -249,6 +250,9 @@ public class NotificationCenterFragment extends Fragment {
                 button_two.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        button_one.setEnabled(false);
+                        button_two.setEnabled(false);
                         // make notification inactive
                         // turns off buttons
                         // changes status
