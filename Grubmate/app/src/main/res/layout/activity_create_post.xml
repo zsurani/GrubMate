@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.usc.zsurani.grubmate.CreatePostActivity"
     android:orientation="vertical"
-    android:layout_margin="12dp">
+    android:layout_margin="16dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -264,7 +264,8 @@
                 android:layout_height="150dp"
                 android:id="@+id/viewImage"
                 android:src = "@mipmap/ic_placeholder"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -273,23 +274,22 @@
 
                 <Button
                     android:id="@+id/button_save_new_post"
-                    android:layout_width="225dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SAVE"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:layout_weight="1"/>
 
                 <Button
                     android:id="@+id/button_delete_post"
-                    android:layout_width="225dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="DELETE"
                     android:layout_gravity="right"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:layout_weight="1"/>
 
             </LinearLayout>
-
-
-            <!-- TODO add categories, images, groups -->
 
         </LinearLayout>
     </ScrollView>

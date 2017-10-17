@@ -2,18 +2,15 @@ package com.usc.zsurani.grubmate;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,7 +50,7 @@ public class MyNotificationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_my_notification, container, false);
 
-        adapter = new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, getNotificationList());
+        adapter = new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, getSubscriptionList());
         notificationList = v.findViewById(R.id.list_notifications);
         notificationList.setAdapter(adapter);
 
@@ -91,7 +88,7 @@ public class MyNotificationFragment extends Fragment {
         });
     }
 
-    private List<Notifications> getNotificationList() {
+    private List<Notifications> getSubscriptionList() {
         String fbId = Profile.getCurrentProfile().getId();
         UserRepo up = new UserRepo(getContext());
         final int userId = up.getId(fbId);
@@ -102,8 +99,10 @@ public class MyNotificationFragment extends Fragment {
         List<String> notifStrings = repo.getNotifications(userId);
         for (String id : notifStrings) {
             Notifications n = repo.getNotification(Integer.valueOf(id));
-            n.setId(Integer.valueOf(id));
-            notifList.add(n);
+            if (n.getType() != null && n.getType().equals(Notifications.TYPE_SUBSCRIPTION)) {
+                n.setId(Integer.valueOf(id));
+                notifList.add(n);
+            }
         }
 
         return notifList;
@@ -111,7 +110,7 @@ public class MyNotificationFragment extends Fragment {
 
     public void refresh() {
         if (getView() != null) {
-            adapter = new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, getNotificationList());
+            adapter = new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, getSubscriptionList());
             notificationList = getView().findViewById(R.id.list_notifications);
             notificationList.setAdapter(adapter);
         }
