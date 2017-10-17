@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 
+import java.util.HashSet;
 import java.util.List;
 
 import java.util.List;
@@ -308,6 +309,14 @@ public class Post{
 	 * that the post belongs to
 	 */
     Set<String> getCategory() {
+        if (category == null && categories != null) {
+            String[] split = categories.split(", ");
+            Set<String> setToReturn = new HashSet<String>();
+            for (String s : split) {
+                setToReturn.add(s);
+            }
+            return setToReturn;
+        }
         return category;
     }
 
@@ -316,6 +325,14 @@ public class Post{
 	 * that the post belongs to.
 	 */
     Set<String> getTags() {
+        if (tags == null && tag != null) {
+            String[] split = tag.split(", ");
+            Set<String> setToReturn = new HashSet<String>();
+            for (String s : split) {
+                setToReturn.add(s);
+            }
+            return setToReturn;
+        }
         return tags;
     }
 
@@ -486,8 +503,14 @@ public class Post{
      * Checks to see if this post matches the tags & categories on the given Notifications object.
      */
     public boolean matches(Notifications notif) {
+        tags = getTags();
+        category = getCategory();
+
         Set<String> notifTags = notif.getTags();
         Set<String> notifCategories = notif.getCategory();
+
+        if (tags == null) Log.d("POST", "TAGS NULL");
+        if (category == null) Log.d("POST", "CAT NULL");
 
         // check tags
         for (String nTag : notifTags) {

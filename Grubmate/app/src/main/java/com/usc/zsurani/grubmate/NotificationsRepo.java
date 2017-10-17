@@ -150,7 +150,8 @@ public class NotificationsRepo {
                 Set<String> tag = null;
                 //get the tags as a string, splits by , and then puts into a set
                 String tagString = c.getString(c.getColumnIndex(Notifications.KEY_tags));
-                if(tagString == null) {
+
+                if(tagString != null) {
                     String[] tagArray = tagString.split(",");
                     tag = new HashSet<>(Arrays.asList(tagArray));
                 }

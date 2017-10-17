@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,6 +110,12 @@ public class NotificationCenterFragment extends Fragment {
 
         PostRepo pr = new PostRepo(getActivity().getApplicationContext());
         List<Post> allPosts = pr.returnAllPosts();
+
+        for (Post post : allPosts) {
+            if (post.getTags() == null) Log.d("NOTIF CENTER" , "POST TAGS NULL");
+            if (post.getCategory() == null) Log.d("NOTIF CENTER", "POST CAT NULL");
+        }
+
         List<Post> matchingPosts = new ArrayList<>();
 
         for (Post post : allPosts) {
@@ -136,7 +143,11 @@ public class NotificationCenterFragment extends Fragment {
         NotificationsRepo repo = new NotificationsRepo(getActivity().getApplicationContext());
         List<String> notifStrings = repo.getNotifications(userId);
         for (String id : notifStrings) {
-            notifList.add(repo.getNotification(Integer.valueOf(id)));
+            Notifications n = repo.getNotification(Integer.valueOf(id));
+            n.setId(Integer.valueOf(id));
+            notifList.add(n);
+            if (n.getTags() == null) Log.d("NOTIF CENTER", "TAGS NULL");
+            if (n.getCategory() == null) Log.d("NOTIF CENTER", "CATEGORIES NULL");
         }
 
         return notifList;
