@@ -266,13 +266,20 @@
                 android:src = "@mipmap/ic_placeholder"
                 android:layout_centerHorizontal="true" />
 
-
             <Button
-                android:id="@+id/button_save_new_post"
+                android:id="@+id/button_select_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SAVE"
+                android:text="NEXT"
                 android:textSize="18sp" />
+
+
+            <!--<Button-->
+                <!--android:id="@+id/button_save_new_post"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="SAVE"-->
+                <!--android:textSize="18sp" />-->
 
 
             <!-- TODO add categories, images, groups -->
