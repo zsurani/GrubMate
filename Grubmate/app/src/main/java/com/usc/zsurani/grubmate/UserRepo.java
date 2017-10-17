@@ -196,7 +196,8 @@ public class UserRepo {
         if(num == 0) {
             return Integer.toString(0); //prevents a divide by 0 error
         }
-        int rating = Integer.parseInt(toReturn) / num;
+
+        int rating = Math.round(Float.parseFloat(toReturn)) / num;
         //db.close();
         return Integer.toString(rating);
     }

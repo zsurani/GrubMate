@@ -378,6 +378,7 @@ public class NotificationsRepo {
         c = db.rawQuery(selectQuery, null);
         if(c.moveToFirst()) {
             do {
+                Log.d("DEBUG", "we have gotten a review");
                 Notifications notification = new Notifications();
                 notification.type = "REVIEW";
                 notification.setRequestID(c.getInt(c.getColumnIndex(Notifications.KEY_requestorID)));

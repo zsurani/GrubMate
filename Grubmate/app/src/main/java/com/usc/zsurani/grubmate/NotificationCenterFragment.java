@@ -1,6 +1,7 @@
 package com.usc.zsurani.grubmate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -213,7 +214,7 @@ public class NotificationCenterFragment extends Fragment {
                     button_two.setVisibility(View.INVISIBLE);
                 } else if (t.getType().equals("REVIEW")) {
                     textInfo.setText("A rating and review has been requested");
-                    button_one.setText("Rate");
+                    button_one.setText("Review");
                     button_two.setVisibility(View.INVISIBLE);
                 }
 
@@ -232,17 +233,19 @@ public class NotificationCenterFragment extends Fragment {
                             button_one.setEnabled(false);
                             button_two.setEnabled(false);
 
-//                            Transaction transaction = new Transaction(postRepo.getProviderId(t.getPostID()),
-//                                    userId, postRepo.getLocation(t.getPostID()), t.getPostID());
-//                            TransactionRepo tr = new TransactionRepo(getApplicationContext());
-//                            transaction.setStatus("OPEN");
-//                            tr.insert(transaction);
+                            Transaction transaction = new Transaction(postRepo.getProviderId(t.getPostID()),
+                                    userId, postRepo.getLocation(t.getPostID()), t.getPostID());
+                            TransactionRepo tr = new TransactionRepo(getApplicationContext());
+                            transaction.setStatus("OPEN");
+                            tr.insert(transaction);
 
                             NotificationsRepo notificationsRepo = new NotificationsRepo(getActivity().getApplicationContext());
                             notificationsRepo.insertAccepted(t.getRequestID(), t.getPostID(), userId);
 
                         } else {
-                            // go to the rating page
+                            Intent i = new Intent(getApplicationContext(), RatingReviewActivity.class);
+                            i.putExtra("UserRatingId", t.getRequestID());
+                            startActivity(i);
                         }
                     }
                 });
