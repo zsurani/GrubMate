@@ -272,13 +272,6 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button_select_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="NEXT"
-                    android:textSize="18sp" />
-
-                <Button
                     android:id="@+id/button_save_new_post"
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
@@ -294,13 +287,6 @@
                     android:textSize="18sp" />
 
             </LinearLayout>
-
-            <!--<Button-->
-                <!--android:id="@+id/button_save_new_post"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="SAVE"-->
-                <!--android:textSize="18sp" />-->
 
 
             <!-- TODO add categories, images, groups -->

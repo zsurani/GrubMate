@@ -67,12 +67,11 @@ public class NotificationCenterFragment extends Fragment {
             listRequests.setVisibility(View.INVISIBLE);
             listSubscriptions.setVisibility(View.VISIBLE);
         } else {
-            // TODO request list adapter
-
+            TransnotifAdapter transAdapter = new TransnotifAdapter(getActivity().getApplicationContext(), R.layout.layout_transnotif_row, getOtherNotifs());
+            listRequests.setAdapter(transAdapter);
             listRequests.setVisibility(View.VISIBLE);
             listSubscriptions.setVisibility(View.INVISIBLE);
         }
-
 
         buttonSubscriptions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +86,8 @@ public class NotificationCenterFragment extends Fragment {
         buttonRequests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO request list adapter
-
+                TransnotifAdapter transnotifAdapter = new TransnotifAdapter(getActivity().getApplicationContext(), R.layout.layout_post_row, getOtherNotifs());
+                listSubscriptions.setAdapter(transnotifAdapter);
                 listRequests.setVisibility(View.VISIBLE);
                 listSubscriptions.setVisibility(View.INVISIBLE);
             }
@@ -127,6 +126,16 @@ public class NotificationCenterFragment extends Fragment {
         }
 
         return matchingPosts;
+    }
+
+    private List<Notifications> getOtherNotifs() {
+        List<Notifications> notifList = new ArrayList<>();
+        return notifList;
+
+        // 1st case -> request
+
+
+
     }
 
     private List<Transaction> getNewTransactions() {
@@ -179,81 +188,59 @@ public class NotificationCenterFragment extends Fragment {
             if (v == null) {
                 LayoutInflater vi;
                 vi = LayoutInflater.from(getContext());
-                v = vi.inflate(R.layout.layout_notification_row, null);
+                v = vi.inflate(R.layout.layout_transnotif_row, null);
             }
 
             // Get the Notifications object, and if it isn't null, populate the layout with its data
             final Notifications t = getItem(position);
 
             if (t != null) {
-                TextView textName = (TextView) v.findViewById(R.id.label_notification_name);
-                TextView textInfo = (TextView) v.findViewById(R.id.label_notification_description);
-                final Button buttonEnd = (Button) v.findViewById(R.id.button_notification);
+                TextView textInfo = (TextView) v.findViewById(R.id.label_description);
+                final Button button_one = (Button) v.findViewById(R.id.button_notification1);
+                final Button button_two = (Button) v.findViewById(R.id.button_notification2);
 
-                String timeStart = t.getBeginTime();
-                String timeEnd = t.getEndTime();
-                String tags = "";
-                if (t.getTags() != null ) {
-                    tags = t.getTags().toString();
-                    if (tags.length() > 0) {
-                        tags = tags.substring(1, tags.length() - 1);
-                    } else {
-                        tags = "none";
-                    }
+                UserRepo userRepo = new UserRepo(v.getContext());
+
+                if (t.getType().equals("REQUEST")) { // and gets status
+                    textInfo.setText(userRepo.getName(t.getRequestID()) + "requests " + t.getFood());
+                    button_one.setText("Accept");
+                    button_two.setText("Reject");
+                } else if (t.getType().equals("ACCEPTED")) {
+                    textInfo.setText(userRepo.getName(t.getProvider()) + "has accepted your request");
+                    button_one.setVisibility(View.INVISIBLE);
+                    button_two.setVisibility(View.INVISIBLE);
+                } else {
+                    textInfo.setText("A rating and review has been requested");
+                    button_one.setText("Rate");
+                    button_two.setVisibility(View.INVISIBLE);
                 }
-                String categories = "";
-                if (t.getCategory() != null) {
-                    categories = t.getCategory().toString();
-                    if (categories.length() > 0) {
-                        categories = categories.substring(1, categories.length() - 1);
-                    } else {
-                        categories = "none";
-                    }
-                }
-
-
-                textName.setText(t.getName());
-                textInfo.setText(String.format(getResources().getString(R.string.text_notification_description), timeStart, timeEnd, tags, categories));
-
-                //if time is passed, button is disabled; else it's enabled
-                DateFormat df = new SimpleDateFormat("hh:mm a");
-                Date end;
-                try {
-                    end = df.parse(timeEnd);
-                } catch (Exception e) {
-                    end = Calendar.getInstance().getTime();
-                }
-                Date now = Calendar.getInstance().getTime();
-
-//                if (now.before(end)) {
-//                    buttonEnd.setEnabled(false);
-//                } else {
-//                    buttonEnd.setEnabled(true);
-//                }
 
                 // on click listener for the "End Notification" button
-                buttonEnd.setOnClickListener(new View.OnClickListener() {
+                button_one.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        NotificationsRepo repo = new NotificationsRepo(getActivity().getApplicationContext());
-                        repo.updateStatus(String.valueOf(t.getId()), "0");
-                        t.setActiveStatus(false);
-
-                        // have to update adapter
-                        notifyDataSetChanged();
-
-                        buttonEnd.setEnabled(false);
-
+                        if (t.getType().equals("REQUEST")) {
+                            // make notification inactive
+                            // turns off buttons
+                            // changes status
+                            // updates post
+                            // make transaction
+                            // make new notification to requestor
+                        } else {
+                            // go to the rating page
+                        }
                     }
                 });
 
-                if (!t.isActive()) {
-                    buttonEnd.setEnabled(false);
-                    buttonEnd.setText("Notification Cancelled");
-                } else {
-                    buttonEnd.setEnabled(true);
-                    buttonEnd.setText("End Notification");
-                }
+                button_two.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // make notification inactive
+                        // turns off buttons
+                        // changes status
+                    }
+                });
+
             }
 
             return v;

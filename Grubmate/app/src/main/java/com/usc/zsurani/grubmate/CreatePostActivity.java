@@ -67,6 +67,8 @@ public class CreatePostActivity extends AppCompatActivity {
 
     ImageView viewImage;
     private Bitmap yourbitmap;
+    int postID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +82,7 @@ public class CreatePostActivity extends AppCompatActivity {
         editEndTime = (EditText) findViewById(R.id.edit_post_end_time);
         editLocation = (EditText) findViewById(R.id.edit_post_location);
         editTags = (EditText) findViewById(R.id.edit_post_tags);
-//        buttonSave = (Button) findViewById(R.id.button_save_new_post);
-        selectGroup = (Button) findViewById(R.id.button_select_group);
+//        selectGroup = (Button) findViewById(R.id.button_select_group);
         buttonSave = (Button) findViewById(R.id.button_save_new_post);
         buttonDelete = (Button) findViewById(R.id.button_delete_post);
         viewImage = (ImageView) findViewById(R.id.viewImage);
@@ -106,7 +107,6 @@ public class CreatePostActivity extends AppCompatActivity {
         homemade = (RadioButton) findViewById(R.id.radio_homemade);
         restaurant = (RadioButton) findViewById(R.id.radio_restaurant);
 
-        final int postID;
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             postID = 0;
@@ -135,15 +135,15 @@ public class CreatePostActivity extends AppCompatActivity {
             }
         });
 
-        selectGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int post = createPost();
-                Intent i = new Intent(CreatePostActivity.this, AddGroupToPostActivity.class);
-                i.putExtra("postID", post);
-                startActivity(i);
-            }
-        });
+//        selectGroup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int post = createPost();
+//                Intent i = new Intent(CreatePostActivity.this, AddGroupToPostActivity.class);
+//                i.putExtra("postID", post);
+//                startActivity(i);
+//            }
+//        });
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,123 +157,12 @@ public class CreatePostActivity extends AppCompatActivity {
             }
         });
 
-//        buttonSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                final String description = editDesc.getText().toString();
-//                final String owner = Profile.getCurrentProfile().getId();
-//                final String food = editName.getText().toString();
-//                // images
-//                num_requests = editNumAvailable.getText().toString(); // error check for words? TODO
-//                final String tags = editTags.getText().toString();
-//                final String beginTime = editBeginTime.getText().toString();
-//                final String endTime = editEndTime.getText().toString();
-//                final String location = editLocation.getText().toString();
-//                final String active = "true";
-//                // groups
-//                final String homemade_tag;
-//                if (homemade.isChecked()) homemade_tag = "homemade";
-//                else homemade_tag = "restaurant";
-//                // all friends can view
-//
-//                String category = ""; // change to dynamic if time TODO
-//
-//                if (checkbox1.isChecked()) {
-//                    category += checkbox1.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox2.isChecked()) {
-//                    category += checkbox2.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox3.isChecked()) {
-//                    category += checkbox3.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox4.isChecked()) {
-//                    category += checkbox4.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox5.isChecked()) {
-//                    category += checkbox5.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox6.isChecked()) {
-//                    category += checkbox6.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox7.isChecked()) {
-//                    category += checkbox7.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox8.isChecked()) {
-//                    category += checkbox8.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox9.isChecked()) {
-//                    category += checkbox9.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox10.isChecked()) {
-//                    category += checkbox10.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox11.isChecked()) {
-//                    category += checkbox11.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox12.isChecked()) {
-//                    category += checkbox12.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox13.isChecked()) {
-//                    category += checkbox13.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox14.isChecked()) {
-//                    category += checkbox14.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox15.isChecked()) {
-//                    category += checkbox15.getText();
-//                    category += ", ";
-//                }
-//                if (checkbox16.isChecked()) {
-//                    category += checkbox16.getText();
-//                }
-//
-//                final String categories = category;
-//                final String users = "";
-//
-//                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                //GETTING A NULL POINTER BELOW THIS
-//                yourbitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
-//                byte[] image = stream.toByteArray();
-//
-//                Log.d("debug", Integer.toString(image.length));
-//
-//                // images in between food and num_requests
-//                // groups in between active and usersRequested
-//                // allFriendsCanView at end
-//                Post post = new Post(description, owner, food, image, num_requests, categories, tags,
-//                        beginTime, endTime, location, active, users, users, homemade_tag);
-//
-//                PostRepo postRepo = new PostRepo(getApplicationContext());
-//                int postId = postRepo.insert(post);
-//
-//                Intent intent = new Intent(CreatePostActivity.this, ViewPostActivity.class);
-//                intent.putExtra("postID", postId);
-//                startActivity(intent);
-//            }
-//        });
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-    }
-
-    private int createPost(){
                 final String description = editDesc.getText().toString();
                 final String owner = Profile.getCurrentProfile().getId();
-                Log.d("DEBUG- owner = ", owner);
                 final String food = editName.getText().toString();
                 // images
                 num_requests = editNumAvailable.getText().toString(); // error check for words? TODO
@@ -371,21 +260,13 @@ public class CreatePostActivity extends AppCompatActivity {
                         beginTime, endTime, location, active, users, users, homemade_tag);
 
                 PostRepo postRepo = new PostRepo(getApplicationContext());
+                int postId = postRepo.insert(post);
 
-                int postId;
-
-                if (postID != 0) {
-                    post.setId(postID);
-                    postRepo.update(post);
-                    postId = postID;
-                }
-                else postId = postRepo.insert(post);
-
-        return postId;
-
-//                Intent intent = new Intent(CreatePostActivity.this, ViewPostActivity.class);
-//                intent.putExtra("postID", postId);
-//                startActivity(intent);
+                Intent intent = new Intent(CreatePostActivity.this, ViewPostActivity.class);
+                intent.putExtra("postID", postId);
+                startActivity(intent);
+            }
+        });
 
     }
 
