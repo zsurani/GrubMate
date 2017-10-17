@@ -1,11 +1,16 @@
 package com.usc.zsurani.grubmate;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,6 +31,8 @@ public class NewsFeedFragment extends Fragment{
 
     private ListView listFeed;
     private PostAdapter adapter;
+    private EditText searchParameter;
+    private Button searchButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +49,17 @@ public class NewsFeedFragment extends Fragment{
         listFeed = (ListView) v.findViewById(R.id.list_feed);
         listFeed.setAdapter(adapter);
 
+        final EditText searchParameter = (EditText)getView().findViewById(R.id.search_text);
+
+        searchButton = (Button) v.findViewById(R.id.button_search);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), SearchResultsActivity.class);
+                i.putExtra ( "SearchParam", searchParameter.getText().toString() );
+                startActivity(i);
+            }
+        });
         // TODO add Options menu to access other pages
     }
 

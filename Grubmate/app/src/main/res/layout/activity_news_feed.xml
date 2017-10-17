@@ -8,9 +8,36 @@
     android:orientation="vertical"
     android:layout_margin="16dp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/label_group_name"
+        android:layout_alignParentStart="true"
+        android:text=""
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="4dp"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_marginRight="4dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_text"
+        android:layout_alignTop="@+id/label_group_name"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_search"
+        android:text="Search"
+        android:layout_below="@+id/search_text"
+        android:layout_alignParentStart="true" />
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
         android:orientation="vertical">
 
         <ListView

@@ -67,7 +67,6 @@ public class CreatePostActivity extends AppCompatActivity {
     private String groupname;
 
     int postId;
-//    int postID;
 
     ImageView viewImage;
     private Bitmap yourbitmap;

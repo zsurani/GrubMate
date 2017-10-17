@@ -33,6 +33,9 @@
     <string name="text_post_button">See Posts</string>
     <string name="text_review_button">See Reviews</string>
 
+    <!-- String Resources for Menu -->
+    <string name="search_title">Search For Post</string>
+
     <!-- String resources for the nav menu -->
     <string-array name="navigation_drawer_items_array">
         <item>My Profile</item>
@@ -45,4 +48,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
 </resources>
