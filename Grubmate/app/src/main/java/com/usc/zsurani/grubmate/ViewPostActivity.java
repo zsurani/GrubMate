@@ -103,7 +103,13 @@ public class ViewPostActivity extends AppCompatActivity {
             buttonRequestOnPost.setEnabled(true);
         }
 
-
+        if(postRepo.getRequestors(postID).length -1 > 0)
+        {
+            buttonEdit.setEnabled(false);
+        } else {
+            buttonEdit.setEnabled(true);
+        }
+        
         buttonRequestOnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,7 +118,7 @@ public class ViewPostActivity extends AppCompatActivity {
                 Integer userId = ur.getId(Profile.getCurrentProfile().getId());
                 postRepo.addNewRequestor(Integer.toString(postID), Integer.toString(userId));
 
-                if(Integer.parseInt(post.getNum_requests()) <= (postRepo.getRequestors(postID).length - 1)) //because it starts wiht ","
+                if(Integer.parseInt(post.getNum_requests()) <= (postRepo.getAccepted(Integer.toString(postID))).length() - 1) //because it starts wiht ","
                 {
                     buttonRequestOnPost.setEnabled(false);
                 } else {

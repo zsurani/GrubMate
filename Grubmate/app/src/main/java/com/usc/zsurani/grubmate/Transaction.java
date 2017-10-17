@@ -31,7 +31,7 @@ public class Transaction {
         this.idRequester = requester;
         this.locRequester = locOfRequester;
         this.originalPostID = originalPost;
-        this.status = "active";
+        //this.status = "active";
     }
 
     /*
@@ -60,8 +60,12 @@ public class Transaction {
      */
     String getStatus(){return status;}
 
+    Integer getId() {return id;}
+
     /*
      * Sets the status as the inputted string
      */
     void setStatus(String status){this.status = status;}
+
+    void setId(int id){this.id = id;}
 }
