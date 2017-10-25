@@ -251,8 +251,18 @@ public class CreatePostActivity extends AppCompatActivity {
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 //GETTING A NULL POINTER BELOW THIS
-                yourbitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
-                byte[] image = stream.toByteArray();
+
+                byte[] image;
+                if (yourbitmap == null) {
+                    Bundle extras = getIntent().getExtras();
+                    postID = extras.getInt("postID");
+                    PostRepo postRepo = new PostRepo(getApplicationContext());
+                    final Post post = postRepo.getPost(postID);
+                    image = post.getPhoto_image();
+                } else {
+                    yourbitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+                    image = stream.toByteArray();
+                }
 
                 Log.d("debug", Integer.toString(image.length));
 
