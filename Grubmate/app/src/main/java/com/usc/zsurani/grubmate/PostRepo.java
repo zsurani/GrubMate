@@ -559,6 +559,7 @@ public class PostRepo {
         return toReturn;
     }
 
+
     public void addNewAccepted(String postId, String userId){
         String oldAcceptedList = getAccepted(postId);
         String newAcceptedList = oldAcceptedList + "," + userId;
@@ -827,6 +828,28 @@ public class PostRepo {
         }
         return r;
     }
+
+    public String[] getAccepted(int postId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                Post.KEY_usersAccepted +
+                " FROM " + Post.TABLE
+                + " WHERE " +
+                Post.KEY_id + "=" + postId;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String[] r = null;
+        if (cursor.moveToFirst()) {
+
+            String s = cursor.getString(cursor.getColumnIndex(Post.KEY_usersAccepted));
+            r = s.split(",");
+
+        }
+        return r;
+    }
+
+
+
     public String getLocation(int postId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT  " +

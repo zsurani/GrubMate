@@ -103,7 +103,7 @@ public class ViewPostActivity extends AppCompatActivity {
             buttonRequestOnPost.setEnabled(true);
         }
 
-        if(postRepo.getRequestors(postID).length -1 > 0)
+        if(postRepo.getAccepted(postID).length -1 > 0)
         {
             buttonEdit.setEnabled(false);
         } else {
