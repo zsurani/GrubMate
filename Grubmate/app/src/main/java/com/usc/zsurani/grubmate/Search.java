@@ -20,15 +20,24 @@ public class Search {
     }
 
     public List<Post> searchForPost(String searchParameter){
+        System.out.println(searchParameter);
         List<Post> toReturn = new ArrayList<Post>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + Post.TABLE
+                + " WHERE " + Post.KEY_tags + " like '%" + searchParameter + "%' ", null);
+
+        /*
+                Cursor c = db.rawQuery("SELECT * FROM " + Post.TABLE
                 + " WHERE " + Post.KEY_food + " like '%" + searchParameter + "%' " +
                 "AND " + Post.KEY_tags + " like '%" + searchParameter + "%' " +
                 "AND " + Post.KEY_categories + " like '%" + searchParameter + "%' " +
                 "AND " + Post.KEY_description + " like '%" + searchParameter + "%' " +
                         "AND " + Post.KEY_beginTime + " like '%" + searchParameter + "%' " +
                         "AND " + Post.KEY_endTime + " like '%" + searchParameter + "%' ", null);
+         */
+
+        KEY_BODY + " LIKE '"+search_text+"%' OR "
+                + KEY_TITLE + " LIKE '"+search_text+"%'"
 
         // looping through all rows and adding to list
 
