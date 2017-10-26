@@ -29,6 +29,7 @@ public class Search {
         /*
                 Cursor c = db.rawQuery("SELECT * FROM " + Post.TABLE
                 + " WHERE " + Post.KEY_food + " like '%" + searchParameter + "%' " +
+<<<<<<< HEAD
                 "AND " + Post.KEY_tags + " like '%" + searchParameter + "%' " +
                 "AND " + Post.KEY_categories + " like '%" + searchParameter + "%' " +
                 "AND " + Post.KEY_description + " like '%" + searchParameter + "%' " +
@@ -38,6 +39,13 @@ public class Search {
 
         KEY_BODY + " LIKE '"+search_text+"%' OR "
                 + KEY_TITLE + " LIKE '"+search_text+"%'"
+=======
+                "OR " + Post.KEY_tags + " like '%" + searchParameter + "%' " +
+                "OR " + Post.KEY_categories + " like '%" + searchParameter + "%' " +
+                "OR " + Post.KEY_description + " like '%" + searchParameter + "%' " +
+                        "OR " + Post.KEY_beginTime + " like '%" + searchParameter + "%' " +
+                        "OR " + Post.KEY_endTime + " like '%" + searchParameter + "%' ", null);
+>>>>>>> 34329aa1519e5c0cb145c9803aa9354e06de206a
 
         // looping through all rows and adding to list
 
