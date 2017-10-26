@@ -24,11 +24,11 @@ public class Search {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + Post.TABLE
                 + " WHERE " + Post.KEY_food + " like '%" + searchParameter + "%' " +
-                "AND " + Post.KEY_tags + " like '%" + searchParameter + "%' " +
-                "AND " + Post.KEY_categories + " like '%" + searchParameter + "%' " +
-                "AND " + Post.KEY_description + " like '%" + searchParameter + "%' " +
-                        "AND " + Post.KEY_beginTime + " like '%" + searchParameter + "%' " +
-                        "AND " + Post.KEY_endTime + " like '%" + searchParameter + "%' ", null);
+                "OR " + Post.KEY_tags + " like '%" + searchParameter + "%' " +
+                "OR " + Post.KEY_categories + " like '%" + searchParameter + "%' " +
+                "OR " + Post.KEY_description + " like '%" + searchParameter + "%' " +
+                        "OR " + Post.KEY_beginTime + " like '%" + searchParameter + "%' " +
+                        "OR " + Post.KEY_endTime + " like '%" + searchParameter + "%' ", null);
 
         // looping through all rows and adding to list
 
