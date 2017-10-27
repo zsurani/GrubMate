@@ -20,6 +20,7 @@ public class Search {
     }
 
     public List<Post> searchForPost(String searchParameter){
+        Log.d("DEBUG", "searchParam = " + searchParameter);
         List<Post> toReturn = new ArrayList<Post>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + Post.TABLE
@@ -27,8 +28,8 @@ public class Search {
                 "OR " + Post.KEY_tags + " like '%" + searchParameter + "%' " +
                 "OR " + Post.KEY_categories + " like '%" + searchParameter + "%' " +
                 "OR " + Post.KEY_description + " like '%" + searchParameter + "%' " +
-                        "OR " + Post.KEY_beginTime + " like '%" + searchParameter + "%' " +
-                        "OR " + Post.KEY_endTime + " like '%" + searchParameter + "%' ", null);
+                "OR " + Post.KEY_beginTime + " like '%" + searchParameter + "%' " +
+                "OR " + Post.KEY_endTime + " like '%" + searchParameter + "%' ", null);
 
 
         // looping through all rows and adding to list
