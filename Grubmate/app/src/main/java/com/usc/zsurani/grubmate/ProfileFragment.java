@@ -18,12 +18,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by Madison on 10/15/17.
@@ -73,6 +76,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         View v = getView();
 
         args = getArguments();
@@ -147,6 +151,7 @@ public class ProfileFragment extends Fragment {
         //final int userId;
         if (args == null) {
             userId = up.getId(fbId);
+            Log.d("TEST", "userId = " + userId);
         } else {
             userId = args.getInt(EXTRA_USER_ID);
         }
