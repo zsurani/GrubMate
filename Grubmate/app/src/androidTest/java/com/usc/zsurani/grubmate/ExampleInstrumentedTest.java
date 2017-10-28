@@ -28,10 +28,4 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.usc.zsurani.grubmate", appContext.getPackageName());
     }
-
-    @Test
-    public void testLogin() throws Exception {
-        Context appContext = InstrumentationRegistry.getTargetContext();
-
-    }
 }

@@ -42,12 +42,19 @@ public class AddGroupMembersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group_members);
+        Intent i = getIntent();
+        if(i != null) {
+            Bundle extras = i.getExtras();
+            groupName = extras.getString("groupName");
+            GroupRepo groupRepo = new GroupRepo(getApplicationContext());
+            members = groupRepo.getUser(groupName);
+        } else {
+            groupName = "";
+            members = null;
 
-        Bundle extras = getIntent().getExtras();
-        groupName = extras.getString("groupName");
+        }
 
-        GroupRepo groupRepo = new GroupRepo(getApplicationContext());
-        members = groupRepo.getUser(groupName);
+
 
         memberName = (EditText) findViewById(R.id.member_name);
         addingMembers = (Button) findViewById(R.id.adding_members);
@@ -65,7 +72,6 @@ public class AddGroupMembersActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 friendname = memberName.getText().toString();
-                GroupRepo groupRepo = new GroupRepo(getApplicationContext());
                 members.add(friendname);
                 adapter.notifyDataSetChanged();
                 memberName.setText("");
