@@ -152,10 +152,14 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 }
 
                 //This uses the current facebook profile to get the use ID to save in database
-                String fbId = Profile.getCurrentProfile().getId();
+                String fbId;
                 UserRepo up = new UserRepo(getApplicationContext());
+                if (Profile.getCurrentProfile() == null) {
+                    fbId = up.getProfile().getId();
+                } else {
+                    fbId = Profile.getCurrentProfile().getId();
+                }
                 int userId = up.getId(fbId); //need to add to use repo
-
                 Notifications n = new Notifications(name, t, cate, start, end, Notifications.TYPE_SUBSCRIPTION, String.valueOf(userId)); //INPUTING A TEMP USER ID
                 n.setActiveStatus(true);
 

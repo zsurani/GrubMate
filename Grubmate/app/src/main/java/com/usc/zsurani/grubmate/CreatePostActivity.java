@@ -165,7 +165,13 @@ public class CreatePostActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 final String description = editDesc.getText().toString();
-                final String owner = Profile.getCurrentProfile().getId();
+                String owner;
+                UserRepo userRepo = new UserRepo(getApplicationContext());
+                if (Profile.getCurrentProfile() == null) {
+                    owner = userRepo.getProfile().getId();
+                } else {
+                    owner = Profile.getCurrentProfile().getId();
+                }
                 final String food = editName.getText().toString();
                 // images
                 num_requests = editNumAvailable.getText().toString(); // error check for words? TODO

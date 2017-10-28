@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.facebook.Profile;
-
 import java.util.HashSet;
 
 public class CreateGroupActivity extends AppCompatActivity {
@@ -19,7 +17,6 @@ public class CreateGroupActivity extends AppCompatActivity {
 
     public static final int RESULT_SAVE = 111;
 
-    String fbId = Profile.getCurrentProfile().getId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
