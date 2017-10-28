@@ -48,6 +48,7 @@ public class Notifications {
     String name;
     String type;
     String food;
+    String location;
 
     /*
      * Constructor (Type 1) for subscription type notification in
@@ -86,6 +87,7 @@ public class Notifications {
         this.endTime = "N/A";
         this.category = null;
         this.tags = null;
+        this.location = locationOfRequester;
 
 
     }
@@ -96,7 +98,7 @@ public class Notifications {
      * their request
      */
     Notifications(Integer postID, Integer requesterID, Integer providerID,
-                  Boolean accepted, String type){
+    Boolean accepted, String type){
         //PostID, requesterID, providerID,locationOfRequester need to create variable?
         status = accepted;
         this.type = type;
