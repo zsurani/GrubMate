@@ -113,6 +113,16 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_NOTIFICATION);
 
+        String CREATE_TABLE_PROFILE = "CREATE TABLE " + User.P_TABLE  + "("
+                + User.KEY_ID  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + User.KEY_name + " TEXT, "
+                + User.KEY_image + " BLOB, "
+                + User.KEY_ID3 + " TEXT)";
+
+        Log.d("SQL", CREATE_TABLE_PROFILE);
+
+        db.execSQL(CREATE_TABLE_PROFILE);
+
     }
 
     @Override
@@ -136,6 +146,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Transaction.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Notifications.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + User.TABLE2);
+        db.execSQL("DROP TABLE IF EXISTS " + User.P_TABLE);
         onCreate(db);
     }
 

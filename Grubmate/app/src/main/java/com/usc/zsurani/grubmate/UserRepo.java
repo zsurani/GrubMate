@@ -54,7 +54,7 @@ public class UserRepo {
             } while (c.moveToNext());
         }
         //db.close();
-
+        Log.d("UMBRELLA", Integer.toString(d));
         return d;
     }
 
@@ -252,6 +252,43 @@ public class UserRepo {
             return false;
         }
         return true;
+    }
+
+    public Profiles getProfile() {
+        //Open connection to read only
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  *  FROM " + User.P_TABLE;
+
+        Profiles p = new Profiles();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        if (cursor.moveToFirst()) {
+            do {
+                p.setName(cursor.getString(cursor.getColumnIndex(User.KEY_name)));
+                p.setId(cursor.getString(cursor.getColumnIndex(User.KEY_ID3)));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        //db.close();
+        return p;
+
+    }
+
+    public void insertProfile(Profiles user) {
+
+        //Open connection to write data
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(User.KEY_name, user.getName());
+        values.put(User.KEY_ID3, user.getId());
+//        values.put(User.KEY_image, user.getImage());
+
+        // Inserting Row
+        long user_id = db.insert(User.P_TABLE, null, values);
+        //db.close(); // Closing database connection
     }
 
 

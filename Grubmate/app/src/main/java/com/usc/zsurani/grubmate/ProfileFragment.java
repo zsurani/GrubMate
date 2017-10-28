@@ -142,7 +142,19 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setupProfile() {
-        String fbId = Profile.getCurrentProfile().getId();
+        String fbId = "";
+        String stringName = "";
+        Uri uri = null;
+        UserRepo userRepo = new UserRepo(getContext());
+        if (Profile.getCurrentProfile() == null) {
+            fbId = userRepo.getProfile().getId();
+            stringName = userRepo.getProfile().getName();
+            uri = userRepo.getProfile().getUri();
+        } else {
+            fbId = Profile.getCurrentProfile().getId();
+            stringName = Profile.getCurrentProfile().getName();
+            uri = Profile.getCurrentProfile().getProfilePictureUri(profilePic.getMaxWidth(), profilePic.getMaxHeight());
+        }
         UserRepo up = new UserRepo(getContext());
         //final int userId;
         if (args == null) {
@@ -154,8 +166,8 @@ public class ProfileFragment extends Fragment {
         String stringNumRatings = up.getNumRatings(String.valueOf(userId));
         String stringRating = up.getRating(String.valueOf(userId));
         Log.d("DEBUG - stringRating", stringNumRatings);
-        String stringName = Profile.getCurrentProfile().getName();
-        Uri uri = Profile.getCurrentProfile().getProfilePictureUri(profilePic.getMaxWidth(), profilePic.getMaxHeight());
+
+        Log.d("uri", uri.toString());
 
         if (stringNumRatings.isEmpty()) stringNumRatings = "0";
         if (stringRating.isEmpty()) stringRating = "N/A";

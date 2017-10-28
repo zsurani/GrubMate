@@ -14,8 +14,11 @@ import com.facebook.Profile;
 
 public class User {
     public static final String TABLE = "User";
+    public static final String P_TABLE = "Profiles";
     public static final String KEY_ID = "id";
+    public static final String KEY_ID3 = "id2";
     public static final String KEY_name = "name";
+    public static final String KEY_image = "image";
     public static final String KEY_fbUniqueIdentifier = "facebookUniqueIdentifier";
     public static final String KEY_rating = "rating";
     public static final String KEY_numRatings = "numRatings";
