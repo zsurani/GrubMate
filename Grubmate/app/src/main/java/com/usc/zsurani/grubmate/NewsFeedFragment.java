@@ -19,7 +19,9 @@ import android.widget.TextView;
 import com.facebook.Profile;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Arrays;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -33,6 +35,9 @@ public class NewsFeedFragment extends Fragment{
     private PostAdapter adapter;
     private EditText searchParameter;
     private Button searchButton;
+    private Button sortButton;
+    private HashSet<String> sorts = new HashSet<String>();
+    String sortChecks = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +50,9 @@ public class NewsFeedFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
         View v = getView();
 
-        adapter = new PostAdapter(getApplicationContext(), R.layout.layout_post_row, getPostList());
+        List<Post> postList = getPostList();
+
+        adapter = new PostAdapter(getApplicationContext(), R.layout.layout_post_row, postList);
         listFeed = (ListView) v.findViewById(R.id.list_feed);
         listFeed.setAdapter(adapter);
 
@@ -60,6 +67,16 @@ public class NewsFeedFragment extends Fragment{
                 startActivity(i);
             }
         });
+
+        sortButton = (Button) v.findViewById(R.id.button_sort);
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), SortActivity.class);
+                startActivity(i);
+            }
+        });
+
         // TODO add Options menu to access other pages
     }
 
