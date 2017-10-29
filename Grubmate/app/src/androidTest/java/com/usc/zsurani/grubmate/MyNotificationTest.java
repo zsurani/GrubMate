@@ -11,11 +11,14 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.ListView;
 
 import com.android21buttons.fragmenttestrule.FragmentTestRule;
 import com.facebook.FacebookSdk;
 
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,6 +35,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.internal.util.Checks.checkNotNull;
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.Is.is;
@@ -81,17 +85,28 @@ public class MyNotificationTest {
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void test() {
+    public void testNotificationsAdapter() {
         onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
         onView(withText("My Notifications")).perform(click());
 
-        //onData(hasEntry(equalTo(onView(withId(R.id.label_notification_name))), is(withText("TEST")))).check(matches(isCompletelyDisplayed()));
+        final int[] counts = new int[1];
+        onView(withId(R.id.list_notifications)).check(matches(new TypeSafeMatcher<View>() {
+            @Override
+            public boolean matchesSafely(View view) {
+                ListView listView = (ListView) view;
 
+                counts[0] = listView.getCount();
 
-        onData(is(instanceOf(MyNotificationFragment.NotificationAdapter.class))).onChildView(withId(R.id.label_notification_name));
-        //.check(matches(withText("TEST")));
-      /*          .inAdapterView(withId(R.layout.layout_notification_row)).onChildView(withId(R.id.label_notification_name)).check(matches(withText("TEST")));
-    */
+                return true;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+
+            }
+        }));
+
+        assertEquals(counts[0], 1);
     }
 
     private static ViewAction actionOpenDrawer() {

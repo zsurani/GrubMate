@@ -123,6 +123,13 @@ public class MyGroupTest {
         assertEquals(counts[0], 1);
     }
 
+    @Test
+    public void verifyButton() {
+        onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        onView(withText("My Groups")).perform(click());
+        onView(withText("Create")).perform(click());
+    }
+
     private static ViewAction actionOpenDrawer() {
         return new ViewAction() {
             @Override
