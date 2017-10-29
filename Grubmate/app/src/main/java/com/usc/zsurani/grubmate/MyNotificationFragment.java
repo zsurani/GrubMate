@@ -126,7 +126,7 @@ public class MyNotificationFragment extends Fragment {
     /*
      * The custom adapter for the Notifications list view.
      */
-    private class NotificationAdapter extends ArrayAdapter<Notifications> {
+    public class NotificationAdapter extends ArrayAdapter<Notifications> {
         private Context context;
 
         public NotificationAdapter(Context context, int textViewResourceId) {

@@ -53,7 +53,7 @@ public class MyGroupFragment extends Fragment {
 
         groupList = (ListView) v.findViewById(android.R.id.list);
 
-        adapter = new GroupAdapter(getApplicationContext(), R.layout.layout_group_row, getGroupList());
+        adapter = new GroupAdapter(getContext(), R.layout.layout_group_row, getGroupList());
         groupList = (ListView) v.findViewById(android.R.id.list);
         groupList.setAdapter(adapter);
 
@@ -93,7 +93,7 @@ public class MyGroupFragment extends Fragment {
     /*
      * The custom adapter for the Notifications list view.
      */
-    private class GroupAdapter extends ArrayAdapter<Group> {
+    public class GroupAdapter extends ArrayAdapter<Group> {
 
         public GroupAdapter(Context context, int textViewResourceId) {
             super(context, textViewResourceId);

@@ -71,11 +71,14 @@ public class CreateNotificationTest {
     @Test
     public void testCreateNotificationIncorrectly() {
         //This is still getting the SDK error
-        //onView(withId(R.id.button_save_new_notification)).perform(scrollTo(), click());
+        onView(withId(R.id.button_save_new_notification)).perform(scrollTo(), click());
+        /*
         CreateNotificationActivity activity = mActivityRule.getActivity();
         onView(withText("Please fill out all fields and try again")).
                 inRoot(withDecorView(not(is(activity.getWindow().getDecorView())))).
                 check(matches(isDisplayed()));
+                */
+        onView(withText("Please fill out all fields and try again")).inRoot(withDecorView(not(is(mActivityRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
     }
 
 
