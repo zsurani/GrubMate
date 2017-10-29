@@ -272,13 +272,13 @@ public class CreatePostActivity extends AppCompatActivity {
 
                 Log.d("debug", Integer.toString(image.length));
                 // if any field is not filled out, the user will not be able to save it
-                if (description.isEmpty() || owner.isEmpty() || food.isEmpty() ||
+                /*
+                if (description.isEmpty() || food.isEmpty() ||
                         food.isEmpty() || image.length == 0 || beginTime.isEmpty() ||
-                        endTime.isEmpty() || location.isEmpty() || active.isEmpty() ||
-                        users.isEmpty() || homemade_tag.isEmpty()) {
+                        endTime.isEmpty() || location.isEmpty() || active.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please fill out all fields and try again", Toast.LENGTH_SHORT).show();
                     return;
-                }
+                }*/
 
                 // images in between food and num_requests
                 // groups in between active and usersRequested

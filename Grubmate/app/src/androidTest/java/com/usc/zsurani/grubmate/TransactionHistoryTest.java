@@ -12,7 +12,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 
-import com.android21buttons.fragmenttestrule.FragmentTestRule;
 import com.facebook.FacebookSdk;
 
 import org.hamcrest.Matcher;
@@ -21,31 +20,26 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onData;
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.core.deps.guava.primitives.Chars.contains;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
-import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static android.support.test.internal.util.Checks.checkNotNull;
 import static com.facebook.FacebookSdk.getApplicationContext;
-import static org.hamcrest.Matchers.hasEntry;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 /**
  * Created by Madison on 10/28/17.
  */
 @RunWith(AndroidJUnit4.class)
-public class MyNotificationTest {
+public class TransactionHistoryTest {
     DatabaseHandler dbHandler;
     SQLiteDatabase db;
     Context c;
     UserRepo ur;
+    String user_name;
 
     @Before
     public void setup() {
@@ -69,29 +63,19 @@ public class MyNotificationTest {
         User user = new User("Madison Snyder", "10204210117208549");
         userRepo.insert(user);
 
-        Notifications n = new Notifications();
-        n.userID = "1";
-        n.userId = 1;
-        n.name = "TEST";
-        NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
-        nr.insert(n);
+        GroupRepo gr = new GroupRepo(getApplicationContext());
+        List<String> m = new ArrayList<String>();
+        m.add("1");
+        gr.insert("GROUP", m);
     }
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void test() {
+    public void testGroup() {
         onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
-        onView(withText("My Notifications")).perform(click());
-
-        //onData(hasEntry(equalTo(onView(withId(R.id.label_notification_name))), is(withText("TEST")))).check(matches(isCompletelyDisplayed()));
-
-
-        onData(is(instanceOf(MyNotificationFragment.NotificationAdapter.class))).onChildView(withId(R.id.label_notification_name));
-        //.check(matches(withText("TEST")));
-      /*          .inAdapterView(withId(R.layout.layout_notification_row)).onChildView(withId(R.id.label_notification_name)).check(matches(withText("TEST")));
-    */
+        onView(withText("My Transactions")).perform(click());
     }
 
     private static ViewAction actionOpenDrawer() {
@@ -112,6 +96,4 @@ public class MyNotificationTest {
             }
         };
     }
-
-
 }
