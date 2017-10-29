@@ -26,6 +26,10 @@ public class AddGroupToPostTest {
     @Rule
     public ActivityTestRule<AddGroupToPostActivity> mActivityRule = new ActivityTestRule<AddGroupToPostActivity>(AddGroupToPostActivity.class);
 
+    @Rule
+    public IntentsTestRule<AddGroupToPostActivity> intentsTestRule =
+            new IntentsTestRule<>(AddGroupToPostActivity.class);
+
     @Before
     public void setup() {
 

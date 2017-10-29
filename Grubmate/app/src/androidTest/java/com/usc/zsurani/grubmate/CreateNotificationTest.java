@@ -1,14 +1,16 @@
 package com.usc.zsurani.grubmate;
 
+import android.net.Uri;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 import android.widget.Checkable;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,8 +19,15 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.facebook.FacebookSdk.getApplicationContext;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.Is.isA;
+import static org.hamcrest.core.IsNot.not;
 
 /**
  * Created by Madison on 10/28/17.
@@ -33,6 +42,20 @@ public class CreateNotificationTest {
     public ActivityTestRule<CreateNotificationActivity> mActivityRule = new ActivityTestRule<CreateNotificationActivity>(
             CreateNotificationActivity.class);
 
+    @Before
+    public void setup() {
+        UserRepo userRepo = new UserRepo(InstrumentationRegistry.getTargetContext());
+        Profiles p = new Profiles();
+        p.setName("Zahra Surani");
+        p.setId("1353924581401606");
+        String uri =  "https://graph.facebook.com/1353924581401606/picture?height=2147483647&width=2147483647&migration_overrides=%7Boctober_2012%3Atrue%7D";
+        p.setUri(Uri.parse(uri));
+
+        userRepo.insertProfile(p);
+        User user = new User("Zahra Surani", "1353924581401606");
+        userRepo.insert(user);
+    }
+
     @Test
     public void testCreateNotification() {
         onView(withId(R.id.edit_notification_name)).perform(typeText(name));
@@ -44,6 +67,17 @@ public class CreateNotificationTest {
         onView(withId(R.id.checkBoxAmerican)).perform(scrollTo(), setChecked(true));
 
     }
+
+    @Test
+    public void testCreateNotificationIncorrectly() {
+        //This is still getting the SDK error
+        //onView(withId(R.id.button_save_new_notification)).perform(scrollTo(), click());
+        CreateNotificationActivity activity = mActivityRule.getActivity();
+        onView(withText("Please fill out all fields and try again")).
+                inRoot(withDecorView(not(is(activity.getWindow().getDecorView())))).
+                check(matches(isDisplayed()));
+    }
+
 
 
     public static ViewAction setChecked(final boolean checked) {
@@ -66,6 +100,8 @@ public class CreateNotificationTest {
                     public void describeTo(Description description) {}
                 };
             }
+
+
 
             @Override
             public String getDescription() {
