@@ -49,9 +49,11 @@ public class NewsFeedTest {
     SQLiteDatabase db;
     Context c;
     UserRepo ur;
+    String user_name;
 
     @Before
     public void setup() {
+        FacebookSdk.sdkInitialize(getApplicationContext());
         FacebookSdk.sdkInitialize(getApplicationContext());
         c = InstrumentationRegistry.getTargetContext();
         dbHandler = new DatabaseHandler(c);
@@ -61,38 +63,34 @@ public class NewsFeedTest {
         mActivityRule.getActivity()
                 .getSupportFragmentManager().beginTransaction();
 
-        UserRepo userRepo = new UserRepo(InstrumentationRegistry.getTargetContext());
+        UserRepo userRepo = new UserRepo(getApplicationContext());
         Profiles p = new Profiles();
-        p.setName("Madison Snyder");
-        p.setId("10204210117208549");
-        String uri =  "https://graph.facebook.com/10204210117208549/picture?height=2147483647&width=2147483647&migration_overrides=%7Boctober_2012%3Atrue%7D";
+        p.setName("Zahra Surani");
+        p.setId("1353924581401606");
+        String uri =  "https://graph.facebook.com/1353924581401606/picture?height=2147483647&width=2147483647&migration_overrides=%7Boctober_2012%3Atrue%7D";
         p.setUri(Uri.parse(uri));
 
         userRepo.insertProfile(p);
-        User user = new User("Madison Snyder", "10204210117208549");
+        User user = new User("Zahra Surani", "1353924581401606");
         userRepo.insert(user);
 
-        //Post p = new Post();
+        Post post = new Post("description", "1353924581401606", "food", null, "1", "categories", "tags",
+                "10:00 pm", "11:00 pm", "home", "true", "", "", "homemade");
 
-
+        PostRepo postRepo = new PostRepo(getApplicationContext());
+        postRepo.insert(post);
     }
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void test() {
+    public void testPostAdapter() {
         onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
         onView(withText("My Newsfeed")).perform(click());
 
-        onData(allOf(withId(R.id.list_feed))).check(matches(Matchers.withListSize(0)));
-
-        //onData(anything()).inAdapterView(withId(R.id.list_feed)).check(matches(isDisplayed()));
-                /*.check(matches(Matchers.withListSize (0)));
-        //onView(withText(R.id.list_feed)).check(matches(Matchers.withListSize (0)));
-        //onView (withId (android.R.id.list)).check (ViewAssertions.matches (Matchers.withListSize (1)));
         final int[] counts = new int[1];
-        onData(anything()).inAdapterView(withId(R.layout.layout_post_row)).check(matches(new TypeSafeMatcher<View>() {
+        onView(withId(R.id.list_feed)).check(matches(new TypeSafeMatcher<View>() {
             @Override
             public boolean matchesSafely(View view) {
                 ListView listView = (ListView) view;
@@ -109,9 +107,6 @@ public class NewsFeedTest {
         }));
 
         assertEquals(counts[0], 1);
-        */
-
-
     }
 
 
@@ -131,20 +126,6 @@ public class NewsFeedTest {
             @Override
             public void perform(UiController uiController, View view) {
                 ((DrawerLayout) view).openDrawer(GravityCompat.START);
-            }
-        };
-    }
-}
-
-class Matchers {
-    public static Matcher<View> withListSize (final int size) {
-        return new TypeSafeMatcher<View>() {
-            @Override public boolean matchesSafely (final View view) {
-                return ((ListView) view).getCount () == size;
-            }
-
-            @Override public void describeTo (final Description description) {
-                description.appendText ("ListView should have " + size + " items");
             }
         };
     }

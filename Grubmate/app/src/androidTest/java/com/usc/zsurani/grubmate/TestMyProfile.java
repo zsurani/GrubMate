@@ -166,25 +166,6 @@ public class TestMyProfile {
             }
         };
     }
-    private static ViewAction actionCloseDrawer() {
-        return new ViewAction() {
-            @Override
-            public Matcher<View> getConstraints() {
-                return isAssignableFrom(DrawerLayout.class);
-            }
-
-            @Override
-            public String getDescription() {
-                return "close drawer";
-            }
-
-            @Override
-            public void perform(UiController uiController, View view) {
-                ((DrawerLayout) view).closeDrawer(GravityCompat.START);
-            }
-        };
-    }
-
 }
 
 
