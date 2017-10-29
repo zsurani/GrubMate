@@ -100,27 +100,41 @@ public class NavigationTest {
         }
     }
 
-    /*
-
-
-        @Rule
-        public FragmentTestRule<?, ProfileFragment> mFragmentRule = FragmentTestRule.create(ProfileFragment.class);
-    */
     @Test
-    public void testMyProfile() {
+    public void openMyProfile() {
         onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
         onView(withText("My Profile")).perform(click());
-
-        //onView(withId(R.id.left_drawer)withText(containsString("My Profile"))));
-        //onView(withId(R.id.drawer_layout)).perform(actionOnItemsAtPosition(5, click()));
-        //MainActivity ma = new MainActivity();
-        //navigate to the profile page --> IDK HOW TO DO THIS PART
-        //make sure that the picture, name, rating and review work
-        //onView(withId(R.id.label_name)).check(matches(withText(Profile.getCurrentProfile().getName())));
-
     }
 
+    @Test
+    public void openMyNewsfeed() {
+        onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        onView(withText("My Newsfeed")).perform(click());
+    }
 
+    @Test
+    public void openMyGroups() {
+        onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        onView(withText("My Groups")).perform(click());
+    }
+
+    @Test
+    public void openMyNotifications() {
+        onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        onView(withText("My Notifications")).perform(click());
+    }
+
+    @Test
+    public void openMyTransactions() {
+        onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        onView(withText("My Transactions")).perform(click());
+    }
+
+    @Test
+    public void openNotificationCenter() {
+        onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        onView(withText("Notification Center")).perform(click());
+    }
 
     private static ViewAction actionOpenDrawer() {
         return new ViewAction() {
