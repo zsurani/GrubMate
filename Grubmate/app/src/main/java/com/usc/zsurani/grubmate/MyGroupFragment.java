@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class MyGroupFragment extends Fragment {
 
         groupList = (ListView) v.findViewById(android.R.id.list);
 
-        adapter = new GroupAdapter(getApplicationContext(), R.layout.layout_group_row, getGroupList());
+        adapter = new GroupAdapter(getContext(), R.layout.layout_group_row, getGroupList());
         groupList = (ListView) v.findViewById(android.R.id.list);
         groupList.setAdapter(adapter);
 
@@ -68,8 +69,14 @@ public class MyGroupFragment extends Fragment {
     }
 
     private List<Group> getGroupList() {
-        String fbId = Profile.getCurrentProfile().getId();
-        UserRepo up = new UserRepo(getApplicationContext());
+        String fbId;
+        UserRepo up = new UserRepo(getContext());
+        if (Profile.getCurrentProfile() == null) {
+            fbId = up.getProfile().getId();
+        } else {
+            fbId = Profile.getCurrentProfile().getId();
+        }
+
         final int userId = up.getId(fbId);
 
         List<Group> groupList = new ArrayList<>();
@@ -86,7 +93,7 @@ public class MyGroupFragment extends Fragment {
     /*
      * The custom adapter for the Notifications list view.
      */
-    private class GroupAdapter extends ArrayAdapter<Group> {
+    public class GroupAdapter extends ArrayAdapter<Group> {
 
         public GroupAdapter(Context context, int textViewResourceId) {
             super(context, textViewResourceId);

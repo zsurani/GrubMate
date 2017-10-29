@@ -23,6 +23,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 /**
  * Created by Madison on 10/15/17.
  */
@@ -89,8 +91,13 @@ public class MyNotificationFragment extends Fragment {
     }
 
     private List<Notifications> getSubscriptionList() {
-        String fbId = Profile.getCurrentProfile().getId();
+        String fbId;
         UserRepo up = new UserRepo(getContext());
+        if (Profile.getCurrentProfile() == null) {
+            fbId = up.getProfile().getId();
+        } else {
+            fbId = Profile.getCurrentProfile().getId();
+        }
         final int userId = up.getId(fbId);
 
         List<Notifications> notifList = new ArrayList<>();
@@ -119,7 +126,7 @@ public class MyNotificationFragment extends Fragment {
     /*
      * The custom adapter for the Notifications list view.
      */
-    private class NotificationAdapter extends ArrayAdapter<Notifications> {
+    public class NotificationAdapter extends ArrayAdapter<Notifications> {
         private Context context;
 
         public NotificationAdapter(Context context, int textViewResourceId) {

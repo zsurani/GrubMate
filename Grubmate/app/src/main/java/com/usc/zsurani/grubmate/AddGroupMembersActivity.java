@@ -121,7 +121,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
             final String t = getItem(position);
 
             if (t != null) {
-                final TextView textName = (TextView) v.findViewById(R.id.label_member_name);
+                TextView textName = (TextView) v.findViewById(R.id.label_member_name);
                 Button buttonEnd = (Button) v.findViewById(R.id.button_member);
 
                 textName.setText(t);
