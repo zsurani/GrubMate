@@ -11,11 +11,14 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.ListView;
 
 import com.android21buttons.fragmenttestrule.FragmentTestRule;
 import com.facebook.FacebookSdk;
 
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,6 +38,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFro
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasEntry;
@@ -92,10 +96,31 @@ public class MyGroupTest {
 
         onData(is(instanceOf(MyGroupFragment.GroupAdapter.class)))
                 .inAdapterView(withId(R.id.listText));
-                //.check(containsString("GROUP"));
+    }
 
+    @Test
+    public void testGroupAdapter() {
+        onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        onView(withText("My Groups")).perform(click());
 
+        final int[] counts = new int[1];
+        onView(withId(android.R.id.list)).check(matches(new TypeSafeMatcher<View>() {
+            @Override
+            public boolean matchesSafely(View view) {
+                ListView listView = (ListView) view;
 
+                counts[0] = listView.getCount();
+
+                return true;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+
+            }
+        }));
+
+        assertEquals(counts[0], 1);
     }
 
     private static ViewAction actionOpenDrawer() {
@@ -116,24 +141,5 @@ public class MyGroupTest {
             }
         };
     }
-    private static ViewAction actionCloseDrawer() {
-        return new ViewAction() {
-            @Override
-            public Matcher<View> getConstraints() {
-                return isAssignableFrom(DrawerLayout.class);
-            }
-
-            @Override
-            public String getDescription() {
-                return "close drawer";
-            }
-
-            @Override
-            public void perform(UiController uiController, View view) {
-                ((DrawerLayout) view).closeDrawer(GravityCompat.START);
-            }
-        };
-    }
-
 
 }

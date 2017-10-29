@@ -85,8 +85,8 @@ public class GroupRepoTest {
         if (stringNumRatings.isEmpty()) stringNumRatings = "0";
         if (stringRating.isEmpty()) stringRating = "N/A";
 
-        textNumRatings.setText(String.format(getResources().getString(R.string.text_profile_num_ratings), stringNumRatings));
-        textRating.setText(String.format(getResources().getString(R.string.text_profile_rating),stringRating));
+//        textNumRatings.setText(String.format(getResources().getString(R.string.text_profile_num_ratings), stringNumRatings));
+//        textRating.setText(String.format(getResources().getString(R.string.text_profile_rating),stringRating));
         textName.setText(stringName);
         Picasso.with(appContext).load(uri).into(profilePic);
     }
