@@ -98,17 +98,16 @@ public class TestMyProfile {
         onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
         onView(withText("My Profile")).perform(click());
         TextView textView = (TextView) mActivityRule.getActivity().findViewById(R.id.label_num_ratings);
-        Log.d("weird", textView.getText().toString());
         assertEquals(textView.getText().toString(), "Num Ratings: 0");
 
     }
 
-
-//    @Test
-//    public void pleaseWork() {
-//        onView(withText("Create Post")).perform(click());
-//       // onView(withText(R.string.button_clicked)).check(matches(isDisplayed()));
-//    }
+    @Test
+    public void verifyButton() {
+        onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        onView(withText("My Profile")).perform(click());
+        onView(withText("Create Post")).perform(click());
+    }
 
     private static ViewAction actionOpenDrawer() {
         return new ViewAction() {
