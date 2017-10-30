@@ -24,6 +24,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -64,19 +67,25 @@ public class MyNotificationTest {
 
         UserRepo userRepo = new UserRepo(InstrumentationRegistry.getTargetContext());
         Profiles p = new Profiles();
-        p.setName("Madison Snyder");
-        p.setId("10204210117208549");
-        String uri =  "https://graph.facebook.com/10204210117208549/picture?height=2147483647&width=2147483647&migration_overrides=%7Boctober_2012%3Atrue%7D";
+        p.setName("Zahra Surani");
+        p.setId("1353924581401606");
+        String uri =  "https://graph.facebook.com/1353924581401606/picture?height=2147483647&width=2147483647&migration_overrides=%7Boctober_2012%3Atrue%7D";
         p.setUri(Uri.parse(uri));
 
         userRepo.insertProfile(p);
-        User user = new User("Madison Snyder", "10204210117208549");
+        User user = new User("Zahra Surani", "1353924581401606");
         userRepo.insert(user);
 
-        Notifications n = new Notifications();
-        n.userID = "1";
-        n.userId = 1;
-        n.name = "TEST";
+        String tags = "tags";
+        HashSet<String> t = new HashSet<String>(Arrays.asList(tags));
+        HashSet<String> cate = new HashSet<String>();
+        cate.add("American");
+        String start = "04:20 am";
+        String end = "05:20 am";
+
+        Notifications n = new Notifications("TEST", t, cate, start, end, Notifications.TYPE_SUBSCRIPTION, String.valueOf(1));
+        n.setActiveStatus(true);
+
         NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
         nr.insert(n);
     }
@@ -107,6 +116,13 @@ public class MyNotificationTest {
         }));
 
         assertEquals(counts[0], 1);
+    }
+
+    @Test
+    public void verifyButton() {
+        onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        onView(withText("My Notifications")).perform(click());
+        onView(withText("Add New Notification")).perform(click());
     }
 
     private static ViewAction actionOpenDrawer() {
