@@ -11,15 +11,21 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.ListView;
 
 import com.android21buttons.fragmenttestrule.FragmentTestRule;
 import com.facebook.FacebookSdk;
 
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Arrays;
+import java.util.HashSet;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -32,6 +38,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.internal.util.Checks.checkNotNull;
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.Is.is;
@@ -60,19 +67,25 @@ public class MyNotificationTest {
 
         UserRepo userRepo = new UserRepo(InstrumentationRegistry.getTargetContext());
         Profiles p = new Profiles();
-        p.setName("Madison Snyder");
-        p.setId("10204210117208549");
-        String uri =  "https://graph.facebook.com/10204210117208549/picture?height=2147483647&width=2147483647&migration_overrides=%7Boctober_2012%3Atrue%7D";
+        p.setName("Zahra Surani");
+        p.setId("1353924581401606");
+        String uri =  "https://graph.facebook.com/1353924581401606/picture?height=2147483647&width=2147483647&migration_overrides=%7Boctober_2012%3Atrue%7D";
         p.setUri(Uri.parse(uri));
 
         userRepo.insertProfile(p);
-        User user = new User("Madison Snyder", "10204210117208549");
+        User user = new User("Zahra Surani", "1353924581401606");
         userRepo.insert(user);
 
-        Notifications n = new Notifications();
-        n.userID = "1";
-        n.userId = 1;
-        n.name = "TEST";
+        String tags = "tags";
+        HashSet<String> t = new HashSet<String>(Arrays.asList(tags));
+        HashSet<String> cate = new HashSet<String>();
+        cate.add("American");
+        String start = "04:20 am";
+        String end = "05:20 am";
+
+        Notifications n = new Notifications("TEST", t, cate, start, end, Notifications.TYPE_SUBSCRIPTION, String.valueOf(1));
+        n.setActiveStatus(true);
+
         NotificationsRepo nr = new NotificationsRepo(getApplicationContext());
         nr.insert(n);
     }
@@ -81,17 +94,35 @@ public class MyNotificationTest {
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void test() {
+    public void testNotificationsAdapter() {
         onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
         onView(withText("My Notifications")).perform(click());
 
-        //onData(hasEntry(equalTo(onView(withId(R.id.label_notification_name))), is(withText("TEST")))).check(matches(isCompletelyDisplayed()));
+        final int[] counts = new int[1];
+        onView(withId(R.id.list_notifications)).check(matches(new TypeSafeMatcher<View>() {
+            @Override
+            public boolean matchesSafely(View view) {
+                ListView listView = (ListView) view;
 
+                counts[0] = listView.getCount();
 
-        onData(is(instanceOf(MyNotificationFragment.NotificationAdapter.class))).onChildView(withId(R.id.label_notification_name));
-        //.check(matches(withText("TEST")));
-      /*          .inAdapterView(withId(R.layout.layout_notification_row)).onChildView(withId(R.id.label_notification_name)).check(matches(withText("TEST")));
-    */
+                return true;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+
+            }
+        }));
+
+        assertEquals(counts[0], 1);
+    }
+
+    @Test
+    public void verifyButton() {
+        onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        onView(withText("My Notifications")).perform(click());
+        onView(withText("Add New Notification")).perform(click());
     }
 
     private static ViewAction actionOpenDrawer() {
