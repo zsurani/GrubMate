@@ -180,7 +180,7 @@ public class PostRepo {
 
         Log.d("DEBUG - owner-string = ", post.getOwner_string());
         c = db.rawQuery("SELECT * FROM " + User.TABLE
-                + " WHERE " + User.KEY_ID + " = " + post.getOwner_string(), null);
+                + " WHERE " + User.KEY_ID + " like '%" + post.getOwner_string() + "%'", null);
 
 
         if (c.moveToFirst()) {

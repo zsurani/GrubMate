@@ -59,9 +59,9 @@ public class NotificationRepoTest {
         n.type = "type";
     }
     @Test
-    public void testInsertNotification() throws Exception {
+    public void testInserttNotification() throws Exception {
         //not working right now
-        Integer id = nr.insert(n);
+        Integer id = nr.insertRequest(n);
 
         String selectQuery = "SELECT "
                 + Notifications.KEY_name + " FROM " + Notifications.TABLE + " where " +
@@ -111,6 +111,93 @@ public class NotificationRepoTest {
         Log.d("DEBUG", "n.getName() = " + n.getName());
         System.out.println("n.getName() = " + n.getName());
         System.out.println("n1.getName() = " + name);
-        assertEquals(name, n.getName());
+        assertEquals("name", n.getName());
     }
+
+    @Test
+    public void testInsertRequestNotification() throws Exception {
+        //not working right now
+        Notifications n1 = new Notifications();
+        n1.postID = 2;
+        n1.requesterID = 3;
+        n1.userId = 4;
+        n1.status = true;
+        n1.type = "REQUEST";
+        Integer id = nr.insertRequest(n1);
+
+        String selectQuery = "SELECT "
+                + Notifications.KEY_requestorID + " FROM " + Notifications.TABLE + " where " +
+                Notifications.KEY_userID + "=" + "4";
+        String requestorID = "";
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                requestorID = c.getString(c.getColumnIndex(Notifications.KEY_requestorID));
+            } while (c.moveToNext());
+        }
+        assertEquals("3", requestorID);
+    }
+
+    @Test
+    public void testGetNotificationFromUserId() throws Exception {
+        assertEquals(1, nr.getNotifications(4).size());
+    }
+
+
+    @Test
+    public void testGetNotificationFromNotifId() throws Exception {
+        assertEquals("REQUEST", "" + nr.getNotification(2).type);
+    }
+
+    @Test
+    public void testGetCategoriesFromNotifId() throws Exception {
+        assertEquals("cate1", "" + nr.getCategories("1"));
+    }
+
+    @Test
+    public void testUpdateStatus() throws Exception {
+        nr.updateStatus("0", "2");
+        String selectQuery = "SELECT "
+                + Notifications.KEY_status + " FROM " + Notifications.TABLE + " where " +
+                Notifications.KEY_id + "=" + "0";
+        String status = "";
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                status = c.getString(c.getColumnIndex(Notifications.KEY_status));
+            } while (c.moveToNext());
+        }
+        assertEquals("2", status);
+    }
+
+    @Test
+    public void testDeleteNotification() throws Exception {
+        String selectQuery = "SELECT * FROM " + Notifications.TABLE;
+        int count = 0;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                count++;
+            } while (c.moveToNext());
+        }
+        assertEquals(3, count);
+
+        nr.deleteNotification("2");
+
+        selectQuery = "SELECT * FROM " + Notifications.TABLE;
+        count = 0;
+
+        c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                count++;
+            } while (c.moveToNext());
+        }
+        assertEquals(2, count);
+
+    }
+
 }

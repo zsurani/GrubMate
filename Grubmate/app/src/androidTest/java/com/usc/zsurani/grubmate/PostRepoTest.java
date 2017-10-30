@@ -41,7 +41,7 @@ public class PostRepoTest {
         //initalizing the Noticition we will use to test
     }
     @Test
-    public void testInsertNotification() throws Exception {
+    public void testInsertPost() throws Exception {
         p = new Post();
         p.setActive_status("True");
         Set<String>groupsInPost = new HashSet<String>();
@@ -71,6 +71,73 @@ public class PostRepoTest {
         db.close();
         assertEquals(description, "food");
     }
+
+    @Test
+    public void testUpdatePost() throws Exception {
+        Post p1 = new Post();
+        p1.setActive_status("True");
+        Set<String>groupsInPost1 = new HashSet<String>();
+        groupsInPost1.add("group1");
+        p1.setGroups(groupsInPost1);
+        p1.setBeginTime("4");
+        p1.setCategories("Indian, Bakery");
+        p1.setDescription("food");
+        p1.setEndTime("5");
+        p1.setFood("Samosa");
+        p1.setGroupString("group1");
+        p1.setHomemade("true");
+        p1.setLocation("Webb");
+        p1.setNum_requests("0");
+        p1.setOwner_string("123");
+        p1.setId(39);
+
+        pr.update(p1);
+        Cursor c = db.rawQuery("SELECT * FROM " + Post.TABLE
+                + " WHERE " + Post.KEY_id + " = 39", null);
+
+        String location = "";
+        if (c.moveToFirst()) {
+            do {
+                location = c.getString(c.getColumnIndex(Post.KEY_location));
+            } while (c.moveToNext());
+        }
+        c.close();
+        db.close();
+        assertEquals(location, "Webb");
+    }
+
+    @Test
+    public void testNewUserPost() throws Exception {
+        Log.d("DEBUG", "" + pr.newUser("56"));
+        Log.d("DEBUG", "" + pr.newUser("123"));
+
+        assertEquals("true", "" + pr.newUser("56"));
+
+        assertEquals("false", "" + pr.newUser("123"));
+    }
+
+    @Test
+    public void testGetPost() throws Exception {
+        Post result = pr.getPost(39);
+        assertEquals(result.description, "food");
+    }
+
+
+    @Test
+    public void testUpdatePostDescription() throws Exception {
+        pr.updateDescription("39", "yummy food");
+        Log.d("DEBUG", "" + pr.getPost(39).description);
+        assertEquals(pr.getPost(39).description, "yummy food");
+    }
+
+    @Test
+    public void testAddCategoryPost() throws Exception {
+        pr.addNewCategory("39", "Mexican");
+        Log.d("DEBUG", "" + pr.getPost(39).description);
+        assertEquals(pr.getPost(39).categories, "Indian, Bakery,Mexican");
+    }
+
+
 
 
 }

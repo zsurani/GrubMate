@@ -38,15 +38,15 @@ public class UserRepoTest {
         ur = new UserRepo(appContext);
 
         //initalizing the Noticition we will use to test
-        u = new User();
-        u.facebookUniqueIdentifier =  "123";
-        u.name = "TestUser";
     }
     @Test
-    public void testInsertNotification() throws Exception {
+    public void testInsertUser() throws Exception {
+        u = new User();
+        u.facebookUniqueIdentifier =  "12345";
+        u.name = "TestUser3";
         ur.insert(u);
         Cursor c = db.rawQuery("SELECT * FROM " + User.TABLE
-                + " WHERE " + User.KEY_name + " like '%TestUser%'", null);
+                + " WHERE " + User.KEY_name + " like '%TestUser3%'", null);
 
 
         // looping through all rows and adding to list
@@ -57,6 +57,26 @@ public class UserRepoTest {
             } while (c.moveToNext());
         }
         c.close();
-        db.close();        assertEquals("123", fbIdentifierTest);
+        db.close();
+        assertEquals("12345", fbIdentifierTest);
+    }
+
+    @Test
+    public void testGetID() throws Exception {
+        assertEquals(6, ur.getId("12345"));
+    }
+
+    @Test
+    public void testAddRating() throws Exception {
+        float rating = 8;
+        ur.addRating("6", rating);
+        assertEquals("8", ur.getRating("6"));
+    }
+
+    @Test
+    public void testNewUser() throws Exception {
+        assertEquals("true", "" + ur.newUser("56"));
+
+        assertEquals("false", "" + ur.newUser("12345"));
     }
 }

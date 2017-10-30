@@ -84,7 +84,6 @@ public class TransactionRepo {
                 t = new Transaction(Integer.parseInt(provider), Integer.parseInt(requester), location, Integer.parseInt(orginalPost));
                 t.setId(id);
                 t.setStatus(status);
-                Log.d("DEBUG", t.getStatus());
             } while (c.moveToNext());
         }
         return t;

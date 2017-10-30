@@ -40,6 +40,7 @@ public class TransactionRepoTest {
 
         //initalizing the Noticition we will use to test
     }
+
     @Test
     public void testInsertNotification() throws Exception {
         t = new Transaction(3, 2,
@@ -58,5 +59,35 @@ public class TransactionRepoTest {
         c.close();
         db.close();
         assertEquals(location, "Parkside");
+    }
+
+    @Test
+    public void testGetTransactionIDs() throws Exception {
+        List<String> result = tr.getTransactionsId(3);
+        assertEquals(3, result.size());
+    }
+
+    @Test
+    public void testGetTransaction() throws Exception {
+        Transaction result = tr.getTransaction(1);
+        assertEquals(result.locRequester, "Parkside");
+    }
+
+    @Test
+    public void testUpdateStatus() throws Exception {
+        tr.updateStatus(1, "2");
+
+        Cursor c = db.rawQuery("SELECT * FROM " + Transaction.TABLE
+                + " WHERE " + Transaction.KEY_id + " like '1'", null);
+
+        String status = "";
+        if (c.moveToFirst()) {
+            do {
+                status = c.getString(c.getColumnIndex(Transaction.KEY_status));
+            } while (c.moveToNext());
+        }
+        c.close();
+        db.close();
+        assertEquals(status, "2");
     }
 }
