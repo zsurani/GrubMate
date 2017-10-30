@@ -120,10 +120,12 @@ public class NotificationCenterFragment extends Fragment {
 
         List<Post> matchingPosts = new ArrayList<>();
 
-        for (Post post : allPosts) {
-            for (Notifications notif : getNotificationList()) {
-                if (post.matches(notif)) {
-                    matchingPosts.add(post);
+        for (Notifications notif : getNotificationList()) {
+            if (notif.isActive()) {
+                for (Post post : allPosts) {
+                    if (post.matches(notif)) {
+                        matchingPosts.add(post);
+                    }
                 }
             }
         }
