@@ -180,25 +180,8 @@ public class MyNotificationFragment extends Fragment {
                     }
                 }
 
-
                 textName.setText(t.getName());
                 textInfo.setText(String.format(getResources().getString(R.string.text_notification_description), timeStart, timeEnd, tags, categories));
-
-                //if time is passed, button is disabled; else it's enabled
-                DateFormat df = new SimpleDateFormat("hh:mm a");
-                Date end;
-                try {
-                    end = df.parse(timeEnd);
-                } catch (Exception e) {
-                    end = Calendar.getInstance().getTime();
-                }
-                Date now = Calendar.getInstance().getTime();
-
-//                if (now.before(end)) {
-//                    buttonEnd.setEnabled(false);
-//                } else {
-//                    buttonEnd.setEnabled(true);
-//                }
 
                 // on click listener for the "End Notification" button
                 buttonEnd.setOnClickListener(new View.OnClickListener() {
@@ -216,12 +199,15 @@ public class MyNotificationFragment extends Fragment {
                     }
                 });
 
+                Date now = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
+
                 if (!t.isActive()) {
                     buttonEnd.setEnabled(false);
                     buttonEnd.setText("Notification Cancelled");
                 } else {
                     buttonEnd.setEnabled(true);
-                    buttonEnd.setText("End Notification");
+                    buttonEnd.setText("Cancel Notification");
                 }
             }
 

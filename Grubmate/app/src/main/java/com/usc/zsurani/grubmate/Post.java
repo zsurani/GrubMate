@@ -531,12 +531,32 @@ public class Post{
      * Checks to see if this post matches the tags & categories on the given Notifications object.
      */
     public boolean matches(Notifications notif) {
+        String notifStart = notif.getBeginTime();
+        String notifEnd = notif.getEndTime();
+
+        if (beginTime.charAt(0) != '0' && beginTime.charAt(1) == ':') {
+            beginTime = "0" + beginTime;
+        }
+        if (endTime.charAt(0) != '0' && endTime.charAt(1) == ':') {
+            endTime = "0" + endTime;
+        }
+
+        /*
+         logic for timing -- if the notification starts after the post ends, that's a no
+         if the post starts after the notification ends, that's a no
+         */
+
+        if (notifStart.compareTo(endTime) >= 0) {
+            return false;
+        } else if (beginTime.compareTo(notifEnd) >= 0) {
+            return false;
+        }
+
         tags = getTags();
         category = getCategory();
 
         Set<String> notifTags = notif.getTags();
         Set<String> notifCategories = notif.getCategory();
-
 
 
         // check tags
