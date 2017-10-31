@@ -27,22 +27,20 @@ public class PostRepoTest {
     Context appContext;
     DatabaseHandler dbHandler;
     SQLiteDatabase db;
-    Post p;
     PostRepo pr;
     @Before
     public void setup() {
         appContext = InstrumentationRegistry.getTargetContext();
         dbHandler = new DatabaseHandler(appContext);
         db = dbHandler.getReadableDatabase();
-
-        //initalizing the NotificationsRepo
         pr = new PostRepo(appContext);
 
-        //initalizing the Noticition we will use to test
+        dbHandler.delete(db);
+
     }
     @Test
     public void testInsertPost() throws Exception {
-        p = new Post();
+        Post p = new Post();
         p.setActive_status("True");
         Set<String>groupsInPost = new HashSet<String>();
         groupsInPost.add("group1");
@@ -74,6 +72,22 @@ public class PostRepoTest {
 
     @Test
     public void testUpdatePost() throws Exception {
+        Post p = new Post();
+        p.setActive_status("True");
+        Set<String>groupsInPost = new HashSet<String>();
+        groupsInPost.add("group1");
+        p.setGroups(groupsInPost);
+        p.setBeginTime("4");
+        p.setCategories("Mexican, American");
+        p.setDescription("food");
+        p.setEndTime("5");
+        p.setFood("Burrito");
+        p.setGroupString("group1");
+        p.setHomemade("true");
+        p.setLocation("Parkside");
+        p.setNum_requests("0");
+        pr.insert(p);
+
         Post p1 = new Post();
         p1.setActive_status("True");
         Set<String>groupsInPost1 = new HashSet<String>();
@@ -89,11 +103,11 @@ public class PostRepoTest {
         p1.setLocation("Webb");
         p1.setNum_requests("0");
         p1.setOwner_string("123");
-        p1.setId(39);
+        p1.setId(1);
 
         pr.update(p1);
         Cursor c = db.rawQuery("SELECT * FROM " + Post.TABLE
-                + " WHERE " + Post.KEY_id + " = 39", null);
+                + " WHERE " + Post.KEY_id + " = 1", null);
 
         String location = "";
         if (c.moveToFirst()) {
@@ -108,33 +122,80 @@ public class PostRepoTest {
 
     @Test
     public void testNewUserPost() throws Exception {
-        Log.d("DEBUG", "" + pr.newUser("56"));
-        Log.d("DEBUG", "" + pr.newUser("123"));
+        UserRepo ur = new UserRepo(appContext);
+        User u = new User();
+        u.facebookUniqueIdentifier =  "12345";
+        u.name = "TestUser3";
+        ur.insert(u);
 
         assertEquals("true", "" + pr.newUser("56"));
-
-        assertEquals("false", "" + pr.newUser("123"));
+        assertEquals("false", "" + pr.newUser("12345"));
     }
 
     @Test
     public void testGetPost() throws Exception {
-        Post result = pr.getPost(39);
+        Post p = new Post();
+        p.setActive_status("True");
+        Set<String>groupsInPost = new HashSet<String>();
+        groupsInPost.add("group1");
+        p.setGroups(groupsInPost);
+        p.setBeginTime("4");
+        p.setCategories("Mexican, American");
+        p.setDescription("food");
+        p.setEndTime("5");
+        p.setFood("Burrito");
+        p.setGroupString("group1");
+        p.setHomemade("true");
+        p.setLocation("Parkside");
+        p.setNum_requests("0");
+        pr.insert(p);
+        Post result = pr.getPost(1);
         assertEquals(result.description, "food");
     }
 
 
     @Test
     public void testUpdatePostDescription() throws Exception {
-        pr.updateDescription("39", "yummy food");
-        Log.d("DEBUG", "" + pr.getPost(39).description);
-        assertEquals(pr.getPost(39).description, "yummy food");
+        Post p = new Post();
+        p.setActive_status("True");
+        Set<String>groupsInPost = new HashSet<String>();
+        groupsInPost.add("group1");
+        p.setGroups(groupsInPost);
+        p.setBeginTime("4");
+        p.setCategories("Mexican, American");
+        p.setDescription("food");
+        p.setEndTime("5");
+        p.setFood("Burrito");
+        p.setGroupString("group1");
+        p.setHomemade("true");
+        p.setLocation("Parkside");
+        p.setNum_requests("0");
+        pr.insert(p);
+        pr.updateDescription("1", "yummy food");
+        Log.d("DEBUG", "" + pr.getPost(1).description);
+        assertEquals(pr.getPost(1).description, "yummy food");
     }
 
     @Test
     public void testAddCategoryPost() throws Exception {
-        pr.addNewCategory("39", "Mexican");
-        Log.d("DEBUG", "" + pr.getPost(39).description);
-        assertEquals(pr.getPost(39).categories, "Indian, Bakery,Mexican");
+        Post p = new Post();
+        p.setActive_status("True");
+        Set<String>groupsInPost = new HashSet<String>();
+        groupsInPost.add("group1");
+        p.setGroups(groupsInPost);
+        p.setBeginTime("4");
+        p.setCategories("Mexican, American");
+        p.setDescription("food");
+        p.setEndTime("5");
+        p.setFood("Burrito");
+        p.setGroupString("group1");
+        p.setHomemade("true");
+        p.setLocation("Parkside");
+        p.setNum_requests("0");
+        pr.insert(p);
+
+        pr.addNewCategory("1", "Indian");
+        assertEquals(pr.getPost(1).categories, "Mexican, American,Indian");
     }
 
 

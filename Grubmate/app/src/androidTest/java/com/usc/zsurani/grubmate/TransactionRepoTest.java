@@ -27,7 +27,6 @@ public class TransactionRepoTest {
     Context appContext;
     DatabaseHandler dbHandler;
     SQLiteDatabase db;
-    Transaction t;
     TransactionRepo tr;
     @Before
     public void setup() {
@@ -35,15 +34,13 @@ public class TransactionRepoTest {
         dbHandler = new DatabaseHandler(appContext);
         db = dbHandler.getReadableDatabase();
 
-        //initalizing the NotificationsRepo
         tr = new TransactionRepo(appContext);
-
-        //initalizing the Noticition we will use to test
+        dbHandler.delete(db);
     }
 
     @Test
     public void testInsertNotification() throws Exception {
-        t = new Transaction(3, 2,
+        Transaction t = new Transaction(3, 2,
                 "Parkside", 6);
         tr.insert(t);
 
@@ -63,18 +60,38 @@ public class TransactionRepoTest {
 
     @Test
     public void testGetTransactionIDs() throws Exception {
+        Transaction t = new Transaction(3, 4,
+                "Parkside", 6);
+        tr.insert(t);
+        Transaction t2 = new Transaction(3, 5,
+                "Parkside", 6);
+        tr.insert(t2);
+        Transaction t3 = new Transaction(3, 9,
+                "Parkside", 6);
+        tr.insert(t3);
+
         List<String> result = tr.getTransactionsId(3);
         assertEquals(3, result.size());
     }
 
     @Test
     public void testGetTransaction() throws Exception {
+        Transaction t = new Transaction(3, 4,
+                "Parkside", 6);
+        Transaction t2 = new Transaction(3, 4,
+                "Webb", 6);
+        tr.insert(t);
+        tr.insert(t2);
+
         Transaction result = tr.getTransaction(1);
         assertEquals(result.locRequester, "Parkside");
     }
 
     @Test
     public void testUpdateStatus() throws Exception {
+        Transaction t = new Transaction(3, 4,
+                "Parkside", 6);
+        tr.insert(t);
         tr.updateStatus(1, "2");
 
         Cursor c = db.rawQuery("SELECT * FROM " + Transaction.TABLE

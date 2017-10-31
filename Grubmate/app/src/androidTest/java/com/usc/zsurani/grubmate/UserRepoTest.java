@@ -25,7 +25,6 @@ public class UserRepoTest {
     Context appContext;
     DatabaseHandler dbHandler;
     SQLiteDatabase db;
-    User u;
     UserRepo ur;
     String fbIdentifierTest = "";
     @Before
@@ -36,12 +35,13 @@ public class UserRepoTest {
 
         //initalizing the NotificationsRepo
         ur = new UserRepo(appContext);
+        dbHandler.delete(db);
 
         //initalizing the Noticition we will use to test
     }
     @Test
     public void testInsertUser() throws Exception {
-        u = new User();
+        User u = new User();
         u.facebookUniqueIdentifier =  "12345";
         u.name = "TestUser3";
         ur.insert(u);
@@ -63,20 +63,33 @@ public class UserRepoTest {
 
     @Test
     public void testGetID() throws Exception {
-        assertEquals(6, ur.getId("12345"));
+        User u = new User();
+        u.facebookUniqueIdentifier =  "12345";
+        u.name = "TestUser3";
+        ur.insert(u);
+        assertEquals(1, ur.getId("12345"));
     }
 
     @Test
     public void testAddRating() throws Exception {
+        User u = new User();
+        u.facebookUniqueIdentifier =  "12345";
+        u.name = "TestUser3";
+        ur.insert(u);
         float rating = 8;
-        ur.addRating("6", rating);
-        assertEquals("8", ur.getRating("6"));
+        ur.addRating("1", rating);
+        assertEquals("8", ur.getRating("1"));
     }
 
     @Test
     public void testNewUser() throws Exception {
-        assertEquals("true", "" + ur.newUser("56"));
+        UserRepo ur = new UserRepo(appContext);
+        User u = new User();
+        u.facebookUniqueIdentifier =  "12345";
+        u.name = "TestUser3";
+        ur.insert(u);
 
+        assertEquals("true", "" + ur.newUser("56"));
         assertEquals("false", "" + ur.newUser("12345"));
     }
 }

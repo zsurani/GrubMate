@@ -225,6 +225,7 @@ public class NotificationsRepo {
                 + " WHERE " +
                 Notifications.KEY_id + "=?";// It's a good practice to use parameter ?, instead of concatenate string
 
+        Log.d("weird", selectQuery);
         Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(notifId) } );
         String toReturn = "";
         if (cursor.moveToFirst()) {

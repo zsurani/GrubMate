@@ -27,7 +27,6 @@ public class NotificationRepoTest {
     Context appContext;
     DatabaseHandler dbHandler;
     SQLiteDatabase db;
-    Notifications n;
     NotificationsRepo nr;
     @Before
     public void setup() {
@@ -35,11 +34,12 @@ public class NotificationRepoTest {
         dbHandler = new DatabaseHandler(appContext);
         db = dbHandler.getReadableDatabase();
 
-        //initalizing the NotificationsRepo
         nr = new NotificationsRepo(appContext);
-
-        //initalizing the Noticition we will use to test
-        n = new Notifications();
+        dbHandler.delete(db);
+    }
+    @Test
+    public void testInserttNotification() throws Exception {
+        Notifications n= new Notifications();
         n.setProvider(1);
         n.id = 1;
         n.userId = 1;
@@ -57,11 +57,7 @@ public class NotificationRepoTest {
         n.status = true;
         n.name = "name";
         n.type = "type";
-    }
-    @Test
-    public void testInserttNotification() throws Exception {
-        //not working right now
-        Integer id = nr.insertRequest(n);
+        Integer id = nr.insert(n);
 
         String selectQuery = "SELECT "
                 + Notifications.KEY_name + " FROM " + Notifications.TABLE + " where " +
@@ -69,25 +65,25 @@ public class NotificationRepoTest {
         Notifications n1 = null;
         String name = "";
 
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c.moveToFirst()) {
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
             do {
-                String userId = c.getString(c.getColumnIndex(Notifications.KEY_userID));
-                String start = c.getString(c.getColumnIndex(Notifications.KEY_beginTime));
-                String end = c.getString(c.getColumnIndex(Notifications.KEY_endTime));
-                String type = c.getString(c.getColumnIndex(Notifications.KEY_type));
-                String status = c.getString(c.getColumnIndex(Notifications.KEY_status));
+                String userId = cursor.getString(cursor.getColumnIndex(Notifications.KEY_userID));
+                String start = cursor.getString(cursor.getColumnIndex(Notifications.KEY_beginTime));
+                String end = cursor.getString(cursor.getColumnIndex(Notifications.KEY_endTime));
+                String type = cursor.getString(cursor.getColumnIndex(Notifications.KEY_type));
+                String status = cursor.getString(cursor.getColumnIndex(Notifications.KEY_status));
                 name = "name";
 
 
                 //gets the category as a string, splits by , and then puts into a list
-                String cateString = c.getString(c.getColumnIndex(Notifications.KEY_category));
+                String cateString = cursor.getString(cursor.getColumnIndex(Notifications.KEY_category));
                 String[] cateArray = new String[]{};
                 if (cateString != null) cateArray = cateString.split(",");
                 List<String> cate = Arrays.asList(cateArray);
                 Set<String> tag = null;
                 //get the tags as a string, splits by , and then puts into a set
-                String tagString = c.getString(c.getColumnIndex(Notifications.KEY_tags));
+                String tagString = cursor.getString(cursor.getColumnIndex(Notifications.KEY_tags));
 
                 if (tagString != null) {
                     String[] tagArray = tagString.split(",");
@@ -105,98 +101,191 @@ public class NotificationRepoTest {
 
 
 
-            } while (c.moveToNext());
+            } while (cursor.moveToNext());
         }
-        Log.d("DEBUG", "n1.getName() = " + name);
-        Log.d("DEBUG", "n.getName() = " + n.getName());
-        System.out.println("n.getName() = " + n.getName());
-        System.out.println("n1.getName() = " + name);
         assertEquals("name", n.getName());
     }
 
     @Test
     public void testInsertRequestNotification() throws Exception {
-        //not working right now
         Notifications n1 = new Notifications();
         n1.postID = 2;
         n1.requesterID = 3;
-        n1.userId = 4;
+        n1.userId = 1;
         n1.status = true;
         n1.type = "REQUEST";
         Integer id = nr.insertRequest(n1);
 
         String selectQuery = "SELECT "
                 + Notifications.KEY_requestorID + " FROM " + Notifications.TABLE + " where " +
-                Notifications.KEY_userID + "=" + "4";
+                Notifications.KEY_userID + "=" + "1";
         String requestorID = "";
 
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c.moveToFirst()) {
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
             do {
-                requestorID = c.getString(c.getColumnIndex(Notifications.KEY_requestorID));
-            } while (c.moveToNext());
+                requestorID = cursor.getString(cursor.getColumnIndex(Notifications.KEY_requestorID));
+            } while (cursor.moveToNext());
         }
         assertEquals("3", requestorID);
     }
 
     @Test
     public void testGetNotificationFromUserId() throws Exception {
-        assertEquals(1, nr.getNotifications(4).size());
+        Notifications n= new Notifications();
+        n.setProvider(1);
+        n.id = 1;
+        n.userId = 2;
+        n.requestID = "1";
+        n.location = "location";
+        n.postID = 1;
+        Set<String> c = new HashSet<>();
+        c.add("cate1");
+        n.category = c;
+        Set<String> t = new HashSet<>();
+        t.add("tag1");
+        n.tags = t;
+        n.beginTime = "1:00PM";
+        n.endTime = "2:00PM";
+        n.status = true;
+        n.name = "name";
+        n.type = "type";
+        Integer id = nr.insertRequest(n);
+        assertEquals(1, nr.getNotifications(2).size());
     }
 
 
     @Test
     public void testGetNotificationFromNotifId() throws Exception {
-        assertEquals("REQUEST", "" + nr.getNotification(2).type);
+        Notifications n= new Notifications();
+        n.setProvider(1);
+        n.id = 1;
+        n.userId = 2;
+        n.requestID = "1";
+        n.location = "location";
+        n.postID = 1;
+        Set<String> c = new HashSet<>();
+        c.add("cate1");
+        n.category = c;
+        Set<String> t = new HashSet<>();
+        t.add("tag1");
+        n.tags = t;
+        n.beginTime = "1:00PM";
+        n.endTime = "2:00PM";
+        n.status = true;
+        n.name = "name";
+        n.type = "REQUEST";
+        Integer id = nr.insertRequest(n);
+        assertEquals("REQUEST", "" + nr.getNotification(1).type);
     }
 
     @Test
     public void testGetCategoriesFromNotifId() throws Exception {
-        assertEquals("cate1", "" + nr.getCategories("1"));
+        Notifications n= new Notifications();
+        n.setProvider(1);
+        n.id = 1;
+        n.userId = 2;
+        n.requestID = "1";
+        n.location = "location";
+        n.postID = 1;
+        Set<String> c = new HashSet<>();
+        c.add("cate1");
+        n.category = c;
+        Set<String> t = new HashSet<>();
+        t.add("tag1");
+        n.tags = t;
+        n.beginTime = "1:00PM";
+        n.endTime = "2:00PM";
+        n.status = true;
+        n.name = "name";
+        n.type = "REQUEST";
+        Integer id = nr.insert(n);
+        assertEquals("cate1", "" + nr.getCategories("0"));
     }
 
     @Test
     public void testUpdateStatus() throws Exception {
+        Notifications n= new Notifications();
+        n.setProvider(1);
+        n.id = 0;
+        n.userId = 2;
+        n.requestID = "1";
+        n.location = "location";
+        n.postID = 1;
+        Set<String> c = new HashSet<>();
+        c.add("cate1");
+        n.category = c;
+        Set<String> t = new HashSet<>();
+        t.add("tag1");
+        n.tags = t;
+        n.beginTime = "1:00PM";
+        n.endTime = "2:00PM";
+        n.status = true;
+        n.name = "name";
+        n.type = "REQUEST";
+        Integer id = nr.insert(n);
+
         nr.updateStatus("0", "2");
         String selectQuery = "SELECT "
                 + Notifications.KEY_status + " FROM " + Notifications.TABLE + " where " +
                 Notifications.KEY_id + "=" + "0";
         String status = "";
 
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c.moveToFirst()) {
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
             do {
-                status = c.getString(c.getColumnIndex(Notifications.KEY_status));
-            } while (c.moveToNext());
+                status = cursor.getString(cursor.getColumnIndex(Notifications.KEY_status));
+            } while (cursor.moveToNext());
         }
+        Log.d("weird", status);
         assertEquals("2", status);
     }
 
     @Test
     public void testDeleteNotification() throws Exception {
+        Notifications n= new Notifications();
+        n.setProvider(1);
+        n.id = 1;
+        n.userId = 2;
+        n.requestID = "1";
+        n.location = "location";
+        n.postID = 1;
+        Set<String> c = new HashSet<>();
+        c.add("cate1");
+        n.category = c;
+        Set<String> t = new HashSet<>();
+        t.add("tag1");
+        n.tags = t;
+        n.beginTime = "1:00PM";
+        n.endTime = "2:00PM";
+        n.status = true;
+        n.name = "name";
+        n.type = "REQUEST";
+        Integer id = nr.insertRequest(n);
+
         String selectQuery = "SELECT * FROM " + Notifications.TABLE;
         int count = 0;
 
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c.moveToFirst()) {
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
             do {
                 count++;
-            } while (c.moveToNext());
+            } while (cursor.moveToNext());
         }
-        assertEquals(3, count);
+        assertEquals(1, count);
 
-        nr.deleteNotification("2");
+        nr.deleteNotification("1");
 
         selectQuery = "SELECT * FROM " + Notifications.TABLE;
         count = 0;
 
-        c = db.rawQuery(selectQuery, null);
-        if (c.moveToFirst()) {
+        cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
             do {
                 count++;
-            } while (c.moveToNext());
+            } while (cursor.moveToNext());
         }
-        assertEquals(2, count);
+        assertEquals(0, count);
 
     }
 

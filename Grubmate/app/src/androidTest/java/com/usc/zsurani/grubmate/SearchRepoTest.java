@@ -41,10 +41,8 @@ public class SearchRepoTest {
         s = new Search(appContext);
         pr = new PostRepo(appContext);
 
-        //initalizing the Noticition we will use to test
-    }
-    @Test
-    public void testSearch() throws Exception {
+        dbHandler.delete(db);
+
         p = new Post();
         p.active_status="True";
         Set<String>groupsInPost = new HashSet<String>();
@@ -77,7 +75,12 @@ public class SearchRepoTest {
         p2.num_requests = "3";
         pr.insert(p2);
 
+        //initalizing the Noticition we will use to test
+    }
+    @Test
+    public void testSearch() throws Exception {
         List<Post> results= s.searchForPost("Samosa");
         assertEquals("Samosas", results.get(0).getDescription());
+        assertEquals(1, results.size());
     }
 }
