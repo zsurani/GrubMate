@@ -1,26 +1,24 @@
 package com.usc.zsurani.grubmate;
 
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.Profile;
 
-public class ViewPostActivity extends AppCompatActivity {
+public class ViewPostFragment extends Fragment {
+
+    private static final String ARG_PARAM1 = "viewpost.postid";
 
     private Button buttonRequestOnPost;
     private Button buttonEdit;
@@ -40,37 +38,47 @@ public class ViewPostActivity extends AppCompatActivity {
     private Post post;
     private PostRepo postRepo;
 
+
+    public ViewPostFragment() {
+        // Required empty public constructor
+    }
+
+    public static ViewPostFragment newInstance(int param1) {
+        ViewPostFragment fragment = new ViewPostFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_PARAM1, param1);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_post);
+    }
 
-        //final int postID;
-        Bundle extras = getIntent().getExtras();
-        if (extras == null) {
-            postID = 0;
-        } else {
-            postID = extras.getInt("postID");
-        }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.activity_view_post, null);
 
-        Log.d("hello", Integer.toString(postID));
+        postID = getArguments().getInt(ARG_PARAM1);
 
-        buttonRequestOnPost = (Button) findViewById(R.id.button_request_on_post_view);
-        postName = (TextView) findViewById(R.id.view_post_name);
-        postUser = (TextView) findViewById(R.id.view_post_user);
-        userRating = (TextView) findViewById(R.id.view_post_rating);
-        description = (TextView) findViewById(R.id.view_post_desc);
-        homemade = (TextView) findViewById(R.id.view_post_homemade);
-        servings = (TextView) findViewById(R.id.view_post_servings);
-        begin = (TextView) findViewById(R.id.view_post_begin);
-        end = (TextView) findViewById(R.id.view_post_end);
-        location = (TextView) findViewById(R.id.view_post_location);
-        categories = (TextView) findViewById(R.id.view_post_categories);
-        tags = (TextView) findViewById(R.id.view_post_tags);
-        image = (ImageView) findViewById(R.id.view_post_picture);
-        buttonEdit = (Button) findViewById(R.id.edit_button);
+        buttonRequestOnPost = (Button) v.findViewById(R.id.button_request_on_post_view);
+        postName = (TextView) v.findViewById(R.id.view_post_name);
+        postUser = (TextView) v.findViewById(R.id.view_post_user);
+        userRating = (TextView) v.findViewById(R.id.view_post_rating);
+        description = (TextView) v.findViewById(R.id.view_post_desc);
+        homemade = (TextView) v.findViewById(R.id.view_post_homemade);
+        servings = (TextView) v.findViewById(R.id.view_post_servings);
+        begin = (TextView) v.findViewById(R.id.view_post_begin);
+        end = (TextView) v.findViewById(R.id.view_post_end);
+        location = (TextView) v.findViewById(R.id.view_post_location);
+        categories = (TextView) v.findViewById(R.id.view_post_categories);
+        tags = (TextView) v.findViewById(R.id.view_post_tags);
+        image = (ImageView) v.findViewById(R.id.view_post_picture);
+        buttonEdit = (Button) v.findViewById(R.id.edit_button);
 
-         postRepo = new PostRepo(getApplicationContext());
+        postRepo = new PostRepo(getActivity().getApplicationContext());
         Log.d("DEBUG - postID", Integer.toString(postID));
         post = postRepo.getPost(postID);
         postName.setText("Name: " + post.getFood());
@@ -109,12 +117,12 @@ public class ViewPostActivity extends AppCompatActivity {
         } else {
             buttonEdit.setEnabled(true);
         }
-        
+
         buttonRequestOnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //need to update the post with the user id of who is requesting
-                UserRepo ur = new UserRepo(getApplicationContext());
+                UserRepo ur = new UserRepo(getActivity().getApplicationContext());
                 Integer userId = ur.getId(Profile.getCurrentProfile().getId());
                 postRepo.addNewRequestor(Integer.toString(postID), Integer.toString(userId));
 
@@ -129,6 +137,8 @@ public class ViewPostActivity extends AppCompatActivity {
 //                i.putExtra("postID", postID);
 //                i.putExtra("userID", userId);
 //                startActivity(i);
+
+                ((MainActivity) getActivity()).goToFragment(1, userId, postID);
 
             }
         });
@@ -150,12 +160,13 @@ public class ViewPostActivity extends AppCompatActivity {
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), CreatePostActivity.class);
+                Intent i = new Intent(getActivity().getApplicationContext(), CreatePostActivity.class);
                 i.putExtra("postID", postID);
                 startActivity(i);
             }
         });
 
-
+        return v;
     }
+
 }

@@ -35,6 +35,8 @@ import static com.usc.zsurani.grubmate.ProfileFragment.newInstance;
 
 public class CreatePostActivity extends AppCompatActivity {
 
+    public static final int RESULT_POST_CREATED = 222;
+
     private EditText editName;
     private EditText editDesc;
     private EditText editNumAvailable;
@@ -300,9 +302,17 @@ public class CreatePostActivity extends AppCompatActivity {
                 }
                 else postId = postRepo.insert(post);
 
-                Intent intent = new Intent(CreatePostActivity.this, ViewPostActivity.class);
-                intent.putExtra("postID", postId);
-                startActivity(intent);
+//                Intent intent = new Intent(CreatePostActivity.this, ViewPostActivity.class);
+//                intent.putExtra("postID", postId);
+//                startActivity(intent);
+
+                // TODO CHANGE THIS TO FRAGMENT AND GO TO VIEW POST FRAGMENT
+
+                Intent dummy = new Intent();
+                dummy.putExtra("PostID", postId);
+                setResult(CreatePostActivity.RESULT_POST_CREATED, dummy);
+                finish();
+
             }
         });
 

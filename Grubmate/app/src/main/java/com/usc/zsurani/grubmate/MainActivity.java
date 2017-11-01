@@ -7,6 +7,7 @@ import android.content.pm.Signature;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -165,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+//        super.onSaveInstanceState(outState);
         outState.putBoolean(KEY_HAS_FRAGMENT, mHasFragment);
     }
 
@@ -228,12 +229,21 @@ public class MainActivity extends AppCompatActivity {
         selectItem(fragId);
     }
 
-    public void goToFragment(int fragId, int arg1) {
+    public void goToFragment(int fragId, int arg1, int arg2) {
         Fragment fragment = null;
 
         switch (fragId) {
             case 0: // rating review fragment
                 fragment = RatingReviewFragment.newInstance(arg1);
+                break;
+            case 1: // enter location fragment
+                fragment = EnterLocationFragment.newInstance(arg1, arg2);
+                break;
+            case 2: // view post fragment
+                fragment = ViewPostFragment.newInstance(arg1);
+                break;
+            case 3:
+
                 break;
             default:
 
@@ -245,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
 //            findViewById(R.id.login_button).setVisibility(View.VISIBLE);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
 
             mHasFragment = true;
         } else {
@@ -294,6 +304,11 @@ public class MainActivity extends AppCompatActivity {
         Fragment current = fm.findFragmentById(R.id.content_frame);
         if (current instanceof MyNotificationFragment) {
             ((MyNotificationFragment) current).refresh();
+        }
+
+        if (resultCode == CreatePostActivity.RESULT_POST_CREATED) {
+            int postId = data.getIntExtra("PostID", 0);
+            goToFragment(2, postId, -1);
         }
     }
 

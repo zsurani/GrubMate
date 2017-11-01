@@ -68,10 +68,12 @@ public class PostAdapter extends ArrayAdapter<Post> {
                 @Override
                 public void onClick(View view) {
 
-                    Intent i = new Intent(context, ViewPostActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("postID", t.getId());
-                    context.startActivity(i);
+//                    Intent i = new Intent(context, ViewPostActivity.class);
+//                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    i.putExtra("postID", t.getId());
+//                    context.startActivity(i);
+
+                    ((MainActivity) context).goToFragment(2, t.getId(), -1);
 
                 }
             });
