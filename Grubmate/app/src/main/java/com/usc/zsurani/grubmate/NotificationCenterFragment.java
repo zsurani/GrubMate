@@ -245,9 +245,11 @@ public class NotificationCenterFragment extends Fragment {
                             notificationsRepo.insertAccepted(t.getRequestID(), t.getPostID(), userId);
 
                         } else {
-                            Intent i = new Intent(getApplicationContext(), RatingReviewActivity.class);
-                            i.putExtra("UserRatingId", t.getRequestID());
-                            startActivity(i);
+//                            Intent i = new Intent(getApplicationContext(), RatingReviewActivity.class);
+//                            i.putExtra("UserRatingId", t.getRequestID());
+//                            startActivity(i);
+                            ((MainActivity) getActivity()).goToFragment(0, t.getRequestID());
+
                         }
                     }
                 });

@@ -224,6 +224,35 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void goToMainFragment(int fragId) {
+        selectItem(fragId);
+    }
+
+    public void goToFragment(int fragId, int arg1) {
+        Fragment fragment = null;
+
+        switch (fragId) {
+            case 0: // rating review fragment
+                fragment = RatingReviewFragment.newInstance(arg1);
+                break;
+            default:
+
+                break;
+        }
+
+        if (fragment != null) {
+//            findViewById(R.id.button2).setVisibility(View.VISIBLE);
+//            findViewById(R.id.login_button).setVisibility(View.VISIBLE);
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            mHasFragment = true;
+        } else {
+            Log.e("MainActivity", "Error in creating fragment");
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

@@ -5,7 +5,7 @@
     android:layout_margin="16dp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/label_rating"
         android:text="Rating: "
@@ -18,7 +18,7 @@
         android:layout_below="@id/label_rating"
         android:id="@+id/user_rating"/>
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/label_review"
         android:layout_below="@id/user_rating"
