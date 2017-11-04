@@ -291,7 +291,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
                 GroupRepo gr = new GroupRepo(getApplicationContext());
                 int groupID = gr.getGroupID(groupname);
-                post.addGroup(Integer.toString(groupID));
+                post.setGroupString(Integer.toString(groupID));
                 
                 if (postID != 0) {
                     post.setId(postID);

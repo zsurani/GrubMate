@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import com.facebook.Profile;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,9 +25,11 @@ import java.util.Set;
 
 public class PostRepo {
     private DatabaseHandler dbHelper;
+    private Context context;
 
     public PostRepo(Context context) {
         dbHelper = new DatabaseHandler(context);
+        this.context = context;
     }
 
     public int insert(Post post) {
@@ -774,24 +778,56 @@ public class PostRepo {
     }
 
     public List<Post> getPosts() {
+
+        List<Post> postList = new ArrayList<>();
+        List<Post> modified_posts = new ArrayList<>();
+
+        UserRepo u = new UserRepo(context);
+        String personalId = Integer.toString(u.getId(Profile.getCurrentProfile().getId()));
+
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT * FROM " + Post.TABLE;
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-        Cursor cursor = db.rawQuery(selectQuery, null );
-        List<Post> postList = new ArrayList<>();
-        if (cursor.moveToFirst()) {
+        if(cursor.moveToFirst()) {
             do {
                 Post post = new Post();
                 post.setFood(cursor.getString(cursor.getColumnIndex(Post.KEY_food)));
                 post.setDescription(cursor.getString(cursor.getColumnIndex(Post.KEY_description)));
                 post.setId(cursor.getInt(cursor.getColumnIndex(Post.KEY_id)));
                 postList.add(post);
-            } while (cursor.moveToNext());
+            } while(cursor.moveToNext());
+        }
+
+        for (int i=0; i<postList.size(); i++) {
+            selectQuery =  "SELECT  " + Post.KEY_groups + " FROM " + Post.TABLE + " WHERE " +
+                    Post.KEY_id + "= " + postList.get(i).getId();
+            cursor = db.rawQuery(selectQuery, null);
+            int group = 0;
+            if(cursor.moveToFirst()) {
+                group = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Post.KEY_groups)));
+            }
+
+            if (group == -1) {
+                modified_posts.add(postList.get(i));
+            } else {
+                selectQuery = "SELECT  " + Group.KEY_user + " FROM " + Group.TABLE + " WHERE " +
+                        Group.KEY_id + "= " + group;
+                cursor = db.rawQuery(selectQuery, null);
+
+                if (cursor.moveToFirst()) {
+                    String users = cursor.getString(cursor.getColumnIndex(Group.KEY_user));
+                    List<String> usersInGroup = Arrays.asList(users.split(", "));
+                    if (usersInGroup.contains(personalId)) {
+                        modified_posts.add(postList.get(i));
+                    }
+                }
+            }
         }
 
         cursor.close();
         db.close();
-        return postList;
+        return modified_posts;
     }
 
     public int getProviderId(int postId) {
