@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,8 +63,10 @@ public class MyGroupFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // start new page for creating a notification
-                Intent i = new Intent(getApplicationContext(), CreateGroupActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(getApplicationContext(), CreateGroupActivity.class);
+//                startActivity(i);
+
+                ((MainActivity) getActivity()).goToFragment(3, 0, 0);
             }
         });
     }
@@ -127,9 +130,17 @@ public class MyGroupFragment extends Fragment {
                 textName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent i = new Intent(getApplicationContext(), AddGroupMembersActivity.class);
-                        i.putExtra("groupName", t.getName());
-                        startActivityForResult(i, 0);
+//                        Intent i = new Intent(getApplicationContext(), AddGroupMembersActivity.class);
+//                        i.putExtra("groupName", t.getName());
+//                        startActivityForResult(i, 0);
+
+                        if (t.getName().length() < 1) {
+                            Log.d(" MY GRP FRAG", "ERROR WITH FRAGMENT");
+                        } else {
+                            Log.d("MY GRP FRAG", "NO ERROR");
+                        }
+
+                        ((MainActivity) getActivity()).goToFragment(10, t.getName());
                     }
                 });
             }

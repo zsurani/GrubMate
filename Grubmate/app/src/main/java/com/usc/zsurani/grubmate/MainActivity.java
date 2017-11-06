@@ -242,8 +242,11 @@ public class MainActivity extends AppCompatActivity {
             case 2: // view post fragment
                 fragment = ViewPostFragment.newInstance(arg1);
                 break;
-            case 3:
-
+            case 3: // create group fragment
+                fragment = CreateGroupFragment.newInstance();
+                break;
+            case 4: // view group fragment
+                fragment = ViewGroupFragment.newInstance();
                 break;
             default:
 
@@ -251,9 +254,28 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (fragment != null) {
-//            findViewById(R.id.button2).setVisibility(View.VISIBLE);
-//            findViewById(R.id.login_button).setVisibility(View.VISIBLE);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
 
+            mHasFragment = true;
+        } else {
+            Log.e("MainActivity", "Error in creating fragment");
+        }
+    }
+
+    public void goToFragment(int fragId, String arg1) {
+        Fragment fragment = null;
+
+        switch (fragId) {
+            case 10: // add group members
+                fragment = AddGroupMembersFragment.newInstance(arg1);
+                break;
+            default:
+
+                break;
+        }
+
+        if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
 
