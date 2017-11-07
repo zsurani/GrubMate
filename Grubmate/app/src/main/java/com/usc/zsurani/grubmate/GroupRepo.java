@@ -281,6 +281,7 @@ public class GroupRepo {
             if (c.moveToFirst()) {
                 d = c.getString(c.getColumnIndex(User.KEY_name));
             }
+            Log.d("weird", d);
             usersIdList.add(d);
         }
         Log.d("debugging", usersIdList.toString());
