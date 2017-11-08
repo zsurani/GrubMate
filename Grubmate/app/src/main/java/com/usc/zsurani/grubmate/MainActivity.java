@@ -277,6 +277,9 @@ public class MainActivity extends AppCompatActivity {
             case 11: // search results
                 fragment = SearchResultsFragment.newInstance(arg1);
                 break;
+            case 12: // sort results
+                fragment = SortResultFragment.newInstance(arg1);
+                break;
             default:
 
                 break;

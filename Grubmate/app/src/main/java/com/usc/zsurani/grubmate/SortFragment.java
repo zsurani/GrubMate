@@ -43,7 +43,7 @@ public class SortFragment extends Fragment {
         saveSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(), SortResultActivity.class);
+//                Intent i = new Intent(getContext(), SortResultActivity.class);
                 HashSet<String> sorts = new HashSet<String>();
                 String sortsString = "";
                 CheckBox c = (CheckBox) v.findViewById(R.id.rating_sort);
@@ -69,8 +69,9 @@ public class SortFragment extends Fragment {
                     sorts.add("Distance");
                     sortsString+="Distance";
                 }
-                i.putExtra ( "sortChecks", sortsString );
-                startActivity(i);
+//                i.putExtra ( "sortChecks", sortsString );
+//                startActivity(i);
+                ((MainActivity) getActivity()).goToFragment(12, sortsString);
             }
         });
 
