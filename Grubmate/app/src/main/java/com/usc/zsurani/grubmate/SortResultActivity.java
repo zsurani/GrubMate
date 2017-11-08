@@ -39,8 +39,10 @@ public class SortResultActivity extends AppCompatActivity {
                 postList = sortByPopularity(postList);
             }
             if (sortCheck.contains("Time")) {
+                postList = sortByTime(postList);
             }
             if (sortCheck.contains("Distance")) {
+                postList = sortByPopularity(postList);
             }
         }
         adapter = new PostAdapter(getApplicationContext(), R.layout.layout_post_row, postList);
@@ -62,6 +64,12 @@ public class SortResultActivity extends AppCompatActivity {
         return Arrays.asList(mergesortPopularity(arrayPost));
     }
 
+    private List<Post>  sortByTime(List<Post> oldList){
+        Post[] arrayPost = new Post[oldList.size()];
+        arrayPost = oldList.toArray(arrayPost);
+        return Arrays.asList(mergesortTime(arrayPost));
+    }
+
     private int getRating(Post p){
         UserRepo ur = new UserRepo(getApplicationContext());
         return Integer.parseInt(ur.getRating(Integer.toString(p.getProviderID())));
@@ -70,6 +78,11 @@ public class SortResultActivity extends AppCompatActivity {
     private int getNumRating(Post p){
         UserRepo ur = new UserRepo(getApplicationContext());
         return Integer.parseInt(ur.getNumRatings(Integer.toString(p.getProviderID())));
+    }
+
+    private int getTime(Post p){
+        PostRepo pr = new PostRepo(getApplicationContext());
+        return Integer.parseInt(pr.getBeginTime(Integer.toString(p.getProviderID())));
     }
 
     private Post[] mergeRating(Post[] a, Post[] b) {
@@ -118,6 +131,30 @@ public class SortResultActivity extends AppCompatActivity {
         for (int i = 0; i < b.length; i++)
             b[i] = input[i + N/2];
         return mergePopularity(mergesortPopularity(a), mergesortPopularity(b));
+    }
+
+    private Post[] mergeTime(Post[] a, Post[] b) {
+        Post[] c = new Post[a.length + b.length];
+        int i = 0, j = 0;
+        for (int k = 0; k < c.length; k++) {
+            if      (i >= a.length) c[k] = b[j++];
+            else if (j >= b.length) c[k] = a[i++];
+            else if (getTime(a[i]) <= getTime(b[j]))  c[k] = a[i++];
+            else                    c[k] = b[j++];
+        }
+        return c;
+    }
+
+    public Post[] mergesortTime(Post[] input) {
+        int N = input.length;
+        if (N <= 1) return input;
+        Post[] a = new Post[N/2];
+        Post[] b = new Post[N - N/2];
+        for (int i = 0; i < a.length; i++)
+            a[i] = input[i];
+        for (int i = 0; i < b.length; i++)
+            b[i] = input[i + N/2];
+        return mergeTime(mergesortTime(a), mergesortTime(b));
     }
 }
 
