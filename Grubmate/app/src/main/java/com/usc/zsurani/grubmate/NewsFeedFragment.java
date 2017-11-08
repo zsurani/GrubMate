@@ -62,9 +62,9 @@ public class NewsFeedFragment extends Fragment{
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), SearchResultsActivity.class);
-                i.putExtra ( "SearchParam", searchParameter.getText().toString() );
-                startActivity(i);
+                // TODO switch to fragment
+
+                ((MainActivity) getActivity()).goToFragment(11, searchParameter.getText().toString());
             }
         });
 

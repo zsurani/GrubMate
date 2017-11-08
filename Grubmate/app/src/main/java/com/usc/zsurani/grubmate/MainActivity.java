@@ -133,7 +133,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-                textView.setText("Login Cancelled");
+//                textView.setText("Login Cancelled");
+                Log.d("MAIN ACTIVITY", "LOGIN CANCELLED");
             }
 
             @Override
@@ -269,6 +270,9 @@ public class MainActivity extends AppCompatActivity {
         switch (fragId) {
             case 10: // add group members
                 fragment = AddGroupMembersFragment.newInstance(arg1);
+                break;
+            case 11: // search results
+                fragment = SearchResultsFragment.newInstance(arg1);
                 break;
             default:
 

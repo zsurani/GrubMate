@@ -75,6 +75,7 @@ public class SearchTest {
         protected Intent getActivityIntent() {
             Context targetContext = InstrumentationRegistry.getInstrumentation()
                     .getTargetContext();
+            // TODO eliminate this test?
             Intent result = new Intent(targetContext, SearchResultsActivity.class);
             result.putExtra("SearchParam", "food");
             return result;
