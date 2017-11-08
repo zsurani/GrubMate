@@ -243,9 +243,6 @@ public class MainActivity extends AppCompatActivity {
             case 2: // view post fragment
                 fragment = ViewPostFragment.newInstance(arg1);
                 break;
-            case 3: // create group fragment
-                fragment = CreateGroupFragment.newInstance();
-                break;
             case 4: // view group fragment
                 fragment = ViewGroupFragment.newInstance();
                 break;

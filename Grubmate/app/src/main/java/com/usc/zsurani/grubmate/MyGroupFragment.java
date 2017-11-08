@@ -63,10 +63,10 @@ public class MyGroupFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // start new page for creating a notification
-//                Intent i = new Intent(getApplicationContext(), CreateGroupActivity.class);
-//                startActivity(i);
+                Intent i = new Intent(getApplicationContext(), CreateGroupActivity.class);
+                startActivity(i);
 
-                ((MainActivity) getActivity()).goToFragment(3, 0, 0);
+//                ((MainActivity) getActivity()).goToFragment(3, 0, 0);
             }
         });
     }

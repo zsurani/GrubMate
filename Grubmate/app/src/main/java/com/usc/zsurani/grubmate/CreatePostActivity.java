@@ -147,6 +147,8 @@ public class CreatePostActivity extends AppCompatActivity {
                 Intent i = new Intent(CreatePostActivity.this, AddGroupToPostActivity.class);
 //                i.putExtra("postID", post);
                 startActivityForResult(i, 0);
+
+
             }
         });
 
