@@ -72,8 +72,10 @@ public class NewsFeedFragment extends Fragment{
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), SortActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(getApplicationContext(), SortActivity.class);
+//                startActivity(i);
+
+                ((MainActivity) getActivity()).goToFragment(5, 0, 0);
             }
         });
 

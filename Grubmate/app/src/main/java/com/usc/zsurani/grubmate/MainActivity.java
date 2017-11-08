@@ -249,6 +249,9 @@ public class MainActivity extends AppCompatActivity {
             case 4: // view group fragment
                 fragment = ViewGroupFragment.newInstance();
                 break;
+            case 5: // sort fragment
+                fragment = SortFragment.newInstance();
+                break;
             default:
 
                 break;
