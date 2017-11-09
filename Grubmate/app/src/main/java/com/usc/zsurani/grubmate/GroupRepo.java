@@ -239,6 +239,26 @@ public class GroupRepo {
         return false;
     }
 
+    public boolean checkIfUser(String name) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        UserRepo userRepo = new UserRepo(context);
+        String selectQuery =  "SELECT *" +
+                " FROM " + User.TABLE
+                + " WHERE " +
+                User.KEY_name + " LIKE '" + name + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                count++;
+            } while (cursor.moveToNext());
+        }
+
+        if (count > 0) return true;
+        return false;
+    }
+
     public List<String> getUser(String groupName){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery =  "SELECT  " +

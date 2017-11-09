@@ -76,9 +76,13 @@ public class AddGroupMembersActivity extends AppCompatActivity {
 
                 int user_id = userRepo.getId(Profile.getCurrentProfile().getId());
                 if (groupRepo.checkIfFriend(user_id, friendname) || friendname.equals(Profile.getCurrentProfile().getName())) {
-                    members.add(friendname);
-                    adapter.notifyDataSetChanged();
-                    memberName.setText("");
+                    if (groupRepo.checkIfUser(friendname)) {
+                        members.add(friendname);
+                        adapter.notifyDataSetChanged();
+                        memberName.setText("");
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Not in the database. Enter another name", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "Not a friend. Enter another name", Toast.LENGTH_SHORT).show();
                 }
