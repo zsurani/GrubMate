@@ -35,6 +35,7 @@ public class GroupRepo {
     public GroupRepo(Context context) {
         Log.d("DEBUG", "stop");
         dbHelper = new DatabaseHandler(context);
+        this.context = context;
     }
 
     public void insert(String groupName, List<String> members) {
@@ -216,39 +217,25 @@ public class GroupRepo {
 
     }
 
-    public boolean checkIfFriend(String name) {
-        final List<String> friendslist = new ArrayList<String>();
-        new GraphRequest(AccessToken.getCurrentAccessToken(),"me/friends", null, HttpMethod.GET, new GraphRequest.Callback() {
-            public void onCompleted(GraphResponse response) {
+    public boolean checkIfFriend(Integer user_id, String name) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        UserRepo userRepo = new UserRepo(context);
+        String selectQuery =  "SELECT  " +
+                User.KEY_FRIENDS +
+                " FROM " + User.F_TABLE
+                + " WHERE " +
+                User.KEY_userId + " = " + user_id;
 
-                try {
-                    JSONObject responseObject = response.getJSONObject();
-                    JSONArray dataArray = responseObject.getJSONArray("data");
-
-                    for (int i = 0; i < dataArray.length(); i++) {
-                        JSONObject dataObject = dataArray.getJSONObject(i);
-                        String fbName = dataObject.getString("name");
-                        friendslist.add(fbName);
-                    }
-                    List<String> list = friendslist;
-                    String friends = "";
-                    if (list != null && list.size() > 0) {
-                        friends = list.toString();
-                        if (friends.contains("[")) {
-                            friends = (friends.substring(1, friends.length() - 1));
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } finally {
-//                    hideLoadingProgress();
-                }
-            }
-        }).executeAsync();
-        Log.d("CHECK", name);
-        for(String str: friendslist) {
-            if(str.trim().contains(name.trim())) return true;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String friends = "";
+        if (cursor.moveToFirst()) {
+            do {
+                friends = cursor.getString(cursor.getColumnIndex(User.KEY_FRIENDS));
+            } while (cursor.moveToNext());
         }
+
+        List<String> userFriends = Arrays.asList(friends.split(", "));
+        if (userFriends.contains(name)) return true;
         return false;
     }
 

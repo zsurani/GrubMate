@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
         dbHandler = new DatabaseHandler(this);
         db = dbHandler.getReadableDatabase();
-//        dbHandler.delete(db);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
@@ -358,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
                         String fbName = dataObject.getString("name");
                         Log.e("FbID", fbId);
                         Log.e("FBName", fbName);
-                        friendslist.add(fbId);
+                        friendslist.add(fbName);
                     }
                     Log.e("fbfriendslist", friendslist.toString());
                     List<String> list = friendslist;
@@ -369,6 +368,8 @@ public class MainActivity extends AppCompatActivity {
                             friends = (friends.substring(1, friends.length() - 1));
                         }
                     }
+                    UserRepo userRepo = new UserRepo(getApplicationContext());
+                    userRepo.insertFriends(friends);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } finally {

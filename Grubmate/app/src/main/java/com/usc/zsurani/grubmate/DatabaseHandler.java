@@ -123,6 +123,13 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_PROFILE);
 
+        String CREATE_TABLE_FRIENDS = "CREATE TABLE " + User.F_TABLE  + "("
+                + User.KEY_ID  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + User.KEY_userId + " INTEGER, "
+                + User.KEY_FRIENDS + " TEXT)";
+
+        db.execSQL(CREATE_TABLE_FRIENDS);
+
     }
 
     @Override
@@ -147,6 +154,8 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Notifications.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + User.TABLE2);
         db.execSQL("DROP TABLE IF EXISTS " + User.P_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + User.F_TABLE);
+
         onCreate(db);
     }
 

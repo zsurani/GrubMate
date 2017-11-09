@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.Profile;
 
@@ -70,9 +71,17 @@ public class AddGroupMembersActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 friendname = memberName.getText().toString();
-                members.add(friendname);
-                adapter.notifyDataSetChanged();
-                memberName.setText("");
+                GroupRepo groupRepo = new GroupRepo(getApplicationContext());
+                UserRepo userRepo = new UserRepo(getApplicationContext());
+
+                int user_id = userRepo.getId(Profile.getCurrentProfile().getId());
+                if (groupRepo.checkIfFriend(user_id, friendname) || friendname.equals(Profile.getCurrentProfile().getName())) {
+                    members.add(friendname);
+                    adapter.notifyDataSetChanged();
+                    memberName.setText("");
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not a friend. Enter another name", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

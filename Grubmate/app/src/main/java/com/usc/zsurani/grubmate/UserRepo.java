@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.facebook.Profile;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -295,5 +297,14 @@ public class UserRepo {
         //db.close(); // Closing database connection
     }
 
+    public void insertFriends(String friends) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        int user_id = getId(Profile.getCurrentProfile().getId());
+        values.put(User.KEY_userId, user_id);
+        values.put(User.KEY_FRIENDS, friends);
 
+        // Inserting Row
+        db.insert(User.F_TABLE, null, values);
+    }
 }
