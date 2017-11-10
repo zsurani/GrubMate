@@ -65,7 +65,7 @@ public class SortResultFragment extends Fragment {
                 postList = sortByPopularity(postList);
             }
         }
-        adapter = new PostAdapter(getContext(), R.layout.layout_post_row, postList);
+        adapter = new PostAdapter(getContext(), R.layout.layout_post_row, postList, getActivity());
 
         sortResultList = (ListView) v.findViewById(R.id.list_sortresults);
         sortResultList.setAdapter(adapter);

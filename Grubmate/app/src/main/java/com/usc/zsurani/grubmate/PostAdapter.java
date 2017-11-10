@@ -27,6 +27,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class PostAdapter extends ArrayAdapter<Post> {
 
     private Context context;
+    private Activity activity;
 
     public PostAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
@@ -36,6 +37,12 @@ public class PostAdapter extends ArrayAdapter<Post> {
     public PostAdapter(Context context, int textViewResourceId, List<Post> items) {
         super(context, textViewResourceId, items);
         this.context = context;
+    }
+
+    public PostAdapter(Context context, int textViewResourceId, List<Post> items, Activity activity) {
+        super(context, textViewResourceId, items);
+        this.context = context;
+        this.activity = activity;
     }
 
 
@@ -73,7 +80,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
 //                    i.putExtra("postID", t.getId());
 //                    context.startActivity(i);
 
-                    ((MainActivity) context).goToFragment(2, t.getId(), -1);
+                    ((MainActivity) activity).goToFragment(2, t.getId(), -1);
 
                 }
             });

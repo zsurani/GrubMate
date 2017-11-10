@@ -52,7 +52,7 @@ public class NewsFeedFragment extends Fragment{
 
         List<Post> postList = getPostList();
 
-        adapter = new PostAdapter(getApplicationContext(), R.layout.layout_post_row, postList);
+        adapter = new PostAdapter(getApplicationContext(), R.layout.layout_post_row, postList, getActivity());
         listFeed = (ListView) v.findViewById(R.id.list_feed);
         listFeed.setAdapter(adapter);
 

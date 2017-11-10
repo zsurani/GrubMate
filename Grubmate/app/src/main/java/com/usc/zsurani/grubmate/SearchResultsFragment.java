@@ -54,7 +54,7 @@ public class SearchResultsFragment extends Fragment {
 
         Search search = new Search(getContext());
         List<Post> postsToDisplay= search.searchForPost(searchParam);
-        adapter = new PostAdapter(getContext(), R.layout.layout_post_row, postsToDisplay);
+        adapter = new PostAdapter(getContext(), R.layout.layout_post_row, postsToDisplay, getActivity());
 
         searchResultList = (ListView) v.findViewById(R.id.list_searchresults);
         searchResultList.setAdapter(adapter);
