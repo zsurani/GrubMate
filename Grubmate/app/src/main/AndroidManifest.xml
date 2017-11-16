@@ -18,32 +18,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyGroupActivity" />
-        <activity android:name=".ViewGroupActivity" />
-        <activity android:name=".CreateGroupActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".NewsFeedActivity" />
-        <activity android:name=".CreatePostActivity" />
-        <activity android:name=".ViewPostActivity" />
+        <!--<activity android:name=".MyGroupActivity" />
+        <activity android:name=".ViewGroupActivity" />-->
+        <activity android:name=".activity_and_fragment.CreatePostActivity" />
+        <!--<activity android:name=".ProfileActivity" />
+        <activity android:name=".NewsFeedActivity" />-->
+        <activity android:name=".activity_and_fragment.CreateGroupActivity" />
+        <!--<activity android:name=".ViewPostActivity" />
         <activity android:name=".TransactionHistoryActivity" />
-        <activity android:name=".MyNotificationActivity" />
-        <activity android:name=".CreateNotificationActivity" />
-        <activity android:name=".RatingReviewActivity" />
+        <activity android:name=".MyNotificationActivity" />-->
+        <activity android:name=".activity_and_fragment.CreateNotificationActivity" />
+        <!--<activity android:name=".RatingReviewActivity" />-->
         <activity
-            android:name=".AndroidDatabaseManager"
+            android:name=".databases.AndroidDatabaseManager"
             android:label="@string/app_name" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".AddGroupMembersActivity" />
-        <activity android:name=".AddGroupToPostActivity" />
-        <activity android:name=".EnterLocationActivity" />
+        <!--<activity android:name=".AddGroupMembersActivity" />-->
+        <activity android:name=".activity_and_fragment.AddGroupToPostActivity" />
+        <!--<activity android:name=".EnterLocationActivity" />
         <activity android:name=".SearchResultsActivity" />
         <activity android:name=".FilterActivity" />
         <activity android:name=".SortActivity" />
-        <activity android:name=".SortResultActivity"></activity>
+        <activity android:name=".SortResultActivity"></activity>-->
     </application>
 
 </manifest>
