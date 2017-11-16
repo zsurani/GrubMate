@@ -4,6 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.usc.zsurani.grubmate.base_classes.Transaction;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Categories;

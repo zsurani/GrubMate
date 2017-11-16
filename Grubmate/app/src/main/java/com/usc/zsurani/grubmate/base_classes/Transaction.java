@@ -13,12 +13,12 @@ public class Transaction {
     public static final String KEY_locRequester = "locRequester";
     public static final String KEY_originalPostID = "originalPostID";
 
-    Integer id;
-    String status;
-    Integer idProvider;
-    Integer idRequester;
-    Integer originalPostID;
-    String locRequester;
+    public Integer id;
+    public String status;
+    public Integer idProvider;
+    public Integer idRequester;
+    public Integer originalPostID;
+    public String locRequester;
 
     /*
      * Constructor setting provider and requester ids along

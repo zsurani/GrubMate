@@ -31,24 +31,24 @@ public class Notifications {
     public static final String TYPE_ACCEPT = "accept";
     public static final String TYPE_REVIEW = "review";
 
-    String userID;
+    public String userID;
 
 
-    Integer id;
-    Integer postID;
-    String requestID;
-    Integer requesterID;
-    Integer userId;
+    public Integer id;
+    public Integer postID;
+    public String requestID;
+    public Integer requesterID;
+    public Integer userId;
 
-    Set<String> category;
-    Set<String> tags;
-    String beginTime;
-    String endTime;
-    Boolean status;
-    String name;
-    String type;
-    String food;
-    String location;
+    public Set<String> category;
+    public Set<String> tags;
+    public String beginTime;
+    public String endTime;
+    public Boolean status;
+    public String name;
+    public String type;
+    public String food;
+    public String location;
 
     /*
      * Constructor (Type 1) for subscription type notification in

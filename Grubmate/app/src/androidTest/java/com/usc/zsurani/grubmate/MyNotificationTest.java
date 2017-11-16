@@ -15,6 +15,12 @@ import android.widget.ListView;
 
 import com.android21buttons.fragmenttestrule.FragmentTestRule;
 import com.facebook.FacebookSdk;
+import com.usc.zsurani.grubmate.base_classes.Notifications;
+import com.usc.zsurani.grubmate.base_classes.Profiles;
+import com.usc.zsurani.grubmate.base_classes.User;
+import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.NotificationsRepo;
+import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.UserRepo;
+import com.usc.zsurani.grubmate.databases.DatabaseHandler;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

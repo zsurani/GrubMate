@@ -16,24 +16,24 @@ public class Group {
     public static final String KEY_user = "users";
     public static final String KEY_name = "name";
 
-    String id;
+    public String id;
     //change to set for easier remove/add
-    Set<String> users;
-    String ownerId;
+    public Set<String> users;
+    public String ownerId;
 
-    String name;
+    public String name;
 
     /*
      * Constructor for when new group is created
      * including list of user IDs in group, and group creator’s id
      */
-    Group(Set<String> users, String userId, String ownerId){
+    public Group(Set<String> users, String userId, String ownerId){
         id = userId;
         this.users = users;
         this.ownerId = ownerId;
     }
 
-    Group(Set<String> users, String userId){
+    public Group(Set<String> users, String userId){
         id = userId;
         this.users = users;
     }
@@ -58,7 +58,7 @@ public class Group {
 	 * Returns list of the User ids that are part of this group.
 	 */
     Set<String> getUsers(){return users;}
-    String getId(){
+    public String getId(){
         return id;
     }
 

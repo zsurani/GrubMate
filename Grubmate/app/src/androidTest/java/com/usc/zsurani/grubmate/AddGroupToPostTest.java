@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.usc.zsurani.grubmate.activity_and_fragment.AddGroupToPostActivity;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
