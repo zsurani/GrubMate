@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".ViewGroupActivity"
+    tools:context=".activity_and_fragment.ViewGroupActivity"
     android:layout_margin="16dp">
 
     <TextView
@@ -13,7 +13,8 @@
         android:text="Group Members"
         android:textAlignment="center"
         android:textSize="24sp"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:textColor="#2f2f2f"/>
 
     <ListView
         android:layout_width="match_parent"

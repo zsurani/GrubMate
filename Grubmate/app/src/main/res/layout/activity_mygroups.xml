@@ -4,18 +4,19 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".MyGroupActivity"
+    tools:context=".activity_and_fragment.MyGroupActivity"
     android:layout_margin="16dp">
 
 
-    <TextView
+    <!--<TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="My Groups"
         android:textAlignment="center"
         android:textSize="24sp"
         android:layout_margin="8dp"
-        android:id="@+id/textView" />
+        android:id="@+id/textView"
+        android:textColor="#2f2f2f" />-->
 
     <ListView
         android:layout_width="match_parent"
@@ -30,7 +31,7 @@
         android:id="@id/create_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create"
+        android:text="Create Group"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="16dp"/>
 

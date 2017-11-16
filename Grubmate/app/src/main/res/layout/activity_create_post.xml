@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.usc.zsurani.grubmate.CreatePostActivity"
+    tools:context="com.usc.zsurani.grubmate.activity_and_fragment.CreatePostActivity"
     android:orientation="vertical"
     android:layout_margin="16dp">
 
@@ -64,7 +64,7 @@
                 android:id="@+id/edit_post_begin_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="datetime"
+                android:inputType="time"
                 android:textSize="18dp" />
 
             <TextView
@@ -77,7 +77,7 @@
                 android:id="@+id/edit_post_end_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="datetime"
+                android:inputType="time"
                 android:textSize="18dp" />
 
             <TextView

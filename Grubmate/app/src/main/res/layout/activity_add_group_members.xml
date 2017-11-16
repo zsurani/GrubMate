@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.usc.zsurani.grubmate.AddGroupMembersActivity"
+    tools:context="com.usc.zsurani.grubmate.activity_and_fragment.AddGroupMembersActivity"
     android:orientation="vertical"
     android:layout_margin="16dp">
 
@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:textSize="18dp"
         android:text="Enter Group Members"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="#2f2f2f"/>
 
     <EditText
         android:id="@+id/member_name"

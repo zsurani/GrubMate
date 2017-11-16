@@ -1,19 +1,14 @@
 package com.usc.zsurani.grubmate;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,13 +28,32 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.usc.zsurani.grubmate.activity_and_fragment.AddGroupMembersFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.CreatePostActivity;
+import com.usc.zsurani.grubmate.activity_and_fragment.EnterLocationFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.MyGroupFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.MyNotificationFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.NewsFeedFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.NotificationCenterFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.ProfileFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.RatingReviewFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.SearchResultsFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.SortFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.SortResultFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.TransactionHistoryFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.ViewGroupFragment;
+import com.usc.zsurani.grubmate.activity_and_fragment.ViewPostFragment;
+import com.usc.zsurani.grubmate.adapters.DrawerItemCustomAdapter;
+import com.usc.zsurani.grubmate.base_classes.User;
+import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.UserRepo;
+import com.usc.zsurani.grubmate.databases.AndroidDatabaseManager;
+import com.usc.zsurani.grubmate.databases.DatabaseHandler;
+import com.usc.zsurani.grubmate.other_UI.DataModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbHandler = new DatabaseHandler(this);
         db = dbHandler.getReadableDatabase();
+//        dbHandler.delete(db);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
@@ -255,7 +270,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+//            ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+            ft.replace(R.id.content_frame, fragment).commitAllowingStateLoss();
 
             mHasFragment = true;
         } else {
