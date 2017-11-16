@@ -30,6 +30,7 @@ public class Search {
                 + " WHERE " + Post.KEY_food + " like '%" + searchParameter + "%'" +
                 "OR " + Post.KEY_tags + " like '%" + searchParameter + "%' " +
                 "OR " + Post.KEY_categories + " like '%" + searchParameter + "%' " +
+                "OR " + Post.KEY_groups + " like '%" + searchParameter + "%' " +
                 "OR " + Post.KEY_description + " like '%" + searchParameter + "%' " +
                 "OR " + Post.KEY_beginTime + " like '%" + searchParameter + "%' " +
                 "OR " + Post.KEY_endTime + " like '%" + searchParameter + "%' ", null);
