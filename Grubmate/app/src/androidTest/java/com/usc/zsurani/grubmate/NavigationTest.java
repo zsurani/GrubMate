@@ -20,6 +20,10 @@ import com.android21buttons.fragmenttestrule.FragmentTestRule;
 import com.facebook.FacebookActivity;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
+import com.usc.zsurani.grubmate.base_classes.Profiles;
+import com.usc.zsurani.grubmate.base_classes.User;
+import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.UserRepo;
+import com.usc.zsurani.grubmate.databases.DatabaseHandler;
 
 import org.hamcrest.Matcher;
 import org.junit.Before;
