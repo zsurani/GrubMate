@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
                 android:inputType="time"
-                android:hint="hh:mm am"
+                android:hint="08:00am"
                 android:id="@+id/edit_notification_begin_time"/>
 
             <TextView
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
-                android:hint="hh:mm am"
+                android:hint="10:00pm"
                 android:inputType="time"
                 android:id="@+id/edit_notification_end_time"/>
 

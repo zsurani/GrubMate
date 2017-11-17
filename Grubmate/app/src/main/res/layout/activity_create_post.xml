@@ -65,7 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="time"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:hint="08:00am"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -78,7 +79,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="time"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:hint="11:00pm"/>
 
             <TextView
                 android:layout_width="match_parent"

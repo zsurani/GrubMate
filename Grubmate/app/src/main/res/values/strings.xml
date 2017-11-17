@@ -19,7 +19,7 @@
 
     <!-- String Resources for Notifications -->
     <string name="text_notification_description">From %1$s to %2$s.  For tags %3$s and categories %4$s.</string>
-    <string name="text_end_notification">Delete Notification</string>
+    <string name="text_end_notification">Cancel</string>
 
     <!-- String Resources for News Feed -->
     <string name="text_post_description">From %1$s to %2$s.  For tags %3$s and categories %4$s.</string>
@@ -30,8 +30,8 @@
     <!-- String Resources for Profile -->
     <string name="text_profile_rating">Rating: %1$s</string>
     <string name="text_profile_num_ratings">Num Ratings: %1$s</string>
-    <string name="text_post_button">See Posts</string>
-    <string name="text_review_button">See Reviews</string>
+    <string name="text_post_button">Posts</string>
+    <string name="text_review_button">Reviews</string>
 
     <!-- String Resources for Menu -->
     <string name="search_title">Search For Post</string>

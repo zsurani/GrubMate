@@ -2,6 +2,7 @@ package com.usc.zsurani.grubmate;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -271,7 +272,8 @@ public class MainActivity extends AppCompatActivity {
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
-//            ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
             ft.replace(R.id.content_frame, fragment).commitAllowingStateLoss();
 
             mHasFragment = true;
@@ -300,7 +302,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+            ft.replace(R.id.content_frame, fragment).commitAllowingStateLoss();
 
             mHasFragment = true;
         } else {
