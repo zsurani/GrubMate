@@ -112,20 +112,37 @@ public class GroupRepo {
         return toReturn;
     }
 
-    public int getGroupID(String name){
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + Group.TABLE + " WHERE " + Group.KEY_name + " like '" +
-                name + "'";
+    public String getGroupID(String name){
 
-        Cursor c = db.rawQuery(selectQuery, null);
-        int d = -1;
-        if (c.moveToFirst()) {
-            do {
-                d = c.getInt(c.getColumnIndex(User.KEY_ID));
-            } while (c.moveToNext());
+        List<String> groupNames = Arrays.asList(name.split(","));
+        List<String> groupId = new ArrayList<>();
+
+        for (int i=0; i< groupNames.size(); i++) {
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            String selectQuery = "SELECT * FROM " + Group.TABLE + " WHERE " + Group.KEY_name + " like '" +
+                    groupNames.get(i).trim() + "'";
+
+            Cursor c = db.rawQuery(selectQuery, null);
+            int d = -1;
+            if (c.moveToFirst()) {
+                do {
+                    groupId.add(Integer.toString(c.getInt(c.getColumnIndex(User.KEY_ID))));
+                } while (c.moveToNext());
+            }
         }
 
-        return d;
+        StringBuilder csvBuilder = new StringBuilder();
+        String SEPARATOR = ",";
+
+        for(String id : groupId){
+            csvBuilder.append(id);
+            csvBuilder.append(SEPARATOR);
+        }
+
+        String csv = csvBuilder.toString();
+        csv = csv.substring(0, csv.length() - SEPARATOR.length());
+
+        return csv;
     }
 
 
