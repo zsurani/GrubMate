@@ -61,8 +61,6 @@ public class PostRepo {
         values.put(Post.KEY_homemadeNotRestaurant, post.getHomemade());
         values.put(Post.KEY_images, post.getPhoto_image());
         values.put(Post.KEY_groups, post.getGroupString());
-        Log.d("please", post.getGroupString());
-
 
         // Inserting Row
         long post_id = db.insert(Post.TABLE, null, values);
