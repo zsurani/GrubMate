@@ -240,7 +240,7 @@ public class NotificationCenterFragment extends Fragment {
                             button_two.setEnabled(false);
 
                             Transaction transaction = new Transaction(postRepo.getProviderId(t.getPostID()),
-                                    userId, postRepo.getLocation(t.getPostID()), t.getPostID());
+                                    t.getRequestID(), postRepo.getLocation(t.getPostID()), t.getPostID());
                             TransactionRepo tr = new TransactionRepo(getApplicationContext());
                             transaction.setStatus("OPEN");
                             tr.insert(transaction);
