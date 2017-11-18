@@ -799,16 +799,21 @@ public class PostRepo {
         }
 
         for (int i=0; i<postList.size(); i++) {
-            selectQuery =  "SELECT  " + Post.KEY_groups + " FROM " + Post.TABLE + " WHERE " +
+            selectQuery =  "SELECT  * FROM " + Post.TABLE + " WHERE " +
                     Post.KEY_id + "= " + postList.get(i).getId();
             cursor = db.rawQuery(selectQuery, null);
             String group = "";
+            int owner = 0;
             if(cursor.moveToFirst()) {
                 group = cursor.getString(cursor.getColumnIndex(Post.KEY_groups));
-            } // fix
+                owner = cursor.getInt(cursor.getColumnIndex(Post.KEY_owner));
+            }
 
             if (group.equals("")) {
-                modified_posts.add(postList.get(i));
+                GroupRepo groupRepo = new GroupRepo(context);
+                if (groupRepo.checkIfFriend(owner, Profile.getCurrentProfile().getName())) {
+                    modified_posts.add(postList.get(i));
+                }
             } else {
                 List<String> groupList = Arrays.asList(group.split(","));
                     for (int j=0; j<groupList.size(); j++) {
