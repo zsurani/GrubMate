@@ -13,6 +13,7 @@ import com.usc.zsurani.grubmate.adapters.PostAdapter;
 import com.usc.zsurani.grubmate.base_classes.Post;
 import com.usc.zsurani.grubmate.base_classes.Search;
 import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.PostRepo;
+import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.Time;
 import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.UserRepo;
 
 import java.util.Arrays;
@@ -108,9 +109,12 @@ public class SortResultFragment extends Fragment {
         return Integer.parseInt(ur.getNumRatings(Integer.toString(p.getProviderID())));
     }
 
-    private int getTime(Post p){
+    private long getTime(Post p){
+        Time t = new Time();
         PostRepo pr = new PostRepo(getContext());
-        return Integer.parseInt(pr.getBeginTime(Integer.toString(p.getProviderID())));
+        String currTime = pr.getBeginTime(Integer.toString(p.getProviderID()));
+        String timeRightNow = t.getCurrentTime();
+        return t.calculateTimeDifference(timeRightNow, currTime);
     }
 
     private Post[] mergeRating(Post[] a, Post[] b) {
@@ -167,7 +171,7 @@ public class SortResultFragment extends Fragment {
         for (int k = 0; k < c.length; k++) {
             if      (i >= a.length) c[k] = b[j++];
             else if (j >= b.length) c[k] = a[i++];
-            else if (getTime(a[i]) <= getTime(b[j]))  c[k] = a[i++];
+            else if (getTime(b[j]) <= getTime(a[i]))  c[k] = a[i++];
             else                    c[k] = b[j++];
         }
         return c;
