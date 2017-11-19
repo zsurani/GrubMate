@@ -105,6 +105,7 @@ public class NotificationsRepo {
 
         ContentValues values = new ContentValues();
         values.put(n.KEY_postID, n.getPostID());
+        values.put(n.KEY_status, "true");
         values.put(n.KEY_requestorID, n.getRequestID()); //who is being sent the rating
         values.put(n.KEY_userID, n.getProvider()); //who we are rating
         values.put(n.KEY_type, "REVIEW");
@@ -353,6 +354,7 @@ public class NotificationsRepo {
                 notification.setRequestID(c.getInt(c.getColumnIndex(Notifications.KEY_requestorID)));
                 notification.setActiveStatus(Boolean.parseBoolean(c.getString(c.getColumnIndex(Notifications.KEY_status))));
                 notification.setPostID(c.getInt(c.getColumnIndex(Notifications.KEY_postID)));
+                notification.setId(c.getInt(c.getColumnIndex(Notifications.KEY_id)));
                 notifList.add(notification);
             } while (c.moveToNext());
         }
@@ -385,8 +387,10 @@ public class NotificationsRepo {
                 Log.d("DEBUG", "we have gotten a review");
                 Notifications notification = new Notifications();
                 notification.setType("REVIEW");
+                notification.setId(c.getInt(c.getColumnIndex(Notifications.KEY_id)));
                 notification.setRequestID(c.getInt(c.getColumnIndex(Notifications.KEY_requestorID)));
                 notification.setProvider(c.getInt(c.getColumnIndex(Notifications.KEY_userID)));
+                notification.setActiveStatus(Boolean.parseBoolean(c.getString(c.getColumnIndex(Notifications.KEY_status))));
                 notifList.add(notification);
             } while (c.moveToNext());
         }
@@ -407,6 +411,17 @@ public class NotificationsRepo {
 
         // Inserting Row
         long notification_Id = db.insert(Notifications.TABLE, null, values);
+        db.close(); // Closing database connection
+    }
+
+    public void setInactive(String notifId){
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Notifications.KEY_status, "false");
+
+        db.update(Notifications.TABLE, values, Notifications.KEY_id + "= " + notifId, null);
         db.close(); // Closing database connection
     }
 }
