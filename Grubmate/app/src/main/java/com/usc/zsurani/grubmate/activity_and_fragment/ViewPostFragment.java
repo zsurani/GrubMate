@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.usc.zsurani.grubmate.MainActivity;
@@ -129,7 +130,6 @@ public class ViewPostFragment extends Fragment {
                 //need to update the post with the user id of who is requesting
                 UserRepo ur = new UserRepo(getActivity().getApplicationContext());
                 Integer userId = ur.getId(Profile.getCurrentProfile().getId());
-                postRepo.addNewRequestor(Integer.toString(postID), Integer.toString(userId));
 
                 if(Integer.parseInt(post.getNum_requests()) <= (postRepo.getAccepted(Integer.toString(postID))).length() - 1) //because it starts wiht ","
                 {
@@ -142,8 +142,12 @@ public class ViewPostFragment extends Fragment {
 //                i.putExtra("postID", postID);
 //                i.putExtra("userID", userId);
 //                startActivity(i);
-
-                ((MainActivity) getActivity()).goToFragment(1, userId, postID);
+                if (postRepo.isRequestor(Integer.toString(postID), Integer.toString(userId))) {
+                    Toast.makeText(getActivity().getApplicationContext(), "You have already requested this food", Toast.LENGTH_LONG).show();
+                } else {
+                    postRepo.addNewRequestor(Integer.toString(postID), Integer.toString(userId));
+                    ((MainActivity) getActivity()).goToFragment(1, userId, postID);
+                }
 
             }
         });

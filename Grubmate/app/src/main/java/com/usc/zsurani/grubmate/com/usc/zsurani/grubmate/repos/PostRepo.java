@@ -513,7 +513,9 @@ public class PostRepo {
     public void addNewRequestor(String postId, String userId){
 
         String oldReqList = getRequestors(postId);
-        String newReqList = oldReqList + "," + userId;
+        String newReqList = "";
+        if (oldReqList.equals("")) newReqList = userId;
+        else newReqList = oldReqList + "," + userId;
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -522,6 +524,13 @@ public class PostRepo {
 
         db.update(Post.TABLE, values, Post.KEY_id + "= " + postId, null);
         db.close(); // Closing database connection
+    }
+
+    public boolean isRequestor(String postId, String userId) {
+        String req = getRequestors(postId);
+        List<String> reqList = Arrays.asList(req.split(","));
+        if (reqList.contains(userId)) return true;
+        return false;
     }
 
     public void deleteRequestor(String postId, String userId){
