@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".MyGroupActivity" />
-        <activity android:name=".ViewGroupActivity" />-->
+        <activity android:name=".activity_and_fragment.MyGroupActivity" />
+        <activity android:name=".activity_and_fragment.ViewGroupActivity" />
         <activity android:name=".activity_and_fragment.CreatePostActivity" />
         <!--<activity android:name=".ProfileActivity" />
         <activity android:name=".NewsFeedActivity" />-->
@@ -37,7 +37,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <!--<activity android:name=".AddGroupMembersActivity" />-->
+        <activity android:name=".activity_and_fragment.AddGroupMembersActivity" />
         <activity android:name=".activity_and_fragment.AddGroupToPostActivity" />
         <!--<activity android:name=".EnterLocationActivity" />
         <activity android:name=".SearchResultsActivity" />

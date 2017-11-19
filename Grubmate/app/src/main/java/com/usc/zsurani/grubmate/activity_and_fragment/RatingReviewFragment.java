@@ -3,6 +3,7 @@ package com.usc.zsurani.grubmate.activity_and_fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,7 @@ public class RatingReviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 UserRepo ur = new UserRepo(getActivity().getApplicationContext());
+                Log.d("rating", Float.toString(rating.getRating()));
                 ur.addRating(Integer.toString(id), rating.getRating());
                 ur.addReview(Integer.toString(id), review.getText().toString());
 

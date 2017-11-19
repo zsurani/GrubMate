@@ -2,6 +2,8 @@ package com.usc.zsurani.grubmate;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import com.usc.zsurani.grubmate.base_classes.User;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

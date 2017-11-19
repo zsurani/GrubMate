@@ -17,10 +17,18 @@
 
     </ListView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_empty_notif"
+        android:text="No Notifications Found"
+        android:textSize="24sp"/>
+
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add New Notification"
+        android:text="Create Notification"
         android:id="@id/button_add_notification"
         android:layout_alignParentBottom="true"
         android:layout_margin="8dp"/>

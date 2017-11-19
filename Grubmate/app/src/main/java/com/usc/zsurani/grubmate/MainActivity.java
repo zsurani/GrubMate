@@ -2,6 +2,7 @@ package com.usc.zsurani.grubmate;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(mNavigationDrawerItemTitles[position]).commit();
 
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
@@ -260,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
             case 4: // view group fragment
                 fragment = ViewGroupFragment.newInstance();
                 break;
-            case 5: // sort fragment
+            case 3: // sort fragment
                 fragment = SortFragment.newInstance();
                 break;
             default:
@@ -271,10 +272,13 @@ public class MainActivity extends AppCompatActivity {
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
-//            ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-            ft.replace(R.id.content_frame, fragment).commitAllowingStateLoss();
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            String title = getResources().getStringArray(R.array.frag_names_1)[fragId];
 
+            ft.replace(R.id.content_frame, fragment).addToBackStack(title).commitAllowingStateLoss();
+            setTitle(title);
             mHasFragment = true;
+
         } else {
             Log.e("MainActivity", "Error in creating fragment");
         }
@@ -282,16 +286,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToFragment(int fragId, String arg1) {
         Fragment fragment = null;
+        int stringPos = 0;
 
         switch (fragId) {
             case 10: // add group members
                 fragment = AddGroupMembersFragment.newInstance(arg1);
+                stringPos = 0;
                 break;
             case 11: // search results
                 fragment = SearchResultsFragment.newInstance(arg1);
+                stringPos = 1;
                 break;
             case 12: // sort results
                 fragment = SortResultFragment.newInstance(arg1);
+                stringPos = 2;
                 break;
             default:
 
@@ -300,8 +308,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            String title = getResources().getStringArray(R.array.frag_names_string)[stringPos];
 
+            ft.replace(R.id.content_frame, fragment).addToBackStack(title).commitAllowingStateLoss();
+            setTitle(title);
             mHasFragment = true;
         } else {
             Log.e("MainActivity", "Error in creating fragment");
@@ -395,6 +407,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }).executeAsync();
         return friendslist;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        int count = getFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getFragmentManager().popBackStack();
+        }
+
     }
 }
 

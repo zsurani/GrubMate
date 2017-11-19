@@ -60,6 +60,10 @@ public class TransactionHistoryFragment extends Fragment {
 //        t.setStatus("Accepted");
 //        dummyList.add(t);
 
+        if (getTransactions().size() > 0) {
+            ((TextView) v.findViewById(R.id.text_empty_trans)).setVisibility(View.GONE);
+        }
+
         transactionList.setAdapter(new TransactionHistoryFragment.TransactionAdapter(getContext(), R.layout.layout_transaction_row, getTransactions()));
 
     }
@@ -135,7 +139,7 @@ public class TransactionHistoryFragment extends Fragment {
                 String food = post.getFood();
 
                 String name = getResources().getString(R.string.text_transaction_name);
-                transactName.setText(String.format(name, provider, food, requester));
+                transactName.setText(String.format(name, requester, food, provider));
                 transactStatus.setText(String.format(getResources().getString(R.string.text_transaction_status), status));
 
                 switch (status) {

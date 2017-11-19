@@ -141,21 +141,59 @@ public class UserRepo {
         //Open connection to write data
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        Float oldRating = Float.parseFloat(getRating(userId));
+        Float oldRating = (float) getRawRating(userId);
         Float newRating = oldRating + nRating;
 
-        Integer oldNum = Integer.parseInt(getNumRatings(userId));
+        Integer oldNum = getRawNumRatings(userId);
         Integer newNum = oldNum + 1;
-        Log.d("DEBUG", "new Num = " + newNum);
 
         ContentValues values = new ContentValues();
 
         values.put(User.KEY_rating, newRating);
-        values.put(User.KEY_numRatings, Integer.toString(newNum));
+        values.put(User.KEY_numRatings, newNum);
 
         db.update(User.TABLE, values, User.KEY_ID + "=" + Integer.parseInt(userId), null);
 
+    }
+
+    public Integer getRawRating(String userId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                User.KEY_rating +
+                " FROM " + User.TABLE
+                + " WHERE " +
+                User.KEY_ID + "= " + userId;// It's a good practice to use parameter ?, instead of concatenate string
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        Integer toReturn = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getInt(cursor.getColumnIndex(User.KEY_rating));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return toReturn;
+    }
+
+    public Integer getRawNumRatings(String userId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  " +
+                User.KEY_numRatings +
+                " FROM " + User.TABLE
+                + " WHERE " +
+                User.KEY_ID + "= " + userId;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        Integer toReturn = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                toReturn = cursor.getInt(cursor.getColumnIndex(User.KEY_numRatings));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
         //db.close();
+        return toReturn;
     }
 
     public String getNumRatings(String userId){
@@ -177,6 +215,29 @@ public class UserRepo {
         cursor.close();
         //db.close();
         return toReturn;
+    }
+
+    public Float getRealRating(Integer userId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT * FROM " + User.TABLE
+                + " WHERE " +
+                User.KEY_ID + "= " + userId;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int rating = 0;
+        int number_of_ratings = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                rating = cursor.getInt(cursor.getColumnIndex(User.KEY_rating));
+                number_of_ratings = cursor.getInt(cursor.getColumnIndex(User.KEY_numRatings));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        if (number_of_ratings == 0) return (float) 0;
+        else {
+            return (float) rating / number_of_ratings;
+        }
     }
 
     public String getRating(String userId){

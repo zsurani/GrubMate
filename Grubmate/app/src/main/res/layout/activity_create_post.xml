@@ -65,7 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="time"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:hint="08:00am"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -78,7 +79,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="time"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:hint="11:00pm"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -270,7 +272,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="next"
+                android:text="select group"
                 android:textSize="18sp"
                 android:id="@+id/button_select_group"/>
 

@@ -62,7 +62,6 @@ public class PostRepo {
         values.put(Post.KEY_images, post.getPhoto_image());
         values.put(Post.KEY_groups, post.getGroupString());
 
-
         // Inserting Row
         long post_id = db.insert(Post.TABLE, null, values);
         db.close(); // Closing database connection
@@ -800,28 +799,36 @@ public class PostRepo {
         }
 
         for (int i=0; i<postList.size(); i++) {
-            selectQuery =  "SELECT  " + Post.KEY_groups + " FROM " + Post.TABLE + " WHERE " +
+            selectQuery =  "SELECT  * FROM " + Post.TABLE + " WHERE " +
                     Post.KEY_id + "= " + postList.get(i).getId();
             cursor = db.rawQuery(selectQuery, null);
-            int group = 0;
+            String group = "";
+            int owner = 0;
             if(cursor.moveToFirst()) {
-                group = Integer.parseInt(cursor.getString(cursor.getColumnIndex(Post.KEY_groups)));
+                group = cursor.getString(cursor.getColumnIndex(Post.KEY_groups));
+                owner = cursor.getInt(cursor.getColumnIndex(Post.KEY_owner));
             }
 
-            if (group == -1) {
-                modified_posts.add(postList.get(i));
-            } else {
-                selectQuery = "SELECT  " + Group.KEY_user + " FROM " + Group.TABLE + " WHERE " +
-                        Group.KEY_id + "= " + group;
-                cursor = db.rawQuery(selectQuery, null);
-
-                if (cursor.moveToFirst()) {
-                    String users = cursor.getString(cursor.getColumnIndex(Group.KEY_user));
-                    List<String> usersInGroup = Arrays.asList(users.split(", "));
-                    if (usersInGroup.contains(personalId)) {
-                        modified_posts.add(postList.get(i));
-                    }
+            if (group.equals("")) {
+                GroupRepo groupRepo = new GroupRepo(context);
+                if (groupRepo.checkIfFriend(owner, Profile.getCurrentProfile().getName())) {
+                    modified_posts.add(postList.get(i));
                 }
+            } else {
+                List<String> groupList = Arrays.asList(group.split(","));
+                    for (int j=0; j<groupList.size(); j++) {
+                        selectQuery = "SELECT  " + Group.KEY_user + " FROM " + Group.TABLE + " WHERE " +
+                                Group.KEY_id + "= " + groupList.get(j);
+                        cursor = db.rawQuery(selectQuery, null);
+
+                        if (cursor.moveToFirst()) {
+                            String users = cursor.getString(cursor.getColumnIndex(Group.KEY_user));
+                            List<String> usersInGroup = Arrays.asList(users.split(", "));
+                            if (usersInGroup.contains(personalId)) {
+                                modified_posts.add(postList.get(i));
+                            }
+                        }
+                    }
             }
         }
 

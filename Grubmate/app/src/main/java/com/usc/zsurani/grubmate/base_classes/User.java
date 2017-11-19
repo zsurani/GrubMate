@@ -36,17 +36,17 @@ public class User {
     private Context context;
 
 
-    String name;
-    String facebookUniqueIdentifier;
-    Integer rating;
-    Integer numRatings;
-    List<Integer> transactions;
-    Set<Integer> posts;
-    List<Integer> groups;
-    Set<Integer> notifications;
-    List<String> reviews;
-    Uri image;
-    Profile current_user;
+    public String name;
+    public String facebookUniqueIdentifier;
+    public Integer rating;
+    public Integer numRatings;
+    public List<Integer> transactions;
+    public Set<Integer> posts;
+    public List<Integer> groups;
+    public Set<Integer> notifications;
+    public List<String> reviews;
+    public Uri image;
+    public Profile current_user;
 
 	/*
 	 * Constructor which takes in user’s unique Facebook

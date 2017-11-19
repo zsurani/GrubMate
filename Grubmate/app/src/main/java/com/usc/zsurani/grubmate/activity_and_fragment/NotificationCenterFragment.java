@@ -41,6 +41,8 @@ public class NotificationCenterFragment extends Fragment {
     private Button buttonRequests;
     private ListView listSubscriptions;
     private ListView listRequests;
+    private TextView emptyRequests;
+    private TextView emptySubscriptions;
 
     private boolean displaySubscriptions = false;
     private static final String KEY_DISPLAY_SUB = "grubmate.notification_center.display_subscriptions";
@@ -67,17 +69,34 @@ public class NotificationCenterFragment extends Fragment {
         buttonSubscriptions = (Button) v.findViewById(R.id.button_notification_center_see_subscriptions);
         listRequests = (ListView) v.findViewById(R.id.list_notification_center_requests);
         listSubscriptions = (ListView) v.findViewById(R.id.list_notification_center_subscriptions);
+        emptyRequests = (TextView) v.findViewById(R.id.text_empty_requests);
+        emptySubscriptions = (TextView) v.findViewById(R.id.text_empty_subscriptions);
+
 
         if (displaySubscriptions) {
             PostAdapter subAdapter = new PostAdapter(getActivity().getApplicationContext(), R.layout.layout_post_row, getMatchingPosts(), getActivity());
             listSubscriptions.setAdapter(subAdapter);
             listRequests.setVisibility(View.INVISIBLE);
             listSubscriptions.setVisibility(View.VISIBLE);
+            emptyRequests.setVisibility(View.INVISIBLE);
+
+            if (getMatchingPosts().size() > 0) {
+                emptySubscriptions.setVisibility(View.INVISIBLE);
+            } else {
+                emptySubscriptions.setVisibility(View.VISIBLE);
+            }
         } else {
             TransnotifAdapter transAdapter = new TransnotifAdapter(getActivity().getApplicationContext(), R.layout.layout_transnotif_row, getOtherNotifs());
             listRequests.setAdapter(transAdapter);
             listRequests.setVisibility(View.VISIBLE);
             listSubscriptions.setVisibility(View.INVISIBLE);
+            emptySubscriptions.setVisibility(View.INVISIBLE);
+
+            if (getOtherNotifs().size() > 0) {
+                emptyRequests.setVisibility(View.INVISIBLE);
+            } else {
+                emptyRequests.setVisibility(View.VISIBLE);
+            }
         }
 
         buttonSubscriptions.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +106,13 @@ public class NotificationCenterFragment extends Fragment {
                 listSubscriptions.setAdapter(subAdapter);
                 listRequests.setVisibility(View.INVISIBLE);
                 listSubscriptions.setVisibility(View.VISIBLE);
+                emptyRequests.setVisibility(View.INVISIBLE);
+
+                if (getMatchingPosts().size() > 0) {
+                    emptySubscriptions.setVisibility(View.INVISIBLE);
+                } else {
+                    emptySubscriptions.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -97,6 +123,13 @@ public class NotificationCenterFragment extends Fragment {
                 listSubscriptions.setAdapter(transnotifAdapter);
                 listRequests.setVisibility(View.VISIBLE);
                 listSubscriptions.setVisibility(View.INVISIBLE);
+                emptySubscriptions.setVisibility(View.INVISIBLE);
+
+                if (getOtherNotifs().size() > 0) {
+                    emptyRequests.setVisibility(View.INVISIBLE);
+                } else {
+                    emptyRequests.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -240,7 +273,7 @@ public class NotificationCenterFragment extends Fragment {
                             button_two.setEnabled(false);
 
                             Transaction transaction = new Transaction(postRepo.getProviderId(t.getPostID()),
-                                    userId, postRepo.getLocation(t.getPostID()), t.getPostID());
+                                    t.getRequestID(), postRepo.getLocation(t.getPostID()), t.getPostID());
                             TransactionRepo tr = new TransactionRepo(getApplicationContext());
                             transaction.setStatus("OPEN");
                             tr.insert(transaction);
@@ -252,7 +285,9 @@ public class NotificationCenterFragment extends Fragment {
 //                            Intent i = new Intent(getApplicationContext(), RatingReviewActivity.class);
 //                            i.putExtra("UserRatingId", t.getRequestID());
 //                            startActivity(i);
-                            ((MainActivity) getActivity()).goToFragment(0, t.getRequestID(), -1);
+                            Log.d("figure", Integer.toString(t.getRequestID()));
+
+                            ((MainActivity) getActivity()).goToFragment(0, t.getProvider(), -1);
 
                         }
                     }
