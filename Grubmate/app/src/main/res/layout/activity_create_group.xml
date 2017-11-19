@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.usc.zsurani.grubmate.CreateGroupActivity"
+    tools:context="com.usc.zsurani.grubmate.activity_and_fragment.CreateGroupActivity"
     android:layout_margin="16dp">
 
     <TextView
@@ -13,7 +13,8 @@
         android:text="Create New Group"
         android:id="@+id/label_create_group"
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textColor="#2f2f2f" />
 
     <TextView
         android:layout_width="wrap_content"

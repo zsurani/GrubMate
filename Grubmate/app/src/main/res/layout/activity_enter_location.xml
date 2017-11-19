@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enter Location:"
+        android:textColor="#2f2f2f"
         android:textSize="18sp"/>
 
     <EditText
@@ -23,7 +24,7 @@
         android:id="@+id/send_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send" />
+        android:text="Save" />
 
 
 </LinearLayout>

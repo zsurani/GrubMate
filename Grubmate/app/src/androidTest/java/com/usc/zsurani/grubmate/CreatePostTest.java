@@ -9,6 +9,11 @@ import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 import android.widget.Checkable;
 
+import com.usc.zsurani.grubmate.activity_and_fragment.CreatePostActivity;
+import com.usc.zsurani.grubmate.base_classes.Profiles;
+import com.usc.zsurani.grubmate.base_classes.User;
+import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.UserRepo;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.Before;

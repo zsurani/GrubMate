@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.usc.zsurani.grubmate.NotificationCenterFragment"
+    tools:context="com.usc.zsurani.grubmate.activity_and_fragment.NotificationCenterFragment"
     android:layout_margin="16dp">
 
     <LinearLayout
@@ -37,6 +37,15 @@
 
     </ListView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_empty_requests"
+        android:text="No Requests Found"
+        android:textSize="24sp"
+        android:layout_alignStart="@id/list_notification_center_requests"
+        android:layout_alignTop="@id/list_notification_center_requests"/>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,5 +54,15 @@
         android:visibility="invisible"
         android:layout_margin="8dp">
     </ListView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_empty_subscriptions"
+        android:text="No Matching Posts Found"
+        android:textSize="24sp"
+        android:layout_alignStart="@id/list_notification_center_requests"
+        android:layout_alignTop="@id/list_notification_center_requests"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

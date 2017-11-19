@@ -7,6 +7,11 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
+import com.usc.zsurani.grubmate.base_classes.Post;
+import com.usc.zsurani.grubmate.base_classes.Search;
+import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.PostRepo;
+import com.usc.zsurani.grubmate.databases.DatabaseHandler;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
