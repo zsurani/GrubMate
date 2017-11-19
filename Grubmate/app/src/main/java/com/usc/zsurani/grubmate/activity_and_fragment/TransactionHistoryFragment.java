@@ -60,6 +60,10 @@ public class TransactionHistoryFragment extends Fragment {
 //        t.setStatus("Accepted");
 //        dummyList.add(t);
 
+        if (getTransactions().size() > 0) {
+            ((TextView) v.findViewById(R.id.text_empty_trans)).setVisibility(View.GONE);
+        }
+
         transactionList.setAdapter(new TransactionHistoryFragment.TransactionAdapter(getContext(), R.layout.layout_transaction_row, getTransactions()));
 
     }

@@ -61,6 +61,10 @@ public class MyGroupFragment extends Fragment {
         groupList = (ListView) v.findViewById(android.R.id.list);
         groupList.setAdapter(adapter);
 
+        if (getGroupList().size() > 0) {
+            ((TextView) v.findViewById(android.R.id.empty)).setVisibility(View.GONE);
+        }
+
         createGroup = (Button) v.findViewById(R.id.create_group);
         createGroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +72,6 @@ public class MyGroupFragment extends Fragment {
                 // start new page for creating a notification
                 Intent i = new Intent(getApplicationContext(), CreateGroupActivity.class);
                 startActivity(i);
-
-//                ((MainActivity) getActivity()).goToFragment(3, 0, 0);
             }
         });
     }

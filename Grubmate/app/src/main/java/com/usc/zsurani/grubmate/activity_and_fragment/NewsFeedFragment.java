@@ -2,12 +2,14 @@ package com.usc.zsurani.grubmate.activity_and_fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.usc.zsurani.grubmate.MainActivity;
 import com.usc.zsurani.grubmate.R;
@@ -52,14 +54,18 @@ public class NewsFeedFragment extends Fragment{
         listFeed = (ListView) v.findViewById(R.id.list_feed);
         listFeed.setAdapter(adapter);
 
+//        if (getPostList().size() > 0) {
+//            ((TextView) v.findViewById(R.id.text_empty_feed)).setVisibility(View.GONE);
+//        } else {
+//            Log.d("FEED @!", "SIZE IS : " + getPostList().size());
+//        }
+
         final EditText searchParameter = (EditText)getView().findViewById(R.id.search_text);
 
         searchButton = (Button) v.findViewById(R.id.button_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO switch to fragment
-
                 ((MainActivity) getActivity()).goToFragment(11, searchParameter.getText().toString());
             }
         });
@@ -68,14 +74,9 @@ public class NewsFeedFragment extends Fragment{
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(), SortActivity.class);
-//                startActivity(i);
-
-                ((MainActivity) getActivity()).goToFragment(5, 0, 0);
+                ((MainActivity) getActivity()).goToFragment(3, 0, 0);
             }
         });
-
-        // TODO add Options menu to access other pages
     }
 
     private List<Post> getPostList() {

@@ -36,26 +36,21 @@ public class MyNotificationFragment extends Fragment {
     private MyNotificationFragment.NotificationAdapter adapter;
     private String status;
 
-//    public static final String ARG_STATUS = "grubmate.notification.argument.status";
-//    public static final String RESULT_SAVE_NOTIF = "grubmate.notification.result.save";
-//    public static final String RESULT_LOAD_NOTIF = "grubmate.notification.result.load";
-
-    /*public static MyNotificationFragment newInstance(String callCode) {
-        MyNotificationFragment frag = new MyNotificationFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_STATUS, callCode);
-        frag.setArguments(args);
-        return frag;
-    }*/
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_my_notification, container, false);
+        final View v = inflater.inflate(R.layout.activity_my_notification, container, false);
 
         adapter = new MyNotificationFragment.NotificationAdapter(getContext(), R.layout.layout_notification_row, getSubscriptionList());
         notificationList = v.findViewById(R.id.list_notifications);
         notificationList.setAdapter(adapter);
+
+        if (getSubscriptionList().size() > 0) {
+            ((TextView) v.findViewById(R.id.text_empty_notif)).setVisibility(View.INVISIBLE);
+        } else {
+            ((TextView) v.findViewById(R.id.text_empty_notif)).setVisibility(View.VISIBLE);
+
+        }
 
         createNotification =  v.findViewById(R.id.button_add_notification);
 
@@ -64,6 +59,7 @@ public class MyNotificationFragment extends Fragment {
             public void onClick(View view) {
                 // start new page for creating a notification
                 Intent i = new Intent(getActivity(), CreateNotificationActivity.class);
+                ((TextView) v.findViewById(R.id.text_empty_notif)).setVisibility(View.INVISIBLE);
                 startActivityForResult(i, 0);
             }
         });
@@ -75,9 +71,16 @@ public class MyNotificationFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        View v = getView();
+        final View v = getView();
 
         refresh();
+
+        if (getSubscriptionList().size() > 0) {
+            ((TextView) v.findViewById(R.id.text_empty_notif)).setVisibility(View.INVISIBLE);
+        } else {
+            ((TextView) v.findViewById(R.id.text_empty_notif)).setVisibility(View.VISIBLE);
+
+        }
 
         createNotification =  v.findViewById(R.id.button_add_notification);
 
@@ -85,6 +88,7 @@ public class MyNotificationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // start new page for creating a notification
+                ((TextView) v.findViewById(R.id.text_empty_notif)).setVisibility(View.INVISIBLE);
                 Intent i = new Intent(getActivity(), CreateNotificationActivity.class);
                 startActivityForResult(i, 0);
             }

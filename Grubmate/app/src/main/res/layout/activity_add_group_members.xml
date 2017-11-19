@@ -9,22 +9,20 @@
     android:layout_margin="16dp">
 
 
-    <TextView
+    <!--<TextView
         android:id="@+id/label_member_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
         android:text="Enter Group Members"
         android:gravity="center"
-        android:textColor="#2f2f2f"/>
+        android:textColor="#2f2f2f"/>-->
 
     <EditText
         android:id="@+id/member_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Insert name here"
-        android:layout_alignBaseline="@id/label_member_name"
-        android:layout_toEndOf="@id/label_member_name" />
+        android:hint="Insert name here" />
 
     <Button
         android:layout_width="match_parent"
