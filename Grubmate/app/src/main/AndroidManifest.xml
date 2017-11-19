@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".MyGroupActivity" />-->
+        <activity android:name=".activity_and_fragment.MyGroupActivity" />
         <activity android:name=".activity_and_fragment.ViewGroupActivity" />
         <activity android:name=".activity_and_fragment.CreatePostActivity" />
         <!--<activity android:name=".ProfileActivity" />

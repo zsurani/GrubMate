@@ -63,13 +63,6 @@ public class PostAdapter extends ArrayAdapter<Post> {
             fullButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-//                    Intent i = new Intent(context, ViewPostActivity.class);
-//                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    i.putExtra("postID", t.getId());
-//                    context.startActivity(i);
-
-                    //TODO: for some reason I am getting a null pointer exception on this
                     ((MainActivity) activity).goToFragment(2, t.getId(), -1);
 
                 }
