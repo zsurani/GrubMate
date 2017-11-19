@@ -213,6 +213,10 @@ public class NotificationCenterFragment extends Fragment {
                     textInfo.setText(userRepo.getName(t.getRequestID()) + " requests food");
                     button_one.setText("Accept");
                     button_two.setText("Reject");
+                    if (!t.isActive()) {
+                        button_one.setEnabled(false);
+                        button_two.setEnabled(false);
+                    }
                 } else if (t.getType().equals("ACCEPT")) {
                     UserRepo up = new UserRepo(getActivity().getApplicationContext());
                     textInfo.setText(up.getName(t.getProvider()) + " has accepted your request");
@@ -222,6 +226,9 @@ public class NotificationCenterFragment extends Fragment {
                     textInfo.setText("A rating and review has been requested");
                     button_one.setText("Review");
                     button_two.setVisibility(View.INVISIBLE);
+                    if (!t.isActive()) {
+                        button_one.setEnabled(false);
+                    }
                 }
 
                 // on click listener for the "End Notification" button
@@ -247,12 +254,16 @@ public class NotificationCenterFragment extends Fragment {
 
                             NotificationsRepo notificationsRepo = new NotificationsRepo(getActivity().getApplicationContext());
                             notificationsRepo.insertAccepted(t.getRequestID(), t.getPostID(), userId);
+                            notificationsRepo.setInactive(Integer.toString(t.getId()));
 
                         } else {
 //                            Intent i = new Intent(getApplicationContext(), RatingReviewActivity.class);
 //                            i.putExtra("UserRatingId", t.getRequestID());
 //                            startActivity(i);
                             Log.d("figure", Integer.toString(t.getRequestID()));
+                            NotificationsRepo notificationsRepo = new NotificationsRepo(getActivity().getApplicationContext());
+                            notificationsRepo.setInactive(Integer.toString(t.getId()));
+                            button_one.setEnabled(false);
 
                             ((MainActivity) getActivity()).goToFragment(0, t.getProvider(), -1);
 
@@ -264,6 +275,8 @@ public class NotificationCenterFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
+                        NotificationsRepo notificationsRepo = new NotificationsRepo(getActivity().getApplicationContext());
+                        notificationsRepo.setInactive(Integer.toString(t.getId()));
                         button_one.setEnabled(false);
                         button_two.setEnabled(false);
                         // make notification inactive
