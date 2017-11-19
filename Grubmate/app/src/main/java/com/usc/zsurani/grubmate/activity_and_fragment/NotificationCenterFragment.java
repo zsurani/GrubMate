@@ -252,7 +252,9 @@ public class NotificationCenterFragment extends Fragment {
 //                            Intent i = new Intent(getApplicationContext(), RatingReviewActivity.class);
 //                            i.putExtra("UserRatingId", t.getRequestID());
 //                            startActivity(i);
-                            ((MainActivity) getActivity()).goToFragment(0, t.getRequestID(), -1);
+                            Log.d("figure", Integer.toString(t.getRequestID()));
+
+                            ((MainActivity) getActivity()).goToFragment(0, t.getProvider(), -1);
 
                         }
                     }

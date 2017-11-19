@@ -38,6 +38,7 @@ public class Notifications {
     public Integer postID;
     public String requestID;
     public Integer requesterID;
+    public Integer providerID;
     public Integer userId;
 
     public Set<String> category;
@@ -120,6 +121,7 @@ public class Notifications {
         this.type = type;
         this.postID = postID;
         this.requesterID = receiversID;
+        this.providerID = providerID;
         this.setProvider(providerID);
 
 
@@ -252,4 +254,5 @@ public class Notifications {
     }
 
     public void setType(String type) { this.type = type; }
+
 }
