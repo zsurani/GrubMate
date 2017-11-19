@@ -168,11 +168,14 @@ public class ProfileFragment extends Fragment {
             userId = args.getInt(EXTRA_USER_ID);
         }
 
-        String stringNumRatings = up.getNumRatings(String.valueOf(userId));
-        String stringRating = up.getRating(String.valueOf(userId));
-        Log.d("DEBUG - stringRating", stringNumRatings);
+//        String stringNumRatings = up.getNumRatings(String.valueOf(userId));
+//        String stringRating = up.getRating(String.valueOf(userId));
+//        Log.d("DEBUG - stringRating", stringNumRatings);
 
         Log.d("uri", uri.toString());
+
+        String stringRating = Float.toString(userRepo.getRealRating(userId));
+        String stringNumRatings = Integer.toString(userRepo.getRawNumRatings(Integer.toString(userId)));
 
         if (stringNumRatings.isEmpty()) stringNumRatings = "0";
         if (stringRating.isEmpty()) stringRating = "N/A";
