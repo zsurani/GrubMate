@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.usc.zsurani.grubmate.R;
+import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.GroupRepo;
 
 public class CreateGroupActivity extends AppCompatActivity {
 
@@ -31,9 +33,14 @@ public class CreateGroupActivity extends AppCompatActivity {
         addGroupMembers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(CreateGroupActivity.this, AddGroupMembersActivity.class);
-                i.putExtra("groupName", editName.getText().toString());
-                startActivityForResult(i, 0);
+                GroupRepo groupRepo = new GroupRepo(getApplicationContext());
+                if (groupRepo.checkIfGroup(editName.getText().toString())) {
+                    Toast.makeText(getApplicationContext(), "You already have a group with the same name", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent i = new Intent(CreateGroupActivity.this, AddGroupMembersActivity.class);
+                    i.putExtra("groupName", editName.getText().toString());
+                    startActivityForResult(i, 0);
+                }
             }
         });
 
