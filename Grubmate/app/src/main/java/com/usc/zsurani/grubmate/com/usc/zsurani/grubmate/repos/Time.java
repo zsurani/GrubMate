@@ -15,6 +15,9 @@ public class Time {
             Date date1 = format.parse(begin);
             Date date2 = format.parse(end);
             long difference = date2.getTime() - date1.getTime();
+            if (difference < 0){
+                return date1.getTime() - date2.getTime();
+            }
             return difference;
         }
         catch (ParseException e){
