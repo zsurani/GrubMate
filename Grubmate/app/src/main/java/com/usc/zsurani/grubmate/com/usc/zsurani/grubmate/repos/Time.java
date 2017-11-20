@@ -42,16 +42,20 @@ public class Time {
             Date time2 = new SimpleDateFormat("HH:mm:ss").parse(string2);
             Calendar calendar2 = Calendar.getInstance();
             calendar2.setTime(time2);
-            calendar2.add(Calendar.DATE, 1);
+            //calendar2.add(Calendar.DATE, 1);
 
             String someRandomTime = searchParameter;
             Date d = new SimpleDateFormat("HH:mm:ss").parse(someRandomTime);
             Calendar calendar3 = Calendar.getInstance();
             calendar3.setTime(d);
-            calendar3.add(Calendar.DATE, 1);
+            //calendar3.add(Calendar.DATE, 1);
 
             Date x = calendar3.getTime();
             if (x.after(calendar1.getTime()) && x.before(calendar2.getTime())) {
+                //checkes whether the current time is between 14:49:00 and 20:11:13.
+                return true;
+            }
+            if (x.equals(calendar1.getTime()) || x.equals(calendar2.getTime())) {
                 //checkes whether the current time is between 14:49:00 and 20:11:13.
                 return true;
             }
