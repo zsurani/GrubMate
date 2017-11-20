@@ -136,6 +136,10 @@ public class TransactionHistoryFragment extends Fragment {
                 final String provider = ur.getName(providerId);
                 final String requester = ur.getName(requesterId);
 
+                if (!Profile.getCurrentProfile().getName().equals(provider)) {
+                    requestButton.setEnabled(false);
+                }
+
                 PostRepo pr = new PostRepo(getContext());
                 final Post post = pr.getPost(postId);
                 String food = post.getFood();
