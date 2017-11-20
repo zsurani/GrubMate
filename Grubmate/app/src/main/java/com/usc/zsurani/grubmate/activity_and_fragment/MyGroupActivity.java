@@ -39,11 +39,14 @@ public class MyGroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mygroups);
         Log.d("ACTIVITY", "entered mygroupactivity");
-//        groupList = (ListView) findViewById(R.id.list_groups);
 
         adapter = new GroupAdapter(getApplicationContext(), R.layout.layout_group_row, getGroupList());
         groupList = (ListView) findViewById(android.R.id.list);
         groupList.setAdapter(adapter);
+
+        if (getGroupList().size() > 0) {
+            ((TextView) findViewById(android.R.id.empty)).setVisibility(View.GONE);
+        }
 
         createGroup = (Button) findViewById(R.id.create_group);
         createGroup.setOnClickListener(new View.OnClickListener() {

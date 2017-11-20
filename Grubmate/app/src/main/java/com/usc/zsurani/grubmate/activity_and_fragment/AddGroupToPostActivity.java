@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.usc.zsurani.grubmate.R;
+import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.GroupRepo;
 
 /**
  * Created by stephaniehernandez on 10/16/17.
@@ -43,12 +45,19 @@ public class AddGroupToPostActivity extends AppCompatActivity {
         savePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.putExtra("groupname", groupname.getText().toString());
-                setResult(RESULT_OK, i);
-                finish();
+                GroupRepo groupRepo = new GroupRepo(getApplicationContext());
+                if (!groupRepo.checkIfGroup(groupname.getText().toString())) {
+                    Toast.makeText(getApplicationContext(), "You don't have a group with this name", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent i = new Intent();
+                    i.putExtra("groupname", groupname.getText().toString());
+                    setResult(RESULT_OK, i);
+                    finish();
+                }
             }
         });
+
+
     }
 
 }

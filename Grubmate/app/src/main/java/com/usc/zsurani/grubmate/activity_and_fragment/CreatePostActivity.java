@@ -72,7 +72,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
     int postId;
 
-    ImageView viewImage;
+    private ImageView viewImage;
     private Bitmap yourbitmap;
     int postID;
 
