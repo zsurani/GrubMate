@@ -49,6 +49,8 @@ public class AddGroupToPostActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
     }
 
 }
