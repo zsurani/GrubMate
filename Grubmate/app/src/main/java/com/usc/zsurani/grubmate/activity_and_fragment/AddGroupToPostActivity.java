@@ -14,6 +14,9 @@ import android.widget.Toast;
 import com.usc.zsurani.grubmate.R;
 import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.GroupRepo;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by stephaniehernandez on 10/16/17.
  */
@@ -46,7 +49,14 @@ public class AddGroupToPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GroupRepo groupRepo = new GroupRepo(getApplicationContext());
-                if (!groupRepo.checkIfGroup(groupname.getText().toString())) {
+                List<String> groupName = Arrays.asList(groupname.getText().toString().split(","));
+                Boolean isInGroup = true;
+                for (int i=0; i<groupName.size(); i++) {
+                    if (!groupRepo.checkIfGroup(groupName.get(i).trim())) {
+                        isInGroup = false;
+                    }
+                }
+                if (!isInGroup) {
                     Toast.makeText(getApplicationContext(), "You don't have a group with this name", Toast.LENGTH_LONG).show();
                 } else {
                     Intent i = new Intent();

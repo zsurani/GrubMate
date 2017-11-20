@@ -12,6 +12,6 @@
         android:textStyle="bold"
         android:layout_margin="8dp"
         android:padding="8dp"
-        android:textColor="#2f2f2f"/>
+        android:textColor="#ffffff"/>
 
 </LinearLayout>
