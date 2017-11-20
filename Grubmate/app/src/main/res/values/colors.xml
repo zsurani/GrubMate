@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorDarkGray">#666666</color>
     <color name="colorLightGray">#3333</color>
+    <color name="accent_material_dark_grubmate">#7f77ff</color>
 </resources>

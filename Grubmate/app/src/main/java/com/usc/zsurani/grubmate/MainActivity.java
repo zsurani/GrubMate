@@ -346,6 +346,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.grubmate_title);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 
     void setupDrawerToggle(){
