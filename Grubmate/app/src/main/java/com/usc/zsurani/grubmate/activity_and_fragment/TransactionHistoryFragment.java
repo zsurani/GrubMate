@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.Profile;
+import com.usc.zsurani.grubmate.MainActivity;
 import com.usc.zsurani.grubmate.R;
 import com.usc.zsurani.grubmate.base_classes.Notifications;
 import com.usc.zsurani.grubmate.base_classes.Post;
@@ -118,6 +119,7 @@ public class TransactionHistoryFragment extends Fragment {
                 TextView transactName = (TextView) v.findViewById(R.id.label_transaction_name);
                 TextView transactStatus = (TextView) v.findViewById(R.id.label_transaction_status);
                 final Button requestButton = (Button) v.findViewById(R.id.button_transaction);
+                final Button rateButton = (Button) v.findViewById(R.id.button_rate);
 
 
                 // Get data from transaction to put into row
@@ -131,8 +133,12 @@ public class TransactionHistoryFragment extends Fragment {
                     gets provider, requester
                  */
                 UserRepo ur = new UserRepo(getContext());
-                String provider = ur.getName(providerId);
-                String requester = ur.getName(requesterId);
+                final String provider = ur.getName(providerId);
+                final String requester = ur.getName(requesterId);
+
+                if (!Profile.getCurrentProfile().getName().equals(provider)) {
+                    requestButton.setEnabled(false);
+                }
 
                 PostRepo pr = new PostRepo(getContext());
                 final Post post = pr.getPost(postId);
@@ -145,9 +151,11 @@ public class TransactionHistoryFragment extends Fragment {
                 switch (status) {
                     case "OPEN":
                         requestButton.setEnabled(true);
+                        rateButton.setEnabled(false);
                         break;
                     case "CLOSED":
                         requestButton.setEnabled(false);
+                        rateButton.setEnabled(true);
                         break;
                 }
 
@@ -165,6 +173,19 @@ public class TransactionHistoryFragment extends Fragment {
                         nr.insertReviewRequest(n2);
                     }
                 });
+
+                rateButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Profile.getCurrentProfile().getName().equals(provider)) {
+                            ((MainActivity) getActivity()).goToFragment(0, requesterId, -1);
+                        } else {
+                            ((MainActivity) getActivity()).goToFragment(0, providerId, -1);
+                        }
+                    }
+                });
+
+
             }
             return v;
         }

@@ -30,6 +30,14 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Rate"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:id="@+id/button_rate"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Complete Transaction"
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
