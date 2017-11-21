@@ -803,6 +803,8 @@ public class PostRepo {
                 post.setFood(cursor.getString(cursor.getColumnIndex(Post.KEY_food)));
                 post.setDescription(cursor.getString(cursor.getColumnIndex(Post.KEY_description)));
                 post.setId(cursor.getInt(cursor.getColumnIndex(Post.KEY_id)));
+                post.setBeginTime(cursor.getString(cursor.getColumnIndex(Post.KEY_beginTime)));
+                post.setEndTime(cursor.getString(cursor.getColumnIndex(Post.KEY_endTime)));
                 postList.add(post);
             } while(cursor.moveToNext());
         }

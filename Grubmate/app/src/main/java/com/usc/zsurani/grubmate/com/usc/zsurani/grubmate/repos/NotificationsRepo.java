@@ -43,7 +43,7 @@ public class NotificationsRepo {
 
         db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(n.KEY_id, nextId);
+//        values.put(n.KEY_id, nextId);
         values.put(n.KEY_userID, n.getUserId());
 
         //loops through the list of categories to turn into a string
@@ -129,6 +129,25 @@ public class NotificationsRepo {
             do {
                 not.add(c.getString(c.getColumnIndex(Notifications.KEY_id)));
                 Log.d("DEBUG", c.getString(c.getColumnIndex(Notifications.KEY_id)));
+            } while (c.moveToNext());
+        }
+        db.close();
+        return not;
+    }
+
+    public List<String> getSubscriptions(int userId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Notifications.TABLE + " where " +
+                Notifications.KEY_userID + " = " + userId;
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        List<String> not = new ArrayList<String>();
+        if(c.moveToFirst()) {
+            do {
+                if (c.getString(c.getColumnIndex(Notifications.KEY_type)).equals("subscription")) {
+                    not.add(c.getString(c.getColumnIndex(Notifications.KEY_id)));
+                    Log.d("DEBUG", c.getString(c.getColumnIndex(Notifications.KEY_id)));
+                }
             } while (c.moveToNext());
         }
         db.close();

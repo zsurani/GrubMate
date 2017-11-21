@@ -145,10 +145,9 @@ public class NotificationCenterFragment extends Fragment {
     private List<Post> getMatchingPosts() {
         String fbId = Profile.getCurrentProfile().getId();
         UserRepo up = new UserRepo(getActivity().getApplicationContext());
-        final int userId = up.getId(fbId);
 
         PostRepo pr = new PostRepo(getActivity().getApplicationContext());
-        List<Post> allPosts = pr.returnAllPosts();
+        List<Post> allPosts = pr.getPosts();
 
         for (Post post : allPosts) {
             if (post.getTags() == null) Log.d("NOTIF CENTER" , "POST TAGS NULL");
@@ -159,7 +158,9 @@ public class NotificationCenterFragment extends Fragment {
 
         for (Notifications notif : getNotificationList()) {
             if (notif.isActive()) {
+                Log.d("notif", "here");
                 for (Post post : allPosts) {
+                    Log.d("notif", "see");
                     if (post.matches(notif)) {
                         matchingPosts.add(post);
                     }
@@ -191,7 +192,7 @@ public class NotificationCenterFragment extends Fragment {
         List<Notifications> notifList = new ArrayList<>();
 
         NotificationsRepo repo = new NotificationsRepo(getActivity().getApplicationContext());
-        List<String> notifStrings = repo.getNotifications(userId);
+        List<String> notifStrings = repo.getSubscriptions(userId);
         for (String id : notifStrings) {
             Notifications n = repo.getNotification(Integer.valueOf(id));
             n.setId(Integer.valueOf(id));

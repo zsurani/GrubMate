@@ -2,6 +2,8 @@ package com.usc.zsurani.grubmate.base_classes;
 
 import android.util.Log;
 
+import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.Time;
+
 import java.util.HashSet;
 
 import java.util.Set;
@@ -526,23 +528,37 @@ public class Post{
         String notifStart = notif.getBeginTime();
         String notifEnd = notif.getEndTime();
 
-        if (beginTime.charAt(0) != '0' && beginTime.charAt(1) == ':') {
-            beginTime = "0" + beginTime;
+        Log.d("weird", beginTime);
+        Log.d("weird", endTime);
+        Log.d("weird", "nada" + notifStart);
+        Log.d("weird", "nada" + notifEnd);
+
+        Time t = new Time();
+        if (t.isInRange(beginTime, endTime, notifStart)) {
+            return true;
         }
-        if (endTime.charAt(0) != '0' && endTime.charAt(1) == ':') {
-            endTime = "0" + endTime;
+
+        if (t.isInRange(beginTime, endTime, notifEnd)) {
+            return true;
         }
+
+//        if (beginTime.charAt(0) != '0' && beginTime.charAt(1) == ':') {
+//            beginTime = "0" + beginTime;
+//        }
+//        if (endTime.charAt(0) != '0' && endTime.charAt(1) == ':') {
+//            endTime = "0" + endTime;
+//        }
 
         /*
          logic for timing -- if the notification starts after the post ends, that's a no
          if the post starts after the notification ends, that's a no
          */
 
-        if (endTime != null || notifStart.compareTo(endTime) >= 0) {
-            return false;
-        } else if (beginTime.compareTo(notifEnd) >= 0) {
-            return false;
-        }
+//        if (endTime != null || notifStart.compareTo(endTime) >= 0) {
+//            return false;
+//        } else if (beginTime.compareTo(notifEnd) >= 0) {
+//            return false;
+//        }
 
         tags = getTags();
         category = getCategory();
