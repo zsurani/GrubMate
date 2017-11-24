@@ -2,7 +2,6 @@ package com.usc.zsurani.grubmate;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -29,6 +28,7 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
 import com.usc.zsurani.grubmate.activity_and_fragment.AddGroupMembersFragment;
 import com.usc.zsurani.grubmate.activity_and_fragment.CreatePostActivity;
 import com.usc.zsurani.grubmate.activity_and_fragment.EnterLocationFragment;
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence mTitle;
     android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
     private boolean mHasFragment = false;
+
 
     private static final String KEY_HAS_FRAGMENT = "grubmate.main_activity.has_fragment";
 

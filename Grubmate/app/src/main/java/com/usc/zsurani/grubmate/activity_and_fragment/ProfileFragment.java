@@ -1,12 +1,15 @@
 package com.usc.zsurani.grubmate.activity_and_fragment;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +19,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.Profile;
+import com.facebook.messenger.MessengerUtils;
+import com.facebook.messenger.MessengerThreadParams;
+import com.facebook.messenger.ShareToMessengerParams;
+import com.facebook.messenger.ShareToMessengerParamsBuilder;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.MessageDialog;
+import com.facebook.share.widget.ShareDialog;
 import com.squareup.picasso.Picasso;
+import com.usc.zsurani.grubmate.MainActivity;
 import com.usc.zsurani.grubmate.R;
 import com.usc.zsurani.grubmate.adapters.PostAdapter;
 import com.usc.zsurani.grubmate.base_classes.Post;
@@ -49,6 +61,7 @@ public class ProfileFragment extends Fragment {
     private Button postButton;
     private Button reviewButton;
     private Button createPost;
+    private Button messageButton;
 
     private Bundle args;
     private Integer userId;
@@ -90,6 +103,7 @@ public class ProfileFragment extends Fragment {
         postButton = (Button) v.findViewById(R.id.button_profile_see_posts);
         reviewButton = (Button) v.findViewById(R.id.button_profile_see_reviews);
         createPost = (Button) v.findViewById(R.id.create_post);
+        messageButton = (Button) v.findViewById(R.id.button_fb_message);
 
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +127,13 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 Intent i = new Intent(getContext(), CreatePostActivity.class);
                 startActivityForResult(i,0);
+            }
+        });
+
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToMessenger();
             }
         });
 
@@ -220,6 +241,45 @@ public class ProfileFragment extends Fragment {
 
         }
 
+    }
+
+    // opens facebook messenger (if installed) on the compose new message page
+    public void goToMessenger() {
+        boolean isFBInstalled = isPackageInstalled("com.facebook.orca", ((getActivity().getPackageManager())));
+
+        if (!isFBInstalled) {
+            Toast.makeText(getContext(),"Facebook messenger isn't installed. Please download the app first.", Toast.LENGTH_SHORT)
+                    .show();
+        }
+
+        else {
+            Uri uri = Uri.parse("fb-messenger://compose");
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+            try {
+                startActivity(intent);
+                Log.d("FB INTENT", "intent created");
+            }
+
+            catch(Exception e) {
+                Toast.makeText(getContext(), "Oops! Can't open Facebook messenger right now. Please try again later.", Toast.LENGTH_SHORT)
+                        .show();
+
+            }
+        }
+
+        return;
+    }
+
+    // Checks to see if the package we're looking for is installed on this phone
+    private boolean isPackageInstalled(String packagename, PackageManager packageManager) {
+        try {
+            packageManager.getPackageInfo(packagename, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 
 }
