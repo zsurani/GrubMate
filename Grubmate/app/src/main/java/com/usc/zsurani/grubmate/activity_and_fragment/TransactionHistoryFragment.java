@@ -34,7 +34,8 @@ import java.util.List;
 
 public class TransactionHistoryFragment extends Fragment {
 
-    private ListView transactionList;
+    private ListView activetransactionList;
+    private ListView pasttransactionList;
 
     private List<Transaction> transactionData;
 
@@ -48,7 +49,9 @@ public class TransactionHistoryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         View v = getView();
 
-        transactionList = (ListView) v.findViewById(R.id.list_transaction_hist) ;
+        activetransactionList = (ListView) v.findViewById(R.id.active_transaction_hist) ;
+        pasttransactionList = (ListView) v.findViewById(R.id.past_transaction_hist) ;
+
 
         /* TODO once TransactionRepo etc. is set up (should be done)
           TransactionRepo repo = new TransactionRepo(getApplicationContext()); // not sure if this context is right
@@ -61,15 +64,19 @@ public class TransactionHistoryFragment extends Fragment {
 //        t.setStatus("Accepted");
 //        dummyList.add(t);
 
-        if (getTransactions().size() > 0) {
+        if (getActiveTransactions().size() > 0) {
             ((TextView) v.findViewById(R.id.text_empty_trans)).setVisibility(View.GONE);
         }
 
-        transactionList.setAdapter(new TransactionHistoryFragment.TransactionAdapter(getContext(), R.layout.layout_transaction_row, getTransactions()));
+        if (getPastTransactions().size() > 0) {
+            ((TextView) v.findViewById(R.id.text_empty_trans2)).setVisibility(View.GONE);
+        }
 
+        activetransactionList.setAdapter(new TransactionHistoryFragment.TransactionAdapter(getContext(), R.layout.layout_transaction_row, getActiveTransactions()));
+        pasttransactionList.setAdapter(new TransactionHistoryFragment.TransactionAdapter(getContext(), R.layout.layout_transaction_row, getPastTransactions()));
     }
 
-    private List<Transaction> getTransactions(){
+    private List<Transaction> getActiveTransactions(){
         String fbId = Profile.getCurrentProfile().getId();
         UserRepo up = new UserRepo(getContext());
         final int userId = up.getId(fbId);
@@ -77,7 +84,23 @@ public class TransactionHistoryFragment extends Fragment {
         TransactionRepo tr = new TransactionRepo(getContext());
         List<Transaction> transList = new ArrayList<>();
 
-        List<String> transactions = tr.getTransactionsId(userId);
+        List<String> transactions = tr.getActiveTransactionsId(userId);
+        for (String id : transactions) {
+            transList.add(tr.getTransaction(Integer.valueOf(id)));
+        }
+
+        return transList;
+    }
+
+    private List<Transaction> getPastTransactions(){
+        String fbId = Profile.getCurrentProfile().getId();
+        UserRepo up = new UserRepo(getContext());
+        final int userId = up.getId(fbId);
+
+        TransactionRepo tr = new TransactionRepo(getContext());
+        List<Transaction> transList = new ArrayList<>();
+
+        List<String> transactions = tr.getPastTransactionsId(userId);
         for (String id : transactions) {
             transList.add(tr.getTransaction(Integer.valueOf(id)));
         }
