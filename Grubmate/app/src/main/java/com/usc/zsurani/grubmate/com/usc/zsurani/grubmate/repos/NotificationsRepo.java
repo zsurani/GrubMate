@@ -1,9 +1,11 @@
 package com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos;
 
+import android.app.Notification;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.audiofx.NoiseSuppressor;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -311,6 +313,31 @@ public class NotificationsRepo {
         cursor.close();
         db.close();
         return toReturn;
+    }
+
+    public void update(Notifications notif) {
+        //Open connection to write data
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+//        Cursor c = db.rawQuery("SELECT " + User.KEY_ID + " FROM " + User.TABLE
+//                + " WHERE " + User.KEY_fbUniqueIdentifier + " = " + post.getOwner_string(), null);
+//
+//        String userId = "";
+//        if (c.moveToFirst()) {
+//            userId = c.getString(c.getColumnIndex(User.KEY_ID));
+//        }
+
+        db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Notifications.KEY_beginTime, notif.getBeginTime());
+        values.put(Notifications.KEY_endTime, notif.getEndTime());
+        values.put(Notifications.KEY_name, notif.getName());
+        values.put(Notifications.KEY_tags, notif.getTag());
+
+        // Inserting Row
+        db.update(Notifications.TABLE, values, Notifications.KEY_id+"="+notif.getId(), null);
+        db.close(); // Closing database connection
+//        c.close();
     }
 
     public void updateBeginTime(String notifId, String newBeginTime) {
