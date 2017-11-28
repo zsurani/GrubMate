@@ -163,6 +163,7 @@ public class MyNotificationFragment extends Fragment {
                 TextView textName = (TextView) v.findViewById(R.id.label_notification_name);
                 TextView textInfo = (TextView) v.findViewById(R.id.label_notification_description);
                 final Button buttonEnd = (Button) v.findViewById(R.id.button_notification);
+                Button editNotif = (Button) v.findViewById(R.id.edit_notification);
 
                 String timeStart = t.getBeginTime();
                 String timeEnd = t.getEndTime();
@@ -201,6 +202,17 @@ public class MyNotificationFragment extends Fragment {
 
                         buttonEnd.setEnabled(false);
 
+                    }
+                });
+
+                //button for editing a notification
+                editNotif.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int notifID = t.getId();
+                        Intent i = new Intent(getActivity().getApplicationContext(), CreateNotificationActivity.class);
+                        i.putExtra("notifID", notifID);
+                        startActivity(i);
                     }
                 });
 

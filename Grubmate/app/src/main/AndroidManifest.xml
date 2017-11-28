@@ -4,17 +4,16 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--android:roundIcon="@mipmap/ic_launcher_round"-->
+    <!-- android:roundIcon="@mipmap/ic_launcher_round" -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/grubmate_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Grubmate">
-
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id">
-
-        </meta-data>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -26,14 +25,18 @@
         <activity android:name=".activity_and_fragment.MyGroupActivity" />
         <activity android:name=".activity_and_fragment.ViewGroupActivity" />
         <activity android:name=".activity_and_fragment.CreatePostActivity" />
-        <!--<activity android:name=".ProfileActivity" />
-        <activity android:name=".NewsFeedActivity" />-->
+        <!--
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".NewsFeedActivity" />
+        -->
         <activity android:name=".activity_and_fragment.CreateGroupActivity" />
-        <!--<activity android:name=".ViewPostActivity" />
+        <!--
+        <activity android:name=".ViewPostActivity" />
         <activity android:name=".TransactionHistoryActivity" />
-        <activity android:name=".MyNotificationActivity" />-->
+        <activity android:name=".MyNotificationActivity" />
+        -->
         <activity android:name=".activity_and_fragment.CreateNotificationActivity" />
-        <!--<activity android:name=".RatingReviewActivity" />-->
+        <!-- <activity android:name=".RatingReviewActivity" /> -->
         <activity
             android:name=".databases.AndroidDatabaseManager"
             android:label="@string/app_name" />
@@ -44,11 +47,13 @@
 
         <activity android:name=".activity_and_fragment.AddGroupMembersActivity" />
         <activity android:name=".activity_and_fragment.AddGroupToPostActivity" />
-        <!--<activity android:name=".EnterLocationActivity" />
+        <!--
+        <activity android:name=".EnterLocationActivity" />
         <activity android:name=".SearchResultsActivity" />
         <activity android:name=".FilterActivity" />
         <activity android:name=".SortActivity" />
-        <activity android:name=".SortResultActivity"></activity>-->
+        <activity android:name=".SortResultActivity"></activity>
+        -->
     </application>
 
 </manifest>

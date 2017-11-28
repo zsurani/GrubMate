@@ -28,6 +28,8 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginResult;
+import com.facebook.login.LoginManager;
+
 import com.facebook.login.widget.LoginButton;
 
 import com.usc.zsurani.grubmate.activity_and_fragment.AddGroupMembersFragment;
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
         setupToolbar();
 
-        DataModel[] drawerItem = new DataModel[6];
+        DataModel[] drawerItem = new DataModel[7];
 
         drawerItem[0] = new DataModel("My Profile");
         drawerItem[1] = new DataModel("My Newsfeed");
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         drawerItem[3] = new DataModel("My Notifications");
         drawerItem[4] = new DataModel("My Transactions");
         drawerItem[5] = new DataModel("Notification Center");
+        drawerItem[6] = new DataModel("Log Out");
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -119,63 +122,73 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         setupDrawerToggle();
 
-        Button tv =(Button)findViewById(R.id.button2);
+        if (Profile.getCurrentProfile() == null) {
+            Button tv = (Button) findViewById(R.id.button2);
 
-        tv.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            tv.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
 
-                Intent dbmanager = new Intent(getApplicationContext(),AndroidDatabaseManager.class);
-                startActivity(dbmanager);
-            }
-        });
-
-        loginButton = (LoginButton)findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList("user_friends"));
-        callbackManager = CallbackManager.Factory.create();
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-                fbfriends = getFriendsList();
-                String id = Profile.getCurrentProfile().getId();
-                UserRepo userRepo = new UserRepo(getApplicationContext());
-                boolean status = userRepo.newUser(id);
-                if (status) {
-                    String name = Profile.getCurrentProfile().getFirstName() + " " + Profile.getCurrentProfile().getLastName();
-                    User user = new User(name, id);
-                    userRepo.insert(user);
-                    Profiles p = new Profiles();
-                    p.setName(Profile.getCurrentProfile().getName());
-                    p.setId(Profile.getCurrentProfile().getId());
-                    p.setUri(Profile.getCurrentProfile().getProfilePictureUri(125, 125));
-                    userRepo.insertProfile(p);
+                    Intent dbmanager = new Intent(getApplicationContext(), AndroidDatabaseManager.class);
+                    startActivity(dbmanager);
                 }
+            });
+
+            loginButton = (LoginButton) findViewById(R.id.login_button);
+            loginButton.setReadPermissions(Arrays.asList("user_friends"));
+            callbackManager = CallbackManager.Factory.create();
+            loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+
+                    fbfriends = getFriendsList();
+                    String id = Profile.getCurrentProfile().getId();
+                    UserRepo userRepo = new UserRepo(getApplicationContext());
+                    boolean status = userRepo.newUser(id);
+                    if (status) {
+                        String name = Profile.getCurrentProfile().getFirstName() + " " + Profile.getCurrentProfile().getLastName();
+                        User user = new User(name, id);
+                        userRepo.insert(user);
+                        Profiles p = new Profiles();
+                        p.setName(Profile.getCurrentProfile().getName());
+                        p.setId(Profile.getCurrentProfile().getId());
+                        p.setUri(Profile.getCurrentProfile().getProfilePictureUri(125, 125));
+                        userRepo.insertProfile(p);
+                    }
+                    loginButton.setVisibility(View.INVISIBLE);
+                    findViewById(R.id.button2).setVisibility(View.INVISIBLE);
+
+                    Fragment fragment = null;
+                    fragment = new NewsFeedFragment();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(mNavigationDrawerItemTitles[1]).commit();
+
 //                Intent intent = new Intent(getApplicationContext(), NewsFeedFragment.class);
 //                startActivity(intent);
-            }
+                }
 
-            @Override
-            public void onCancel() {
+                @Override
+                public void onCancel() {
 //                textView.setText("Login Cancelled");
-                Log.d("MAIN ACTIVITY", "LOGIN CANCELLED");
+                    Log.d("MAIN ACTIVITY", "LOGIN CANCELLED");
+                }
+
+                @Override
+                public void onError(FacebookException error) {
+
+                }
+            });
+
+
+            // for screen rotation
+            if (mHasFragment) {
+                // hide the main activity layout
+                loginButton.setVisibility(View.INVISIBLE);
+                tv.setVisibility(View.INVISIBLE);
+            } else {
+                // show the main activity (facebook layout)
+                loginButton.setVisibility(View.VISIBLE);
+                tv.setVisibility(View.VISIBLE);
             }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
-
-        // for screen rotation
-        if (mHasFragment)  {
-            // hide the main activity layout
-            loginButton.setVisibility(View.INVISIBLE);
-            tv.setVisibility(View.INVISIBLE);
-        } else {
-            // show the main activity (facebook layout)
-            loginButton.setVisibility(View.VISIBLE);
-            tv.setVisibility(View.VISIBLE);
-        }
 
         /*
         Integer intentFragment = getIntent().getExtras().getInt("frgToLoad");
@@ -184,6 +197,23 @@ public class MainActivity extends AppCompatActivity {
             selectItem(intentFragment);
         }
         */
+        }
+        else{
+            Fragment fragment = null;
+            fragment = new NewsFeedFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(mNavigationDrawerItemTitles[1]).commit();
+
+            mDrawerList.setItemChecked(1, true);
+            mDrawerList.setSelection(1);
+            setTitle(mNavigationDrawerItemTitles[1]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+
+            findViewById(R.id.button2).setVisibility(View.INVISIBLE);
+            findViewById(R.id.login_button).setVisibility(View.INVISIBLE);
+
+            mHasFragment = true;
+        }
 
 
     }
@@ -225,6 +255,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 5:
                 fragment = new NotificationCenterFragment();
+                break;
+            case 6:
+                //fragment = new NotificationCenterFragment();
+                LoginManager.getInstance().logOut();
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
                 break;
 
             default:
