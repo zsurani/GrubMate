@@ -112,6 +112,22 @@ public class GroupRepo {
         return toReturn;
     }
 
+    public String getName(String groupId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery =  "SELECT  * FROM " + Group.TABLE
+                + " WHERE " +
+                Group.KEY_id + "=" + groupId;// It's a good practice to use parameter ?, instead of concatenate string
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String name = "";
+        if (cursor.moveToFirst()) {
+            do {
+                name = cursor.getString(cursor.getColumnIndex(Group.KEY_name));
+            } while (cursor.moveToNext());
+        }
+        return name;
+    }
+
     public String getGroupID(String name){
 
         List<String> groupNames = Arrays.asList(name.split(","));

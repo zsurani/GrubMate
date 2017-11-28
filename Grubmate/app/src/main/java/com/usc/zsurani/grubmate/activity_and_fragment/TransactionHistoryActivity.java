@@ -34,7 +34,7 @@ public class TransactionHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_history);
 
-        transactionList = (ListView) findViewById(R.id.list_transaction_hist) ;
+        transactionList = (ListView) findViewById(R.id.active_transaction_hist) ;
 
         /* TODO once TransactionRepo etc. is set up
           TransactionRepo repo = new TransactionRepo(getApplicationContext()); // not sure if this context is right

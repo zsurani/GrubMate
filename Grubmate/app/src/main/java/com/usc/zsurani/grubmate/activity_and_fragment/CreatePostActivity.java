@@ -34,6 +34,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CreatePostActivity extends AppCompatActivity {
 
@@ -68,7 +71,7 @@ public class CreatePostActivity extends AppCompatActivity {
     private RadioButton homemade;
     private RadioButton restaurant;
     private String num_requests;
-    private String groupname;
+    private String groupname = "";
 
     int postId;
 
@@ -116,7 +119,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
-            postID = 0;
+            postID = -1;
         } else {
             postID = extras.getInt("postID");
             PostRepo postRepo = new PostRepo(getApplicationContext());
@@ -133,6 +136,27 @@ public class CreatePostActivity extends AppCompatActivity {
             byte[] images = post.getPhoto_image();
             Bitmap images2 = BitmapFactory.decodeByteArray(images, 0, images.length);
             viewImage.setImageBitmap(images2);
+            String groups = post.getGroupString();
+            if (!groups.equals("")) {
+                GroupRepo groupRepo = new GroupRepo(getApplicationContext());
+                List<String> groupList = Arrays.asList(groups.split(","));
+                List<String> groupNames = new ArrayList<>();
+                for (int i=0; i<groupList.size(); i++) {
+                    groupNames.add(groupRepo.getName(groupList.get(i)));
+                }
+                String separator = ", ";
+                int total = groupNames.size() * separator.length();
+                for (String s : groupNames) {
+                    total += s.length();
+                }
+
+                StringBuilder sb = new StringBuilder(total);
+                for (String s : groupNames) {
+                    sb.append(separator).append(s);
+                }
+
+                groupname = sb.substring(separator.length());
+            }
         }
 
         viewImage.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +171,7 @@ public class CreatePostActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                int post = createPost();
                 Intent i = new Intent(CreatePostActivity.this, AddGroupToPostActivity.class);
-//                i.putExtra("postID", post);
+                i.putExtra("groupname", groupname);
                 startActivityForResult(i, 0);
 
 
@@ -157,7 +181,7 @@ public class CreatePostActivity extends AppCompatActivity {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (postID != 0) {
+                if (postID != -1) {
                     PostRepo postRepo = new PostRepo(getApplicationContext());
                     postRepo.deletePost(postID);
                 }
@@ -298,14 +322,14 @@ public class CreatePostActivity extends AppCompatActivity {
                 PostRepo postRepo = new PostRepo(getApplicationContext());
 
                 GroupRepo gr = new GroupRepo(getApplicationContext());
-                if (groupname != null) {
+                if (!groupname.equals("")) {
                     String groupID = gr.getGroupID(groupname);
                     post.setGroupString(groupID);
                 } else {
                     post.setGroupString("");
                 }
 
-                if (postID != 0) {
+                if (postID != -1) {
                     post.setId(postID);
                     postRepo.update(post);
                     postId = postID;

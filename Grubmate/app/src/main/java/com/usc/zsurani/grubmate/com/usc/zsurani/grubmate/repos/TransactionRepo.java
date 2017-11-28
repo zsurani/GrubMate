@@ -61,6 +61,49 @@ public class TransactionRepo {
         return trans;
     }
 
+    //get list of active transactions for the current user
+    public List<String> getActiveTransactionsId(int userId) {
+        Log.d("DEBUG", "in getTransactionID");
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Transaction.TABLE + " where " +
+                Transaction.KEY_idProvider + " = " + userId
+                + " OR " + Transaction.KEY_idRequester + " = " + userId;
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        List<String> trans = new ArrayList<String>();
+        if(c.moveToFirst()) {
+            do {
+                if (c.getString(c.getColumnIndex(Transaction.KEY_status)).equals("OPEN")) {
+                    trans.add(c.getString(c.getColumnIndex(Transaction.KEY_id)));
+                    Log.d("DEBUG", c.getString(c.getColumnIndex(Transaction.KEY_id)));
+                }
+            } while (c.moveToNext());
+        }
+        db.close();
+        return trans;
+    }
+
+    public List<String> getPastTransactionsId(int userId) {
+        Log.d("DEBUG", "in getTransactionID");
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Transaction.TABLE + " where " +
+                Transaction.KEY_idProvider + " = " + userId
+                + " OR " + Transaction.KEY_idRequester + " = " + userId;
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        List<String> trans = new ArrayList<String>();
+        if(c.moveToFirst()) {
+            do {
+                if (c.getString(c.getColumnIndex(Transaction.KEY_status)).equals("CLOSED")) {
+                    trans.add(c.getString(c.getColumnIndex(Transaction.KEY_id)));
+                    Log.d("DEBUG", c.getString(c.getColumnIndex(Transaction.KEY_id)));
+                }
+            } while (c.moveToNext());
+        }
+        db.close();
+        return trans;
+    }
+
     //gets the instance of the Trasaction class from a transaction id
     public Transaction getTransaction(int id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
