@@ -35,6 +35,8 @@ public class CreateNotificationActivity extends AppCompatActivity {
     public static final String NOTIFICATION_TAGS = "grubmate.notification.create.tags";
     public static final String NOTIFICATION_CATEGORY = "grubmate.notification.create.category";
 
+    int notifId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,23 @@ public class CreateNotificationActivity extends AppCompatActivity {
         editNotifTimeStart = (EditText) findViewById(R.id.edit_notification_begin_time);
         editNotifTimeEnd = (EditText) findViewById(R.id.edit_notification_end_time);
         editNotifTags = (EditText) findViewById(R.id.edit_notification_tags);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras == null){
+            notifId = 0;
+        }
+        else{
+            notifId = extras.getInt("notifID");
+            NotificationsRepo notifrepo = new NotificationsRepo(getApplicationContext());
+            final Notifications notif = notifrepo.getNotification(notifId);
+            editNotifName.setText(notif.getName());
+            editNotifTimeStart.setText(notif.getBeginTime());
+            editNotifTimeEnd.setText(notif.getEndTime());
+            editNotifTags.setText(notif.getTag());
+            // TODO
+            //where do the checkboxes go?
+            //update postid with new info
+        }
 
         saveNotification = (Button) findViewById(R.id.button_save_new_notification);
 
@@ -170,7 +189,12 @@ public class CreateNotificationActivity extends AppCompatActivity {
                 }
 
                 NotificationsRepo np = new NotificationsRepo(getApplicationContext());
-                np.insert(n);
+
+                if(notifId != 0){
+                    n.setId(notifId);
+                    np.update(n);
+                }
+                else np.insert(n);
 
                 List<String> cList = new ArrayList<String>(cate);
                 String cString = TextUtils.join(", ", cList);

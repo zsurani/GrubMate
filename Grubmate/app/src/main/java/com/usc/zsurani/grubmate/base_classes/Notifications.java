@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import java.util.Iterator;
 import java.util.List;
 
 import java.util.List;
@@ -123,8 +124,6 @@ public class Notifications {
         this.requesterID = receiversID;
         this.providerID = providerID;
         this.setProvider(providerID);
-
-
     }
 
     public Notifications() {}
@@ -174,6 +173,22 @@ public class Notifications {
      */
     public Set<String> getTags(){return tags;}
 
+    public String getTag(){
+        String tag = "";
+        Set<String> tags = getTags();
+        if(tags != null) {
+            StringBuilder sb = new StringBuilder();
+            Iterator<String> it = tags.iterator();
+            if(it.hasNext()) {
+                sb.append(it.next());
+            }
+            while(it.hasNext()) {
+                sb.append(", ").append(it.next());
+            }
+            tag = sb.toString();
+        }
+        return tag;
+    }
     /*
      * Returns time set by creator of notification of beginning of
      * time period for notification
