@@ -156,7 +156,8 @@ public class ViewPostFragment extends Fragment {
         postUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Post p = new Post(postID);
+                UserRepo userRepo = new UserRepo(getActivity().getApplicationContext());
+                ((MainActivity) getActivity()).goToFragment(13, Integer.toString(userRepo.getUserId(post.getOwner_string())));
                 //ProfileActivity pa = new ProfileActivity(p.getProvider());
                 // Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
                 //i.putExtra("frgToLoad", 0); //0 = profile

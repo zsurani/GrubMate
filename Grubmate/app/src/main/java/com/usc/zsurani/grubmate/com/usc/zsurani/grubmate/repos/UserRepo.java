@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.util.Log;
 
 import com.facebook.Profile;
@@ -69,12 +70,28 @@ public class UserRepo {
     public int getUserId(String name){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT " + User.KEY_ID + " FROM " + User.TABLE + " WHERE " + User.KEY_name
-                + "=" + name;
+                + " like '%" + name + "%'";
         Cursor c = db.rawQuery(selectQuery, null);
         int d = -1;
         if(c.moveToFirst()){
             do {
                 d = c.getInt(c.getColumnIndex(User.KEY_ID));
+            } while (c.moveToNext());
+        }
+        //db.close();
+
+        return d;
+    }
+
+    public String getFBId(int userID){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT " + User.KEY_fbUniqueIdentifier + " FROM " + User.TABLE + " WHERE " + User.KEY_ID + " = " + userID;
+        Log.d("TEST", "query: " + selectQuery);
+        Cursor c = db.rawQuery(selectQuery, null);
+        String d = "";
+        if(c.moveToFirst()){
+            do {
+                d = c.getString(c.getColumnIndex(User.KEY_fbUniqueIdentifier));
             } while (c.moveToNext());
         }
         //db.close();
@@ -337,6 +354,34 @@ public class UserRepo {
             do {
                 p.setName(cursor.getString(cursor.getColumnIndex(User.KEY_name)));
                 p.setId(cursor.getString(cursor.getColumnIndex(User.KEY_ID3)));
+                p.setUri(Uri.parse(cursor.getString(cursor.getColumnIndex(User.KEY_image))));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        //db.close();
+        return p;
+
+    }
+
+    public Profiles getProfile(String fb_id) {
+        //Open connection to read only
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String selectQuery =  "SELECT  *  FROM " + User.P_TABLE + " WHERE " + User.KEY_ID3 + " = " + fb_id;
+
+        Profiles p = new Profiles();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        if (cursor.moveToFirst()) {
+            do {
+                p.setName(cursor.getString(cursor.getColumnIndex(User.KEY_name)));
+                p.setUri(Uri.parse(cursor.getString(cursor.getColumnIndex(User.KEY_image))));
+                Log.d("TEST", "name: " + cursor.getString(cursor.getColumnIndex(User.KEY_name)));
+                Log.d("TEST", "uri: " + cursor.getString(cursor.getColumnIndex(User.KEY_image)));
+
             } while (cursor.moveToNext());
         }
 
@@ -353,7 +398,7 @@ public class UserRepo {
         ContentValues values = new ContentValues();
         values.put(User.KEY_name, user.getName());
         values.put(User.KEY_ID3, user.getId());
-//        values.put(User.KEY_image, user.getImage());
+        values.put(User.KEY_image, user.getUri().toString());
 
         // Inserting Row
         long user_id = db.insert(User.P_TABLE, null, values);

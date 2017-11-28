@@ -2,6 +2,7 @@ package com.usc.zsurani.grubmate;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -45,6 +46,7 @@ import com.usc.zsurani.grubmate.activity_and_fragment.TransactionHistoryFragment
 import com.usc.zsurani.grubmate.activity_and_fragment.ViewGroupFragment;
 import com.usc.zsurani.grubmate.activity_and_fragment.ViewPostFragment;
 import com.usc.zsurani.grubmate.adapters.DrawerItemCustomAdapter;
+import com.usc.zsurani.grubmate.base_classes.Profiles;
 import com.usc.zsurani.grubmate.base_classes.User;
 import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.UserRepo;
 import com.usc.zsurani.grubmate.databases.AndroidDatabaseManager;
@@ -142,6 +144,11 @@ public class MainActivity extends AppCompatActivity {
                     String name = Profile.getCurrentProfile().getFirstName() + " " + Profile.getCurrentProfile().getLastName();
                     User user = new User(name, id);
                     userRepo.insert(user);
+                    Profiles p = new Profiles();
+                    p.setName(Profile.getCurrentProfile().getName());
+                    p.setId(Profile.getCurrentProfile().getId());
+                    p.setUri(Profile.getCurrentProfile().getProfilePictureUri(125, 125));
+                    userRepo.insertProfile(p);
                 }
 //                Intent intent = new Intent(getApplicationContext(), NewsFeedFragment.class);
 //                startActivity(intent);
@@ -301,6 +308,9 @@ public class MainActivity extends AppCompatActivity {
             case 12: // sort results
                 fragment = SortResultFragment.newInstance(arg1);
                 stringPos = 2;
+                break;
+            case 13: //view post fragment
+                fragment = ProfileFragment.newInstance(Integer.parseInt(arg1));
                 break;
             default:
 

@@ -34,6 +34,7 @@ import com.usc.zsurani.grubmate.MainActivity;
 import com.usc.zsurani.grubmate.R;
 import com.usc.zsurani.grubmate.adapters.PostAdapter;
 import com.usc.zsurani.grubmate.base_classes.Post;
+import com.usc.zsurani.grubmate.base_classes.Profiles;
 import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.PostRepo;
 import com.usc.zsurani.grubmate.com.usc.zsurani.grubmate.repos.UserRepo;
 
@@ -65,6 +66,7 @@ public class ProfileFragment extends Fragment {
 
     private Bundle args;
     private Integer userId;
+    private Integer extraId = null;
 
     public static final String EXTRA_USER_ID = "grubmate.profile_fragment.user_id";
 
@@ -93,6 +95,10 @@ public class ProfileFragment extends Fragment {
         View v = getView();
 
         args = getArguments();
+        if(args != null) {
+            extraId = getArguments().getInt(EXTRA_USER_ID);
+        }
+
 
         postList = (ListView) v.findViewById(R.id.list_posts);
         reviewList = (ListView) v.findViewById(R.id.list_reviews);
@@ -175,7 +181,11 @@ public class ProfileFragment extends Fragment {
             fbId = userRepo.getProfile().getId();
             stringName = userRepo.getProfile().getName();
             uri = userRepo.getProfile().getUri();
-        } else {
+        } else if (extraId != null) {
+            userId = extraId;
+            Log.d("DEBUG", "extra Id != null and userID = " + userId);
+        }
+        else {
             fbId = Profile.getCurrentProfile().getId();
             stringName = Profile.getCurrentProfile().getName();
             uri = Profile.getCurrentProfile().getProfilePictureUri(profilePic.getMaxWidth(), profilePic.getMaxHeight());
@@ -186,14 +196,21 @@ public class ProfileFragment extends Fragment {
             userId = up.getId(fbId);
             Log.d("TEST", "userId = " + userId);
         } else {
-            userId = args.getInt(EXTRA_USER_ID);
+            Log.d("TEST", "userId = " + userId);
+            userId = extraId;
+            stringName = up.getName(userId);
+            String fbid = up.getFBId(userId);
+            Log.d("TEST", "fbid: " + fbid);
+            Profiles profile = up.getProfile(fbid);
+            uri = profile.getUri();
+            Log.d("TEST", "uri: " + uri);
         }
 
 //        String stringNumRatings = up.getNumRatings(String.valueOf(userId));
 //        String stringRating = up.getRating(String.valueOf(userId));
 //        Log.d("DEBUG - stringRating", stringNumRatings);
 
-        Log.d("uri", uri.toString());
+//        Log.d("uri", uri.toString());
 
         String stringRating = Float.toString(userRepo.getRealRating(userId));
         String stringNumRatings = Integer.toString(userRepo.getRawNumRatings(Integer.toString(userId)));

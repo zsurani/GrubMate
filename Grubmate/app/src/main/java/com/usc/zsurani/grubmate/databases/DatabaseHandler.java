@@ -120,8 +120,8 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         String CREATE_TABLE_PROFILE = "CREATE TABLE " + User.P_TABLE  + "("
                 + User.KEY_ID  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + User.KEY_name + " TEXT, "
-                + User.KEY_image + " BLOB, "
-                + User.KEY_ID3 + " TEXT)";
+                + User.KEY_image + " TEXT, "
+                + User.KEY_ID3 + " INTEGER)";
 
         Log.d("SQL", CREATE_TABLE_PROFILE);
 
