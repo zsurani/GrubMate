@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button_fb_message"
-        android:text="Message on fb"
+        android:text="Open fb messenger"
         android:layout_below="@id/label_num_ratings"
         android:layout_toEndOf="@id/image_profile_pic"/>
 
